@@ -1,0 +1,9 @@
+{
+    "dependencies": [
+        {
+            "interfaces": "pallo\\library\\template\\theme\\Theme",
+            "class": "pallo\\library\\template\\theme\\BootstrapTheme",
+            "id": "bootstrap"
+        }
+    ]
+}
