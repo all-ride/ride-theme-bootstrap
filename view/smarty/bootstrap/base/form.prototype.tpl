@@ -316,7 +316,7 @@
     
                 <div class="{$type}">
                     <label>
-                        <input type="{$type}" name="{$widget->getName()}{if $part}[{$part}]{elseif $type == 'checkbox'}[]{/if}" value="{$option}"{if (!is_array($value) && strcmp($value, $option)) == 0 || (is_array($value) && isset($value[$option]))} checked="checked"{/if} />
+                        <input type="{$type}" name="{$widget->getName()}{if $part}[{$part}]{elseif $type == 'checkbox'}[]{/if}" value="{$option}"{if (!is_array($value) && strcmp($value, $option) == 0) || (is_array($value) && isset($value[$option]))} checked="checked"{/if} />
                         {$label}
                     </label>
                 </div>
