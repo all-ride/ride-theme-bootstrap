@@ -29,7 +29,7 @@
 {*
     Renders a simple row of the form
 *}
-{function name="formRow" form=null row=null}
+{function name="formRow" form=null row=null part=null}
     {if !$form && isset($block_form)}
         {$form = $block_form}
     {/if}
@@ -41,7 +41,7 @@
     {if $row}
         {$type = $row->getType()}
         {if $type == 'hidden'}
-            {call formWidget form=$form row=$row}
+            {call formWidget form=$form row=$row part=$part}
             
             {$errors = $form->getValidationErrors($row->getName())}
             {if $errors}
@@ -57,7 +57,7 @@
 
                 {call formCollectionPrototype assign="prototype" form=$form row=$row part='%prototype%'}
                 <div class="col-md-10" data-prototype="{$prototype|escape:"html"|trim|replace:"\n":''}">
-                    {call formCollectionWidget form=$form row=$row}
+                    {call formCollectionWidget form=$form row=$row part=$part}
 
                     {$description = $row->getDescription()}
                     {if $description}
@@ -72,7 +72,7 @@
             <div class="form-group row-{$row->getName()|replace:'[':''|replace:']':''}{if $row->isDisabled()} disabled{/if}{if $row->isReadOnly()} readonly{/if} clearfix{if $errors} has-error{/if}">
                 <label class="col-md-2 control-label" for="{$widget->getId()}">{$row->getLabel()}</label>
                 <div class="col-md-10">
-                    {call formWidget form=$form row=$row}
+                    {call formWidget form=$form row=$row part=$part}
 
                     {if $errors}
                         <ul class="text-danger">
@@ -175,7 +175,7 @@
     {if $widget}
         <input type="hidden" 
                name="{$widget->getName()}{if $part}[{$part}]{/if}" 
-               value="{$widget->getValue()|escape}"
+               value="{$widget->getValue($part)|escape}"
            {foreach $widget->getAttributes() as $name => $value}
                {$name}="{$value|escape}"
            {/foreach} 
@@ -203,7 +203,7 @@
         
         <input type="text" 
                name="{$widget->getName()}{if $part}[{$part}]{/if}" 
-               value="{$widget->getValue()|escape}"
+               value="{$widget->getValue($part)|escape}"
            {foreach $attributes as $name => $value}
                {$name}="{$value|escape}"
            {/foreach} 
@@ -231,7 +231,7 @@
         
         <input type="website" 
                name="{$widget->getName()}{if $part}[{$part}]{/if}" 
-               value="{$widget->getValue()|escape}"
+               value="{$widget->getValue($part)|escape}"
            {foreach $attributes as $name => $value}
                {$name}="{$value|escape}"
            {/foreach} 
@@ -288,7 +288,7 @@
            {foreach $attributes as $name => $value}
                {$name}="{$value|escape}"
            {/foreach} 
-         >{$widget->getValue()|escape}</textarea>
+         >{$widget->getValue($part)|escape}</textarea>
     {/if}
 {/function}
 
