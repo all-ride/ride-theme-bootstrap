@@ -52,12 +52,22 @@
         {elseif $type == 'component'}
             {call formComponent form=$form row=$row}
         {elseif $type == 'collection'}
-            <div class="form-group row-{$row->getName()|replace:'[':''|replace:']':''}{if $row->isDisabled()} disabled{/if}{if $row->isReadOnly()} readonly{/if} clearfix{if false} has-error{/if}">
+            {$errors = $form->getValidationErrors($row->getName())}
+            
+            <div class="form-group row-{$row->getName()|replace:'[':''|replace:']':''}{if $row->isDisabled()} disabled{/if}{if $row->isReadOnly()} readonly{/if} clearfix{if $errors} has-error{/if}">
                 <label class="col-md-2 control-label">{$row->getLabel()}</label>
 
                 {call formCollectionPrototype assign="prototype" form=$form row=$row part='%prototype%'}
                 <div class="col-md-10 collection-controls" data-prototype="{$prototype|escape:"html"|trim|replace:"\n":''}">
                     {call formWidgetCollection form=$form row=$row part=$part}
+
+                   {if $errors}
+                        <ul class="text-danger">
+                        {foreach $errors as $error => $null}
+                            <li>{$error}</li>
+                        {/foreach}
+                        </ul>
+                    {/if}
 
                     {$description = $row->getDescription()}
                     {if $description}
