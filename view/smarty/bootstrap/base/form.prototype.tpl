@@ -56,8 +56,8 @@
                 <label class="col-md-2 control-label">{$row->getLabel()}</label>
 
                 {call formCollectionPrototype assign="prototype" form=$form row=$row part='%prototype%'}
-                <div class="col-md-10" data-prototype="{$prototype|escape:"html"|trim|replace:"\n":''}">
-                    {call formCollectionWidget form=$form row=$row part=$part}
+                <div class="col-md-10 collection-controls" data-prototype="{$prototype|escape:"html"|trim|replace:"\n":''}">
+                    {call formWidgetCollection form=$form row=$row part=$part}
 
                     {$description = $row->getDescription()}
                     {if $description}
@@ -142,7 +142,7 @@
 {*
     Renders a single control of the form
 *}
-{function name="formWidget" form=null row=null part=null}
+{function name="formWidget" form=null row=null part=null type=null}
     {if !$form && isset($block_form)}
         {$form = $block_form}
     {/if}
@@ -152,11 +152,18 @@
     {/if}
 
     {if $row}
-        {$type = $row->getType()|ucfirst}
-        {$function = "formWidget`$type`"}
-        {call $function form=$form row=$row part=$part}
+        {if !$type}
+            {$type = $row->getType()|ucfirst}
+        {/if}
         
-        {$row->setIsRendered(true)}
+        {if !$type}
+            <span class="error">No type provided for row {$row->getName()}</span>
+        {else}
+            {$function = "formWidget`$type`"}
+            {call $function form=$form row=$row part=$part}
+            
+            {$row->setIsRendered(true)}
+        {/if}
     {else}
         <span class="error">No row provided</span>
     {/if}
@@ -303,28 +310,39 @@
 
     {$widget = $row->getWidget()}
     {if $widget}
-        {if $widget->isMultiSelect()}
+        {if $widget->isArray()}
             {$type = "checkbox"}
         {else}
             {$type = "radio"}
         {/if}
         
+        {$attributes = $widget->getAttributes()}
         {$value = $widget->getValue()}
         {$options = $widget->getOptions()}
         {if $options}
             {foreach $options as $option => $label}
-    
                 <div class="{$type}">
                     <label>
-                        <input type="{$type}" name="{$widget->getName()}{if $part}[{$part}]{elseif $type == 'checkbox'}[]{/if}" value="{$option}"{if (!is_array($value) && strcmp($value, $option) == 0) || (is_array($value) && isset($value[$option]))} checked="checked"{/if} />
+                        <input type="{$type}" 
+                               name="{$widget->getName()}{if $part}[{$part}]{elseif $type == 'checkbox'}[]{/if}" 
+                               value="{$option}"
+                               {if (!is_array($value) && strcmp($value, $option) == 0) || (is_array($value) && isset($value[$option]))}checked="checked"{/if}
+                               {foreach $attributes as $name => $value}
+                                   {$name}="{$value|escape}"
+                               {/foreach} 
+                         />
                         {$label}
                     </label>
                 </div>
             {/foreach}
         {else}
             <div class="checkbox">
-                <label>
-                    <input type="checkbox" name="{$widget->getName()}" value="1"{if $value} checked="checked"{/if} />
+                <label{if isset($attributes.disabled)} class="text-muted"{/if}>
+                    <input type="checkbox" name="{$widget->getName()}" value="1"{if $value} checked="checked"{/if}
+                        {foreach $attributes as $name => $value}
+                            {$name}="{$value|escape}"
+                        {/foreach} 
+                    />
                     {$row->getDescription()}
                 </label>
             </div>
@@ -350,8 +368,8 @@
             {$attributes.class = 'form-control'}
         {/if}
             
-        <select name="{$widget->getName()}{if $part}[{$part}]{elseif $widget->isMultiSelect()}[]{/if}"
-           {if $widget->isMultiSelect()} multiple="multiple"{/if} 
+        <select name="{$widget->getName()}{if $part}[{$part}]{elseif $widget->isArray()}[]{/if}"
+           {if $widget->isArray()} multiple="multiple"{/if} 
            {foreach $attributes as $name => $value}
                {$name}="{$value|escape}"
            {/foreach} 
@@ -425,11 +443,8 @@
 
 {*
     Renders a collection control of the form
-    @param zibo\library\html\form\build\BuilderForm $form
-    @param zibo\library\html\form\build\FormRow $row
-    @param string $field Name of the field
 *}
-{function name="formCollectionWidget" form=null row=null}
+{function name="formWidgetCollection" form=null row=null}
     {if !$form && isset($block_form)}
         {$form = $block_form}
     {/if}
@@ -438,7 +453,6 @@
         {$widget = $row->getWidget()}
         {if $widget}
             {$values = $widget->getValue()}
-
             {foreach $values as $key => $value}
                 {call formCollectionPrototype form=$form row=$row part=$key}
             {/foreach}
@@ -452,20 +466,25 @@
         {/if}
     </div>
 
-    <a href="#" class="btn prototype-add{if $row->isDisabled() || $row->isReadOnly()} disabled{/if}"><i class="icon icon-plus"></i></a>
+    <a href="#" class="btn btn-default prototype-add{if $row->isDisabled() || $row->isReadOnly()} disabled{/if}"><i class="glyphicon glyphicon-plus"></i> {translate key="button.add"}</a>
 {/function}
 
 {*
     Renders a single collection control of the form
 *}
 {function name="formCollectionPrototype" form=null row=null part=null}
-    <div class="collection-control">
-        {$widget = $row->getField()}
+    <div class="collection-control clearfix">
+        <div class="col-md-10">
+        {$widget = $row->getWidget()}
         {if $widget}
-            {call formWidget form=$form row=$row part=$part}
+            {call formWidget form=$form row=$row part=$part type=$widget->getType()}
         {else}
             {call formRow form=$form row=$row->getRow($part)}
         {/if}
-        <a href="#" class="btn prototype-remove{if $row->isDisabled() || $row->isReadOnly()} disabled{/if}"><i class="icon icon-minus"></i></a>
+        </div>
+        <div class="col-md-2">
+            <a href="#" class="btn btn-default prototype-remove{if $row->isDisabled() || $row->isReadOnly()} disabled{/if}"><i class="glyphicon glyphicon-minus"></i> {translate key="button.remove"}</a>
+        </div>
+        <hr />
     </div>
 {/function}

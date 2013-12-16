@@ -22,7 +22,7 @@
 {/block}
 
 {block name="container"}
-        <div class="container">
+    <div class="container">
     {block name="content"}
         {block name="content_title"}{/block}
         {block name="messages"}
@@ -47,10 +47,9 @@
                 {/foreach}
             {/if}
         {/block}
-        
-        
+        {block name="content_body"}{/block}
     {/block}
-        </div>
+    </div>
 {/block}
 	
 {block name="scripts"}
