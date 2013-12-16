@@ -193,8 +193,8 @@
         <input type="hidden" 
                name="{$widget->getName()}{if $part}[{$part}]{/if}" 
                value="{$widget->getValue($part)|escape}"
-           {foreach $widget->getAttributes() as $name => $value}
-               {$name}="{$value|escape}"
+           {foreach $widget->getAttributes() as $name => $attribute}
+               {$name}="{$attribute|escape}"
            {/foreach} 
          />
     {/if}
@@ -221,8 +221,8 @@
         <input type="text" 
                name="{$widget->getName()}{if $part}[{$part}]{/if}" 
                value="{$widget->getValue($part)|escape}"
-           {foreach $attributes as $name => $value}
-               {$name}="{$value|escape}"
+           {foreach $attributes as $name => $attribute}
+               {$name}="{$attribute|escape}"
            {/foreach} 
          />
     {/if}
@@ -249,8 +249,8 @@
         <input type="website" 
                name="{$widget->getName()}{if $part}[{$part}]{/if}" 
                value="{$widget->getValue($part)|escape}"
-           {foreach $attributes as $name => $value}
-               {$name}="{$value|escape}"
+           {foreach $attributes as $name => $attribute}
+               {$name}="{$attribute|escape}"
            {/foreach} 
          />
     {/if}
@@ -276,8 +276,8 @@
         
         <input type="password" 
                name="{$widget->getName()}{if $part}[{$part}]{/if}" 
-           {foreach $attributes as $name => $value}
-               {$name}="{$value|escape}"
+           {foreach $attributes as $name => $attribute}
+               {$name}="{$attribute|escape}"
            {/foreach} 
          />
     {/if}
@@ -302,8 +302,8 @@
         {/if}
     
         <textarea name="{$widget->getName()}{if $part}[{$part}]{/if}" 
-           {foreach $attributes as $name => $value}
-               {$name}="{$value|escape}"
+           {foreach $attributes as $name => $attribute}
+               {$name}="{$attribute|escape}"
            {/foreach} 
          >{$widget->getValue($part)|escape}</textarea>
     {/if}
@@ -337,8 +337,8 @@
                                name="{$widget->getName()}{if $part}[{$part}]{elseif $type == 'checkbox'}[]{/if}" 
                                value="{$option}"
                                {if (!is_array($value) && strcmp($value, $option) == 0) || (is_array($value) && isset($value[$option]))}checked="checked"{/if}
-                               {foreach $attributes as $name => $value}
-                                   {$name}="{$value|escape}"
+                               {foreach $attributes as $name => $attribute}
+                                   {$name}="{$attribute|escape}"
                                {/foreach} 
                          />
                         {$label}
@@ -349,8 +349,8 @@
             <div class="checkbox">
                 <label{if isset($attributes.disabled)} class="text-muted"{/if}>
                     <input type="checkbox" name="{$widget->getName()}" value="1"{if $value} checked="checked"{/if}
-                        {foreach $attributes as $name => $value}
-                            {$name}="{$value|escape}"
+                        {foreach $attributes as $name => $attribute}
+                            {$name}="{$attribute|escape}"
                         {/foreach} 
                     />
                     {$row->getDescription()}
@@ -380,8 +380,8 @@
             
         <select name="{$widget->getName()}{if $part}[{$part}]{elseif $widget->isArray()}[]{/if}"
            {if $widget->isArray()} multiple="multiple"{/if} 
-           {foreach $attributes as $name => $value}
-               {$name}="{$value|escape}"
+           {foreach $attributes as $name => $attribute}
+               {$name}="{$attribute|escape}"
            {/foreach} 
          >
          {$value = $widget->getValue()}
@@ -415,8 +415,8 @@
         
         <input type="file" 
                name="{$widget->getName()}{if $part}[{$part}]{/if}" 
-           {foreach $attributes as $name => $value}
-               {$name}="{$value|escape}"
+           {foreach $attributes as $name => $attribute}
+               {$name}="{$attribute|escape}"
            {/foreach} 
          />
 
