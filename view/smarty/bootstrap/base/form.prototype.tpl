@@ -49,8 +49,8 @@
                 {call formWidgetErrors form=$form row=$row}
             </div>
             {/if}
-        {elseif $type == 'component'}
-            {call formComponent form=$form row=$row}
+        {elseif $type == 'component' && !$row->getOption('embed')}
+            {call formWidgetComponent form=$form row=$row}
         {elseif $type == 'collection'}
             {$errors = $form->getValidationErrors($row->getName())}
             
@@ -77,7 +77,13 @@
             </div>
         {else}
             {$widget = $row->getWidget()}
-            {$errors = $form->getValidationErrors($widget->getName())}
+            {if $widget->isMultiple() && $part}
+                {$errorsName = $widget->getName()}
+                {$errorsName = "`$errorsName`[`$part`]"}
+                {$errors = $form->getValidationErrors($errorsName)}
+            {else}
+                {$errors = $form->getValidationErrors($widget->getName())}
+            {/if}
 
             <div class="form-group row-{$row->getName()|replace:'[':''|replace:']':''}{if $row->isDisabled()} disabled{/if}{if $row->isReadOnly()} readonly{/if} clearfix{if $errors} has-error{/if}">
                 <label class="col-md-2 control-label" for="{$widget->getId()}">{$row->getLabel()}</label>
@@ -119,7 +125,7 @@
 {*
     Renders the errors of a single widget of the form
 *}
-{function name="formWidgetErrors" form=null row=null}
+{function name="formWidgetErrors" form=null row=null part=null}
     {if !$form && isset($block_form)}
         {$form = $block_form}
     {/if}
@@ -132,7 +138,13 @@
         {$widget = $row->getWidget()}
 
         {if $widget}
-            {$errors = $form->getValidationErrors($widget->getName())}
+            {if $widget->isMultiple() && $part}
+                {$errorsName = $widget->getName()}
+                {$errorsName = "`$errorsName`[`$part`]"}
+                {$errors = $form->getValidationErrors($errorsName)}
+            {else}
+                {$errors = $form->getValidationErrors($widget->getName())}
+            {/if}        
 
             {if $errors}
                 <ul class="errors help-block">
@@ -219,6 +231,90 @@
         {/if}
         
         <input type="text" 
+               name="{$widget->getName()}{if $part}[{$part}]{/if}" 
+               value="{$widget->getValue($part)|escape}"
+           {foreach $attributes as $name => $attribute}
+               {$name}="{$attribute|escape}"
+           {/foreach} 
+         />
+    {/if}
+{/function}
+
+{function name="formWidgetNumber" form=null row=null part=null}
+    {if !$form && isset($block_form)}
+        {$form = $block_form}
+    {/if}
+
+    {if is_string($row) && $form}
+        {$row = $form->getRow($row)}
+    {/if}
+
+    {$widget = $row->getWidget()}
+    {if $widget}
+        {$attributes = $widget->getAttributes()}
+        {if isset($attributes.class)}
+            {$attributes.class = "`$attributes.class` form-control"}
+        {else}
+            {$attributes.class = 'form-control'}
+        {/if}
+        
+        <input type="number" 
+               name="{$widget->getName()}{if $part}[{$part}]{/if}" 
+               value="{$widget->getValue($part)|escape}"
+           {foreach $attributes as $name => $attribute}
+               {$name}="{$attribute|escape}"
+           {/foreach} 
+         />
+    {/if}
+{/function}
+
+{function name="formWidgetEmail" form=null row=null part=null}
+    {if !$form && isset($block_form)}
+        {$form = $block_form}
+    {/if}
+
+    {if is_string($row) && $form}
+        {$row = $form->getRow($row)}
+    {/if}
+
+    {$widget = $row->getWidget()}
+    {if $widget}
+        {$attributes = $widget->getAttributes()}
+        {if isset($attributes.class)}
+            {$attributes.class = "`$attributes.class` form-control"}
+        {else}
+            {$attributes.class = 'form-control'}
+        {/if}
+        
+        <input type="email" 
+               name="{$widget->getName()}{if $part}[{$part}]{/if}" 
+               value="{$widget->getValue($part)|escape}"
+           {foreach $attributes as $name => $attribute}
+               {$name}="{$attribute|escape}"
+           {/foreach} 
+         />
+    {/if}
+{/function}
+
+{function name="formWidgetDate" form=null row=null part=null}
+    {if !$form && isset($block_form)}
+        {$form = $block_form}
+    {/if}
+
+    {if is_string($row) && $form}
+        {$row = $form->getRow($row)}
+    {/if}
+
+    {$widget = $row->getWidget()}
+    {if $widget}
+        {$attributes = $widget->getAttributes()}
+        {if isset($attributes.class)}
+            {$attributes.class = "`$attributes.class` form-control"}
+        {else}
+            {$attributes.class = 'form-control'}
+        {/if}
+        
+        <input type="date" 
                name="{$widget->getName()}{if $part}[{$part}]{/if}" 
                value="{$widget->getValue($part)|escape}"
            {foreach $attributes as $name => $attribute}
@@ -320,7 +416,7 @@
 
     {$widget = $row->getWidget()}
     {if $widget}
-        {if $widget->isArray()}
+        {if $widget->isMultiple()}
             {$type = "checkbox"}
         {else}
             {$type = "radio"}
@@ -338,6 +434,9 @@
                                value="{$option}"
                                {if (!is_array($value) && strcmp($value, $option) == 0) || (is_array($value) && isset($value[$option]))}checked="checked"{/if}
                                {foreach $attributes as $name => $attribute}
+                                   {if $name == 'id'}
+                                        {$attribute = "`$attribute`-`$option`"}
+                                   {/if}
                                    {$name}="{$attribute|escape}"
                                {/foreach} 
                          />
@@ -377,14 +476,15 @@
         {else}
             {$attributes.class = 'form-control'}
         {/if}
-            
-        <select name="{$widget->getName()}{if $part}[{$part}]{elseif $widget->isArray()}[]{/if}"
-           {if $widget->isArray()} multiple="multiple"{/if} 
+
+        {$value = $widget->getValue()}
+        
+        <select name="{$widget->getName()}{if $part}[{$part}]{elseif $widget->isMultiple()}[]{/if}"
+           {if $widget->isMultiple()} multiple="multiple"{/if} 
            {foreach $attributes as $name => $attribute}
                {$name}="{$attribute|escape}"
            {/foreach} 
          >
-         {$value = $widget->getValue()}
          {foreach $widget->getOptions() as $option => $label}
             {if is_array($label)}
             <optgroup label="{$option|escape}">
@@ -431,7 +531,7 @@
 {*
     Renders a component control of the form
 *}
-{function name="formComponent" form=null row=null class=null}
+{function name="formWidgetComponent" form=null row=null class=null}
     {if !$form && isset($block_form)}
         {$form = $block_form}
     {/if}
@@ -483,6 +583,10 @@
     Renders a single collection control of the form
 *}
 {function name="formCollectionPrototype" form=null row=null part=null}
+    {if is_string($row) && $form}
+        {$row = $form->getRow($row)}
+    {/if}
+
     <div class="collection-control clearfix">
         <div class="col-md-10">
         {$widget = $row->getWidget()}
