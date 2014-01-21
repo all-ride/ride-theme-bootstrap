@@ -230,13 +230,26 @@
             {$attributes.class = 'form-control'}
         {/if}
         
-        <input type="text" 
-               name="{$widget->getName()}{if $part}[{$part}]{/if}" 
-               value="{$widget->getValue($part)|escape}"
-           {foreach $attributes as $name => $attribute}
-               {$name}="{$attribute|escape}"
-           {/foreach} 
-         />
+        {$value = $widget->getValue($part)}
+        {if is_array($value)}
+            {foreach $value as $part => $val} 
+            <input type="text" 
+                   name="{$widget->getName()}{if $widget->isMultiple() || $part !== null}[{$part}]{/if}" 
+                   value="{$val|escape}"
+               {foreach $attributes as $name => $attribute}
+                   {$name}="{$attribute|escape}"
+               {/foreach} 
+             />
+             {/foreach}
+        {else} 
+            <input type="text" 
+                   name="{$widget->getName()}{if $widget->isMultiple() || $part !== null}[{$part}]{/if}" 
+                   value="{$value|escape}"
+               {foreach $attributes as $name => $attribute}
+                   {$name}="{$attribute|escape}"
+               {/foreach} 
+             />
+        {/if}
     {/if}
 {/function}
 
@@ -425,7 +438,7 @@
         {$attributes = $widget->getAttributes()}
         {$value = $widget->getValue()}
         {$options = $widget->getOptions()}
-        {if $options}
+        {if is_array($options)}
             {foreach $options as $option => $label}
                 <div class="{$type}">
                     <label>
@@ -500,6 +513,33 @@
     {/if}
 {/function}
 
+{function name="formWidgetFile" form=null row=null part=null}
+    {if !$form && isset($block_form)}
+        {$form = $block_form}
+    {/if}
+
+    {if is_string($row) && $form}
+        {$row = $form->getRow($row)}
+    {/if}
+
+    {$widget = $row->getWidget()}
+    {if $widget}
+        {$attributes = $widget->getAttributes()}
+        
+        <input type="file" 
+               name="{$widget->getName()}{if $part !== null}[{$part}]{/if}" 
+           {foreach $attributes as $name => $attribute}
+               {$name}="{$attribute|escape}"
+           {/foreach} 
+         />
+
+        {$value = $widget->getValue($part)}
+        {if $value}
+        <div class="help-block">{$value}</div>
+        {/if}
+    {/if}
+{/function}
+
 {function name="formWidgetImage" form=null row=null part=null}
     {if !$form && isset($block_form)}
         {$form = $block_form}
@@ -514,19 +554,21 @@
         {$attributes = $widget->getAttributes()}
         
         <input type="file" 
-               name="{$widget->getName()}{if $part}[{$part}]{/if}" 
+               name="{$widget->getName()}{if $part !== null}[{$part}]{/if}" 
            {foreach $attributes as $name => $attribute}
                {$name}="{$attribute|escape}"
            {/foreach} 
          />
 
-         {if $widget->getValue()}
-         <div class="help-block">
-            {image src=$widget->getValue() thumbnail="crop" width=100 height=100 title=$widget->getValue()}
+        {$value = $widget->getValue($part)}
+        {if $value}
+        <div class="help-block">
+            {image src=$value thumbnail="crop" width=100 height=100 title=$value}
         </div>
-         {/if}
+        {/if}
     {/if}
 {/function}
+
 
 {*
     Renders a component control of the form

@@ -53,10 +53,8 @@
 {/block}
 	
 {block name="scripts"}
-        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="{$app.url.base}/js/jquery.js"></script>
-        <!-- Include all compiled plugins (below), or include individual files as needed -->
-        <script src="{$app.url.base}/js/bootstrap.min.js"></script>    	
+        <script src="{$app.url.base}/js/bootstrap.min.js"></script>
 {/block}
     </body>
 </html>
