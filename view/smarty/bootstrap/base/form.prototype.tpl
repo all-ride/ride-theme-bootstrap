@@ -418,6 +418,32 @@
     {/if}
 {/function}
 
+{function name="formWidgetWysiwyg" form=null row=null part=null}
+    {if !$form && isset($block_form)}
+        {$form = $block_form}
+    {/if}
+
+    {if is_string($row) && $form}
+        {$row = $form->getRow($row)}
+    {/if}
+
+    {$widget = $row->getWidget()}
+    {if $widget}
+        {$attributes = $widget->getAttributes()}
+        {if isset($attributes.class)}
+            {$attributes.class = "`$attributes.class` form-control"}
+        {else}
+            {$attributes.class = 'form-control'}
+        {/if}
+    
+        <textarea name="{$widget->getName()}{if $part}[{$part}]{/if}" 
+           {foreach $attributes as $name => $attribute}
+               {$name}="{$attribute|escape}"
+           {/foreach} 
+         >{$widget->getValue($part)|escape}</textarea>
+    {/if}
+{/function}
+
 {function name="formWidgetOption" form=null row=null part=null}
     {if !$form && isset($block_form)}
         {$form = $block_form}
