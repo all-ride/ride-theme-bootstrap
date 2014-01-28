@@ -102,8 +102,14 @@
                         <span class="help-block">{translate key="label.date.description" example=time()|date_format:$row->getFormat() format=$row->getFormat()}</span>
                     {/if}
 
+                    {if $widget && $type == 'option'}
+                        {$widgetOptions = $widget->getOptions()}
+                    {else}
+                        {$widgetOptions = array()}
+                    {/if}
+    
                     {$description = $row->getDescription()}
-                    {if $description && $type != 'checkbox' && ($type != 'option' || ($type == 'option' && !empty($row->getWidget()) && !empty($row->getWidget()->getOptions())))}                
+                    {if $description && $type !== 'checkbox' && ($type !== 'option' || ($type === 'option' && $widget && $widgetOptions))}
                         <span class="help-block">{$description}</span>
                     {/if}
 
