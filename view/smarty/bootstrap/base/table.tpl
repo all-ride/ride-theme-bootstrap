@@ -50,7 +50,7 @@
                     <div class="options col-md-3">    
                         {if $table->hasActions()}
                             {block name="table.actions"}
-                                {if $tableForm->hasRow($actionField)}
+                                {if $tableForm->hasRow($tableActionField)}
                                     <input type="checkbox" id="{$tableForm->getId()}-action-all" class="check-all" />
                                     {formWidget form=$tableForm row=$tableActionField}
                                 {/if}                    

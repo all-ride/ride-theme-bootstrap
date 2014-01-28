@@ -103,7 +103,7 @@
                     {/if}
 
                     {$description = $row->getDescription()}
-                    {if $description && $type != 'checkbox' && ($type != 'option' || ($type == 'option' && !empty($row->getWidget()->getOptions())))}
+                    {if $description && $type != 'checkbox' && ($type != 'option' || ($type == 'option' && !empty($row->getWidget()) && !empty($row->getWidget()->getOptions())))}                
                         <span class="help-block">{$description}</span>
                     {/if}
 
