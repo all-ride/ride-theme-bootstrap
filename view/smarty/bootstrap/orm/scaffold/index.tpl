@@ -8,8 +8,8 @@
 
 {block name="content_body" append}
     <div class="btn-group">
-    {foreach $actions as $url => $action}
-        <a href="{$url}" class="btn btn-default">{$action}</a>
+    {foreach $actions as $url => $dataAction}
+        <a href="{$url}" class="btn btn-default">{$dataAction}</a>
     {/foreach}
     </div>
     
