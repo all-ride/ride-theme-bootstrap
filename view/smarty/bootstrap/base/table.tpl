@@ -86,8 +86,6 @@
                     {/if}
                 </div>
             {/if}
-        {else}
-            <p>No rows</p>
         {/if}
         </fieldset>
     </form>     
