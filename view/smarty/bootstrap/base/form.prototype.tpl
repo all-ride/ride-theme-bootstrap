@@ -76,13 +76,17 @@
                 </div>
             </div>
         {else}
+            {$errors = $form->getValidationErrors()}
             {$widget = $row->getWidget()}
+            {$errorsName = $widget->getName()}
             {if $widget->isMultiple() && $part}
-                {$errorsName = $widget->getName()}
                 {$errorsName = "`$errorsName`[`$part`]"}
-                {$errors = $form->getValidationErrors($errorsName)}
+            {/if}
+
+            {if isset($errors.$errorsName)}
+                {$errors = $errors.$errorsName}
             {else}
-                {$errors = $form->getValidationErrors($widget->getName())}
+                {$errors = array()}
             {/if}
 
             <div class="form-group row-{$row->getName()|replace:'[':''|replace:']':''}{if $row->isDisabled()} disabled{/if}{if $row->isReadOnly()} readonly{/if} clearfix{if $errors} has-error{/if}">
@@ -92,14 +96,14 @@
 
                     {if $errors}
                         <ul class="text-danger">
-                        {foreach $errors as $error => $null}
-                            <li>{$error}</li>
+                        {foreach $errors as $error}
+                            <li>{$error->getCode()|translate:$error->getParameters()}</li>
                         {/foreach}
                         </ul>
                     {/if}
 
                     {if $type == 'date'}
-                        <span class="help-block">{translate key="label.date.description" example=time()|date_format:$row->getFormat() format=$row->getFormat()}</span>
+                        <span class="help-block">{translate key="label.date.example" example=time()|date_format:$row->getFormat() format=$row->getFormat()}</span>
                     {/if}
 
                     {if $widget && $type == 'option'}
@@ -144,18 +148,22 @@
         {$widget = $row->getWidget()}
 
         {if $widget}
+            {$errors = $form->getValidationErrors()}
+            {$errorsName = $widget->getName()}
             {if $widget->isMultiple() && $part}
-                {$errorsName = $widget->getName()}
                 {$errorsName = "`$errorsName`[`$part`]"}
-                {$errors = $form->getValidationErrors($errorsName)}
+            {/if}
+
+            {if isset($errors.$errorsName)}
+                {$errors = $errors.$errorsName}
             {else}
-                {$errors = $form->getValidationErrors($widget->getName())}
-            {/if}        
+                {$errors = array()}
+            {/if}      
 
             {if $errors}
                 <ul class="errors help-block">
-                {foreach $errors as $error => $null}
-                    <li>{$error}</li>
+                {foreach $errors as $error}
+                    <li>{$error->getCode()|translate:$error->getParameters()}</li>
                 {/foreach}
                 </ul>
             {/if}
