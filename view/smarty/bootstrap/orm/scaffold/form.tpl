@@ -25,9 +25,4 @@
 
 {block name="scripts" append}
     <script src="{$app.url.base}/js/form.js"></script>
-    <script type="text/javascript">
-        $(function() {
-            $('form').formCollection(); 
-        });
-    </script>
 {/block}

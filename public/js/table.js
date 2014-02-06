@@ -29,3 +29,7 @@ $.fn.table = function() {
 		}
 	});
 };
+
+$(function() {
+    $('form.table').table(); 
+});
