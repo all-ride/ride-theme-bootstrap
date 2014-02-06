@@ -5,17 +5,9 @@
 {block name="content_title"}
 <div class="page-header">
     <h1>{translate key="title.orm"}</h1>
-    
-    <table>
-    {foreach $models as $modelName => $model}
-        <tr>
-            <td>
-                <a href="{url id="orm.model" parameters=['model' => $modelName]}">{$modelName}</a>
-                <div class="muted">
-                </div>
-            </td>
-        </tr>
-    {/foreach}
-    </table>
 </div>
+{/block}
+
+{block name="content_body" append}
+    {include file="base/table" table=$tableModels tableForm=$tableModelsForm tableAction=$tableModelsAction}
 {/block}

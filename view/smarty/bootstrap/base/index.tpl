@@ -11,6 +11,16 @@
     {block name="styles"}
         <link href="{$app.url.base}/css/bootstrap.min.css" rel="stylesheet" media="screen">
         <link href="{$app.url.base}/css/custom.css" rel="stylesheet" media="screen">
+        
+        {if isset($app.styles)}
+            {foreach $app.styles as $style => $null}
+                {if substr($style, 0, 7) == 'http://' || substr(style, 0, 8) == 'https://' || substr($style, 0, 2) == '//'}
+                    <script src="{$style}"></script>
+                {else}
+                    <script src="{$app.url.base}/{$style}"></script>
+                {/if}
+            {/foreach}
+        {/if}        
     {/block}
 {/block}
     </head>
@@ -55,6 +65,25 @@
 {block name="scripts"}
         <script src="{$app.url.base}/js/jquery.js"></script>
         <script src="{$app.url.base}/js/bootstrap.min.js"></script>
+       
+    {if isset($app.javascripts)} 
+        {foreach $app.javascripts as $script => $null}
+            {if substr($script, 0, 7) == 'http://' || substr(script, 0, 8) == 'https://' || substr($script, 0, 2) == '//'}
+                <script src="{$script}"></script>
+            {else}
+                <script src="{$app.url.base}/{$script}"></script>
+            {/if}
+        {/foreach}        
+    {/if}
+    {if isset($app.inlineJavascripts)}
+    <script type="text/javascript"> 
+        $(function() {
+        {foreach $app.inlineJavascripts as $inlineJavascript}
+            {$inlineJavascript}
+        {/foreach}        
+        });
+    </script> 
+    {/if}
 {/block}
     </body>
 </html>

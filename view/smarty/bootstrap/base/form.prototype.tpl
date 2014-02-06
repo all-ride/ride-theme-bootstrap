@@ -29,7 +29,7 @@
 {*
     Renders a simple row of the form
 *}
-{function name="formRow" form=null row=null part=null}
+{function name="formRow" form=null row=null part=null class=null}
     {if !$form && isset($block_form)}
         {$form = $block_form}
     {/if}
@@ -54,7 +54,7 @@
         {elseif $type == 'collection'}
             {$errors = $form->getValidationErrors($row->getName())}
             
-            <div class="form-group row-{$row->getName()|replace:'[':''|replace:']':''}{if $row->isDisabled()} disabled{/if}{if $row->isReadOnly()} readonly{/if} clearfix{if $errors} has-error{/if}">
+            <div class="form-group row-{$row->getName()|replace:'[':''|replace:']':''}{if $row->isDisabled()} disabled{/if}{if $row->isReadOnly()} readonly{/if} clearfix{if $errors} has-error{/if}{if $class} {$class}{/if}">
                 <label class="col-md-2 control-label">{$row->getLabel()}</label>
 
                 {call formCollectionPrototype assign="prototype" form=$form row=$row part='%prototype%'}
@@ -89,7 +89,7 @@
                 {$errors = array()}
             {/if}
 
-            <div class="form-group row-{$row->getName()|replace:'[':''|replace:']':''}{if $row->isDisabled()} disabled{/if}{if $row->isReadOnly()} readonly{/if} clearfix{if $errors} has-error{/if}">
+            <div class="form-group row-{$row->getName()|replace:'[':''|replace:']':''}{if $row->isDisabled()} disabled{/if}{if $row->isReadOnly()} readonly{/if} clearfix{if $errors} has-error{/if}{if $class} {$class}{/if}">
                 <label class="col-md-2 control-label" for="{$widget->getId()}">{$row->getLabel()}</label>
                 <div class="col-md-10">
                     {call formWidget form=$form row=$row part=$part}
@@ -102,10 +102,6 @@
                         </ul>
                     {/if}
 
-                    {if $type == 'date'}
-                        <span class="help-block">{translate key="label.date.example" example=time()|date_format:$row->getFormat() format=$row->getFormat()}</span>
-                    {/if}
-
                     {if $widget && $type == 'option'}
                         {$widgetOptions = $widget->getOptions()}
                     {else}
@@ -115,6 +111,12 @@
                     {$description = $row->getDescription()}
                     {if $description && $type !== 'checkbox' && ($type !== 'option' || ($type === 'option' && $widget && $widgetOptions))}
                         <span class="help-block">{$description}</span>
+                    {/if}
+                    
+                    {if $type == 'date'}
+                        <span class="help-block">{translate key="label.date.example" example=time()|date_format:$row->getFormat() format=$row->getFormat()}</span>
+                    {elseif $type == 'select' && $widget->isMultiple()}
+                        <span class="help-block">{translate key="label.multiselect"}</span>
                     {/if}
 
 {*
@@ -478,36 +480,52 @@
         {$attributes = $widget->getAttributes()}
         {$value = $widget->getValue()}
         {$options = $widget->getOptions()}
-        {if is_array($options)}
-            {foreach $options as $option => $label}
-                <div class="{$type}">
-                    <label>
-                        <input type="{$type}" 
-                               name="{$widget->getName()}{if $part}[{$part}]{elseif $type == 'checkbox'}[]{/if}" 
-                               value="{$option}"
-                               {if (!is_array($value) && strcmp($value, $option) == 0) || (is_array($value) && isset($value[$option]))}checked="checked"{/if}
-                               {foreach $attributes as $name => $attribute}
-                                   {if $name == 'id'}
-                                        {$attribute = "`$attribute`-`$option`"}
-                                   {/if}
-                                   {$name}="{$attribute|escape}"
-                               {/foreach} 
-                         />
-                        {$label}
+        {if $part !== null}
+            {if isset($options.$part)}
+            <input type="{$type}" 
+                   name="{$widget->getName()}{if $type == 'checkbox'}[{$part}]{/if}" 
+                   value="{$part}"
+                   {if (!is_array($value) && strcmp($value, $part) == 0) || (is_array($value) && isset($value[$part]))}checked="checked"{/if}
+                   {foreach $attributes as $name => $attribute}
+                       {if $name == 'id'}
+                            {$attribute = "`$attribute`-`$part`"}
+                       {/if}
+                       {$name}="{$attribute|escape}"
+                   {/foreach} 
+             />        
+             {/if}
+        {else}
+            {if is_array($options)}
+                {foreach $options as $option => $label}
+                    <div class="{$type}">
+                        <label>
+                            <input type="{$type}" 
+                                   name="{$widget->getName()}{if $part}[{$part}]{elseif $type == 'checkbox'}[]{/if}" 
+                                   value="{$option}"
+                                   {if (!is_array($value) && strcmp($value, $option) == 0) || (is_array($value) && isset($value[$option]))}checked="checked"{/if}
+                                   {foreach $attributes as $name => $attribute}
+                                       {if $name == 'id'}
+                                            {$attribute = "`$attribute`-`$option`"}
+                                       {/if}
+                                       {$name}="{$attribute|escape}"
+                                   {/foreach} 
+                             />
+                            {$label}
+                        </label>
+                    </div>
+                {/foreach}
+            {else}
+                <div class="checkbox">
+                    <label{if isset($attributes.disabled)} class="text-muted"{/if}>
+                        <input type="checkbox" name="{$widget->getName()}" value="1"{if $value} checked="checked"{/if}
+                            {foreach $attributes as $name => $attribute}
+                                {$name}="{$attribute|escape}"
+                            {/foreach} 
+                        />
+                        {$row->getDescription()}
                     </label>
                 </div>
-            {/foreach}
-        {else}
-            <div class="checkbox">
-                <label{if isset($attributes.disabled)} class="text-muted"{/if}>
-                    <input type="checkbox" name="{$widget->getName()}" value="1"{if $value} checked="checked"{/if}
-                        {foreach $attributes as $name => $attribute}
-                            {$name}="{$attribute|escape}"
-                        {/foreach} 
-                    />
-                    {$row->getDescription()}
-                </label>
-            </div>
+            {/if}
         {/if}
     {/if}
 {/function}

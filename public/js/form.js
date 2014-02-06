@@ -24,3 +24,7 @@ $.fn.formCollection = function() {
 		return false;
 	});
 };
+
+$(function() {
+    $('form[role=form]').formCollection();
+});
