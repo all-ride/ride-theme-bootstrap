@@ -49,7 +49,7 @@
                 {call formWidgetErrors form=$form row=$row}
             </div>
             {/if}
-        {elseif $type == 'component' && !$row->getOption('embed')}
+        {elseif $type == 'component' && $row->getOption('embed')}
             {call formWidgetComponent form=$form row=$row}
         {elseif $type == 'collection'}
             {$errors = $form->getValidationErrors($row->getName())}
