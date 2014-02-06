@@ -23,3 +23,5 @@ body .navbar {
         padding: 0;
 	}
 }
+
+.tab-pane { padding-top: 25px }
