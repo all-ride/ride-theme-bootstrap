@@ -228,6 +228,25 @@
     {/if}
 {/function}
 
+{function name="formWidgetLabel" form=null row=null part=null}
+    {if !$form && isset($block_form)}
+        {$form = $block_form}
+    {/if}
+
+    {if is_string($row) && $form}
+        {$row = $form->getRow($row)}
+    {/if}
+
+    {$widget = $row->getWidget()}
+    {if $widget}
+        <span               
+           {foreach $widget->getAttributes() as $name => $attribute}
+               {$name}="{$attribute|escape}"
+           {/foreach} 
+         >{$widget->getValue($part)|escape}</span>
+    {/if}
+{/function}
+
 {function name="formWidgetString" form=null row=null part=null}
     {if !$form && isset($block_form)}
         {$form = $block_form}
