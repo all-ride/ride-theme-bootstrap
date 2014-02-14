@@ -1,5 +1,11 @@
 {extends file="base/index"}
 
+{block name="taskbar_panels" append}
+    {if $localizeUrl}
+        {call taskbarPanelLocales url=$localizeUrl locale=$locale locales=$locales}
+    {/if}
+{/block}
+
 {block name="content_title"}
     <div class="page-header">
         <h1>{$title}</h1>
