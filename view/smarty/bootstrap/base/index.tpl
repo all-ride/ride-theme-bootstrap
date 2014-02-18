@@ -25,65 +25,64 @@
 {/block}
     </head>
     <body>
-{block name="taskbar"}
-    {if isset($app.taskbar)}
-        {include file="base/taskbar" title=$app.taskbar->getTitle() applicationsMenu=$app.taskbar->getApplicationsMenu() settingsMenu=$app.taskbar->getSettingsMenu()} 
-    {/if}	
-{/block}
-
-{block name="container"}
-    <div class="container">
-    {block name="content"}
-        {block name="content_title"}{/block}
-        {block name="messages"}
-            {if isset($app.messages)}
-                {$_messageTypes = ["error" => "danger", "warning" => "warning", "success" => "success", "information" => "info"]}
-                {foreach $_messageTypes as $_messageType => $_messageClass}
-                    {$_messages = $app.messages->getByType($_messageType)}
-                    {if $_messages}
-                        <div class="alert alert-{$_messageClass}">
-                        {if $_messages|count == 1}
-                            {$_message = $_messages|array_pop}
-                            <p>{$_message->getMessage()}</p>
-                        {else}
-                            <ul>
-                            {foreach $_messages as $_message}
-                                <li>{$_message->getMessage()}</li>
-                            {/foreach}
-                            </ul>
-                        {/if} 
-                        </div>
-                    {/if}
-                {/foreach}
-            {/if}
-        {/block}
-        {block name="content_body"}{/block}
+{block name="body"}
+    {block name="taskbar"}
+        {if isset($app.taskbar)}
+            {include file="base/taskbar" title=$app.taskbar->getTitle() applicationsMenu=$app.taskbar->getApplicationsMenu() settingsMenu=$app.taskbar->getSettingsMenu()} 
+        {/if}	
     {/block}
-    </div>
-{/block}
-	
-{block name="scripts"}
+    {block name="container"}
+        <div class="container">
+        {block name="content"}
+            {block name="content_title"}{/block}
+            {block name="messages"}
+                {if isset($app.messages)}
+                    {$_messageTypes = ["error" => "danger", "warning" => "warning", "success" => "success", "information" => "info"]}
+                    {foreach $_messageTypes as $_messageType => $_messageClass}
+                        {$_messages = $app.messages->getByType($_messageType)}
+                        {if $_messages}
+                            <div class="alert alert-{$_messageClass}">
+                            {if $_messages|count == 1}
+                                {$_message = $_messages|array_pop}
+                                <p>{$_message->getMessage()}</p>
+                            {else}
+                                <ul>
+                                {foreach $_messages as $_message}
+                                    <li>{$_message->getMessage()}</li>
+                                {/foreach}
+                                </ul>
+                            {/if} 
+                            </div>
+                        {/if}
+                    {/foreach}
+                {/if}
+            {/block}
+            {block name="content_body"}{/block}
+        {/block}
+        </div>
+    {/block}
+    {block name="scripts"}
         <script src="{$app.url.base}/js/jquery.js"></script>
         <script src="{$app.url.base}/js/bootstrap.min.js"></script>
-       
     {if isset($app.javascripts)} 
         {foreach $app.javascripts as $script => $null}
             {if substr($script, 0, 7) == 'http://' || substr(script, 0, 8) == 'https://' || substr($script, 0, 2) == '//'}
-                <script src="{$script}"></script>
+        <script src="{$script}"></script>
             {else}
-                <script src="{$app.url.base}/{$script}"></script>
+        <script src="{$app.url.base}/{$script}"></script>
             {/if}
         {/foreach}        
     {/if}
     {if isset($app.inlineJavascripts)}
-    <script type="text/javascript"> 
-        $(function() {
-        {foreach $app.inlineJavascripts as $inlineJavascript}
-            {$inlineJavascript}
-        {/foreach}        
-        });
-    </script> 
+        <script type="text/javascript"> 
+            $(function() {
+            {foreach $app.inlineJavascripts as $inlineJavascript}
+                {$inlineJavascript}
+            {/foreach}        
+            });
+        </script> 
     {/if}
+    {/block}
 {/block}
     </body>
 </html>
