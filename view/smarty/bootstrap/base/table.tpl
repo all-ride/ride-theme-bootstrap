@@ -4,6 +4,8 @@
 
     {$tableMessages = json_encode($table->getActionConfirmationMessages())}
     <form id="{$tableForm->getId()}" action="{$tableAction}" method="POST" class="table" role="form" data-confirm-messages="{$tableMessages|escape}">
+        {formWidget form=$tableForm row=$tableNameField}
+        
         <fieldset>
     
         {if $table->hasOrderMethods() || $table->hasSearch()}
