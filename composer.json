@@ -1,6 +1,6 @@
 {
-    "name": "pallo/theme-bootstrap",
-    "description": "Bootstrap theme for the base web application of the Pallo framework",
+    "name": "ride/theme-bootstrap",
+    "description": "Bootstrap theme for the base web application of the Ride framework",
     "license": "MIT",
     "version": "0.4.1",
     "authors": [
@@ -10,13 +10,13 @@
         }
     ],
     "require": {
-        "pallo/app-template-smarty": ">=0.2.0",
-        "pallo/lib-template": ">=0.2.0",
-        "pallo/web-template-smarty": ">=0.2.0"
+        "ride/app-template-smarty": ">=0.2.0",
+        "ride/lib-template": ">=0.2.0",
+        "ride/web-template-smarty": ">=0.2.0"
     }, 
     "autoload": {
         "psr-0": {
-            "pallo\\library\\template\\theme\\": ["src/", "test/src/"]
+            "ride\\library\\template\\theme\\": ["src/", "test/src/"]
         }
     }
 }
