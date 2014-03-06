@@ -56,6 +56,14 @@ form.table span.loading {
 }
 
 table .info {
-	color: #999;
-	font-size: 0.8em;
+    color: #999;
+    font-size: 0.8em;
+}
+
+table .unlocalized a {
+    color: #777;
+}
+
+table .unlocalized .help-block {
+    color: #AAA;
 }
