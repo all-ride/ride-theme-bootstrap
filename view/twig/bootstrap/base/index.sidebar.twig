@@ -1,0 +1,13 @@
+{% extends 'base/index' %}
+
+{% block content %}
+    <div class="col-md-3">
+        {% block sidebar %}{% endblock %}
+    </div>
+    <div class="col-md-9">
+        {% set contentParent = parent() %}
+        {% block content_main %}
+            {{ contentParent|raw }}
+        {% endblock %}
+    </div>
+{% endblock %}

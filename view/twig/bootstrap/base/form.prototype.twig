@@ -1,0 +1,737 @@
+{#
+    Prototype functions for the form rendering
+
+    To override, create a file and recreate the functions you wish to override.
+    At the end of your file, include this one to define the missing functions.
+#}
+
+{#
+    Renders the rows of the form
+#}
+{% macro formRows(rows = null, form = null, rowClass = null) %}
+    {% if not form and block_form is defined %}
+        {% set form = block_form %}
+    {% endif %}
+
+    {% if not rows and form %}
+        {% set rows = form.getRows() %}
+    {% endif %}
+
+    {% if rows %}
+        {% for row in rows %}
+            {% if not row.isRendered() %}
+                {{ _self.formRow(form, row, null, rowClass) }}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endmacro %}
+
+{#
+    Renders a simple row of the form
+#}
+{% macro formRow(form = null, row = null, part = null, class=null) %}
+    {% if not form and block_form is defined %}
+        {% set form = block_form %}
+    {% endif %}
+
+    {% if row|is_string and form %}
+        {% set row = form.getRows(row) %}
+    {% endif %}
+
+    {% if row %}
+        {% set type = row.getType() %}
+        {% if type == 'hidden' %}
+            {# {{ _self.formWidget form=form row=row part=part} }} #}
+            {% set errors = form.getValidationErrors(row.getName()) %}
+            {% if errors %}
+            <div class="form-group has-error">
+                {# {{ _self.formWidgetErrors form=form row=row} }} #}
+            </div>
+            {% endif %}
+        {% elseif type == 'component' and row.getOption('embed') %}
+            {# {{ _self.formWidgetComponent form=form row=row} }} #}
+        {% elseif type == 'collection' %}
+            {% set errors = form.getValidationErrors(row.getName()) %}
+
+            <div class="form-group row-{{ row.getName()|replace({'[': '', ']': ''}) }}{% if row.isDisabled() %} disabled{% endif %}{% if row.isReadOnly() %} readonly{% endif %} clearfix{% if errors %} has-error{% endif %}{% if class %} {{ class }}{% endif %}">
+                <label class="col-md-2 control-label">{{ row.getLabel() }}</label>
+
+                {# {{ _self.formCollectionPrototype assign="prototype" form=form row=row part='%prototype%' }} #}
+                <div class="col-md-10 collection-controls" data-prototype="{{ prototype|escape("html")|trim|replace({"\n": ''}) }}">
+                    {# {{ _self.formWidgetCollection form=form row=row part=part }} #}
+
+                   {% if errors %}
+                        <ul class="text-danger">
+                        {% for error in errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+
+                    {% set description = row.getDescription() %}
+                    {% if description %}
+                        <span class="help-block">{{ description }}</span>
+                    {% endif %}
+                </div>
+            </div> #}
+        {% else %}
+            {% set errors = form.getValidationErrors() %}
+            {% set widget = row.getWidget() %}
+            {% set errorsName = widget.getName() %}
+            {% if widget.isMultiple() and part %}
+                {% set errorsName = errorsName ~ '[' ~ part ~ ']' %}
+            {% endif %}
+
+            {# {{ dump(errors) }} #}
+            {% if errors.errorsName is defined %}
+                {% set errors = errors.errorsName %}
+            {% else %}
+                {% set errors = {} %}
+            {% endif %}
+
+            <div class="form-group row-{{ row.getName()|replace({'[': '', ']': ''}) }}{% if row.isDisabled() %} disabled{% endif %}{% if row.isReadOnly() %} readonly{% endif %} clearfix{% if errors %} has-error{% endif %}{% if class %} {{ class }}{% endif %}">
+                <label class="col-md-2 control-label" for="{{ widget.getId() }}">{{ row.getLabel() }}</label>
+                <div class="col-md-10">
+                    {{ _self.formWidget(form, row, part) }}
+
+                    {% if errors %}
+                        <ul class="text-danger">
+                        {% for error in errors %}
+                            <li>{{ translate(error.getCode(), error.getParameters()) }}</li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+
+                    {% if widget and type == 'option' %}
+                        {% set widgetOptions = widget.getOptions() %}
+                    {% else %}
+                        {% set widgetOptions = {} %}
+                    {% endif %}
+
+                    {% set description = row.getDescription() %}
+                    {% if description and type != 'checkbox' and (type != 'option' or (type == 'option' and widget and widgetOptions)) %}
+                        <span class="help-block">{{ description }}</span>
+                    {% endif %}
+
+                    {% if type == 'date' %}
+                        {# <span class="help-block">{translate key="label.date.example" example=time()|date_format:row->getFormat() format=row->getFormat()}</span> #}
+                    {% elseif type == 'select' and widget.isMultiple() %}
+                        {# <span class="help-block">{{ translate("label.multiselect") }}</span> #}
+                    {% endif %}
+                    {% if type == 'image' and row.getData() %}
+                        {# {image src=row.getData() width=100 height=100 thumbnail="crop"} #}
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+
+        {{ row.setIsRendered(true) }}
+    {% else %}
+        <div class="alert alert-danger">No row provided</div>
+    {% endif %}
+{% endmacro %}
+
+
+{#
+    Renders a single control of the form
+#}
+{% macro formWidget(form=null, row=null, part=null, type=null) %}
+    {% if not form and block_form is defined %}
+        {% set form = block_form %}
+    {% endif %}
+
+    {% if row|is_string and form %}
+        {% set row = form.getRows(row) %}
+    {% endif %}
+
+    {% if row %}
+        {% if not type %}
+            {% set type = row.getType()|capitalize %}
+        {% endif %}
+
+        {% if not type %}
+            <span class="error">No type provided for row {{ row.getName() }}</span>
+        {% else %}
+            {% set function = "formWidget" ~ type %}
+            {# {{ dump(function) }} #}
+            {{ attribute(_self, function, [form, row, part]) }}
+
+            {{ row.setIsRendered(true) }}
+        {% endif %}
+    {% else %}
+        <span class="error">No row provided</span>
+    {% endif %}
+{% endmacro %}
+
+{#
+{*
+    Renders the errors of a single widget of the form
+*}
+{% macro formWidgetErrors(form=null, row=null, part=null) %}
+    {% if not form and block_form is defined %}
+        {% set form = block_form %}
+    {% endif %}
+
+    {% if row|is_string and form %}
+        {% set row = form.getRows(row) %}
+    {% endif %}
+
+    {% if row %}
+        {% set widget = row.getWidget() %}
+
+        {% if widget %}
+            {% set errors = form.getValidationErrors() %}
+            {% set errorsName = widget.getName() %}
+            {if widget.isMultiple() and part}
+                {% set errorsName = "`errorsName`[`part`]" %}
+            {% endif %}
+
+            {% if errors.errorsName is defined %}
+                {% set errors = errors.errorsName %}
+            {% else %}
+                {% set errors = array() %}
+            {% endif %}
+
+            {% if errors %}
+                <ul class="errors help-block">
+                {foreach $errors as $error}
+                    <li>{{ translate(error.getCode(), error.getParameters()) }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% else %}
+            <span class="error">No widget set in row {row.getName()}.</span>
+        {% endif %}
+    {% else %}
+        <span class="error">No row provided</span>
+    {% endif %}
+{% endmacro %}
+
+{% macro formWidgetHidden(form=null, row=null, part=null) %}
+    {% if not form and block_form is defined %}
+        {% set form = block_form %}
+    {% endif %}
+
+    {% if row|is_string and form %}
+        {% set row = form.getRows(row) %}
+    {% endif %}
+
+    {% set widget = row.getWidget() %}
+    {% if widget %}
+        <input type="hidden"
+               name="{{ widget.getName() }}{% if part %}[{{ part }}]{% endif %}"
+               value="{{ widget.getValue(part)|escape }}"
+           {foreach widget->getAttributes() as $name => $attribute}
+               {{ name }}="{{ attribute|escape }}"
+           {% endfor %}
+         />
+    {% endif %}
+{% endmacro %}
+
+{% macro formWidgetLabel(form=null, row=null, part=null) %}
+    {% if not form and block_form is defined %}
+        {% set form = block_form %}
+    {% endif %}
+
+    {% if row|is_string and form %}
+        {% set row = form.getRows(row) %}
+    {% endif %}
+
+    {% set widget = row.getWidget() %}
+    {% if widget %}
+        <span
+           {foreach widget->getAttributes() as $name => $attribute}
+               {{ name }}="{{ attribute|escape }}"
+           {% endfor %}
+         >{{ widget.getValue(part)|escape }}</span>
+    {% endif %}
+{% endmacro %}
+#}
+{% macro formWidgetString(form=null, row=null, part=null) %}
+    {% if not form and block_form is defined %}
+        {% set form = block_form %}
+    {% endif %}
+
+    {% if row|is_string and form %}
+        {% set row = form.getRows(row) %}
+    {% endif %}
+
+    {% set widget = row.getWidget() %}
+    {% if widget %}
+        {% set attributes = widget.getAttributes() %}
+        {% if attributes.class is defined %}
+            {% set attributes = {class: attributes.class ~ " form-control"} %}
+        {% else %}
+            {% set attributes = {class: 'form-control'} %}
+        {% endif %}
+
+        {% set value = widget.getValue(part) %}
+        {% if value is iterable %}
+            {% for part, val in value %}
+            <input type="text"
+                   name="{{ widget.getName() }}{% if widget.isMultiple() or part is not null %}[{{ part }}]{% endif %}"
+                   value="{{ val|escape }}"
+               {% for name, attribute in attributes %}
+                   {{ name }}="{{ attribute|escape }}"
+               {% endfor %}
+             />
+             {% endfor %}
+        {% else %}
+            <input type="text"
+                   name="{{ widget.getName() }}{% if widget.isMultiple() or part is not null %}[{{ part }}]{% endif %}"
+                   value="{{ value|escape }}"
+               {% for name, attribute in attributes %}
+                   {{ name }}="{{ attribute|escape }}"
+               {% endfor %}
+             />
+        {% endif %}
+    {% endif %}
+{% endmacro %}
+{#
+{% macro formWidgetNumber(form=null, row=null, part=null) %}
+    {% if not form and block_form is defined %}
+        {% set form = block_form %}
+    {% endif %}
+
+    {% if row|is_string and form %}
+        {% set row = form.getRows(row) %}
+    {% endif %}
+
+    {% set widget = row.getWidget() %}
+    {% if widget %}
+        {% set attributes = widget.getAttributes() %}
+        {% if attributes.class is defined %}
+            {% set attributes = {class: attributes.class ~ " form-control"} %}
+        {% else %}
+            {% set attributes = {class: 'form-control'} %}
+        {% endif %}
+
+        <input type="number"
+               name="{{ widget.getName() }}{% if part %}[{{ part }}]{% endif %}"
+               value="{{ widget.getValue(part)|escape }}"
+           {% for name, attribute in attributes %}
+               {{ name }}="{{ attribute|escape }}"
+           {% endfor %}
+         />
+    {% endif %}
+{% endmacro %}
+
+{% macro formWidgetEmail(form=null, row=null, part=null) %}
+    {% if not form and block_form is defined %}
+        {% set form = block_form %}
+    {% endif %}
+
+    {% if row|is_string and form %}
+        {% set row = form.getRows(row) %}
+    {% endif %}
+
+    {% set widget = row.getWidget() %}
+    {% if widget %}
+        {% set attributes = widget.getAttributes() %}
+        {% if attributes.class is defined %}
+            {% set attributes = {class: attributes.class ~ " form-control"} %}
+        {% else %}
+            {% set attributes = {class: 'form-control'} %}
+        {% endif %}
+
+        <input type="email"
+               name="{{ widget.getName() }}{% if part %}[{{ part }}]{% endif %}"
+               value="{{ widget.getValue(part)|escape }}"
+           {% for name, attribute in attributes %}
+               {{ name }}="{{ attribute|escape }}"
+           {% endfor %}
+         />
+    {% endif %}
+{% endmacro %}
+
+{% macro formWidgetDate(form=null, row=null, part=null) %}
+    {% if not form and block_form is defined %}
+        {% set form = block_form %}
+    {% endif %}
+
+    {% if row|is_string and form %}
+        {% set row = form.getRows(row) %}
+    {% endif %}
+
+    {% set widget = row.getWidget() %}
+    {% if widget %}
+        {% set attributes = widget.getAttributes() %}
+        {% if attributes.class is defined %}
+            {% set attributes = {class: attributes.class ~ " form-control"} %}
+        {% else %}
+            {% set attributes = {class: 'form-control'} %}
+        {% endif %}
+
+        <input type="date"
+               name="{{ widget.getName() }}{% if part %}[{{ part }}]{% endif %}"
+               value="{{ widget.getValue(part)|escape }}"
+           {% for name, attribute in attributes %}
+               {{ name }}="{{ attribute|escape }}"
+           {% endfor %}
+         />
+    {% endif %}
+{% endmacro %}
+#}
+
+{% macro formWidgetWebsite(form=null, row=null, part=null) %}
+    {% if not form and block_form is defined %}
+        {% set form = block_form %}
+    {% endif %}
+
+    {% if row|is_string and form %}
+        {% set row = form.getRows(row) %}
+    {% endif %}
+
+    {% set widget = row.getWidget() %}
+    {% if widget %}
+        {% set attributes = widget.getAttributes() %}
+        {% if attributes.class is defined %}
+            {% set attributes = {class: attributes.class ~ " form-control"} %}
+        {% else %}
+            {% set attributes = {class: 'form-control'} %}
+        {% endif %}
+        <input type="website"
+               name="{{ widget.getName() }}{% if part %}[{{ part }}]{% endif %}"
+               value="{{ widget.getValue(part)|escape }}"
+           {% for name, attribute in attributes %}
+               {{ name }}="{{ attribute|escape }}"
+           {% endfor %}
+         />
+    {% endif %}
+{% endmacro %}
+
+{#
+{% macro formWidgetPassword(form=null, row=null, part=null) %}
+    {% if not form and block_form is defined %}
+        {% set form = block_form %}
+    {% endif %}
+
+    {% if row|is_string and form %}
+        {% set row = form.getRows(row) %}
+    {% endif %}
+
+    {% set widget = row.getWidget() %}
+    {% if widget %}
+        {% set attributes = widget.getAttributes() %}
+        {% if attributes.class is defined %}
+            {% set attributes = {class: attributes.class ~ " form-control"} %}
+        {% else %}
+            {% set attributes = {class: 'form-control'} %}
+        {% endif %}
+
+        <input type="password"
+               name="{{ widget.getName() }}{% if part %}[{{ part }}]{% endif %}"
+           {% for name, attribute in attributes %}
+               {{ name }}="{{ attribute|escape }}"
+           {% endfor %}
+         />
+    {% endif %}
+{% endmacro %}
+#}
+{% macro formWidgetText(form=null, row=null, part=null) %}
+    {% if not form and block_form is defined %}
+        {% set form = block_form %}
+    {% endif %}
+
+    {% if row|is_string and form %}
+        {% set row = form.getRows(row) %}
+    {% endif %}
+
+    {% set widget = row.getWidget() %}
+
+    {% if widget %}
+        {% set attributes = widget.getAttributes() %}
+        {% if attributes.class is defined %}
+            {% set attributes = {class: attributes.class ~ " form-control"} %}
+        {% else %}
+            {% set attributes = {class: 'form-control'} %}
+        {% endif %}
+
+        <textarea name="{{ widget.getName() }}{% if part %}[{{ part }}]{% endif %}"
+           {% for name, attribute in attributes %}
+               {{ name }}="{{ attribute|escape }}"
+           {% endfor %}
+         >{{ widget.getValue(part)|escape }}</textarea>
+    {% endif %}
+{% endmacro %}
+{#
+{% macro formWidgetWysiwyg(form=null, row=null, part=null) %}
+    {% if not form and block_form is defined %}
+        {% set form = block_form %}
+    {% endif %}
+
+    {% if row|is_string and form %}
+        {% set row = form.getRows(row) %}
+    {% endif %}
+
+    {% set widget = row.getWidget() %}
+    {% if widget %}
+        {% set attributes = widget.getAttributes() %}
+        {% if attributes.class is defined %}
+            {% set attributes = {class: attributes.class ~ " form-control"} %}
+        {% else %}
+            {% set attributes = {class: 'form-control'} %}
+        {% endif %}
+
+        <textarea name="{{ widget.getName() }}{% if part %}[{{ part }}]{% endif %}"
+           {% for name, attribute in attributes %}
+               {{ name }}="{{ attribute|escape }}"
+           {% endfor %}
+         >{{ widget.getValue(part)|escape }}</textarea>
+    {% endif %}
+{% endmacro %}
+#}
+
+{% macro formWidgetOption(form=null, row=null, part=null) %}
+    {% if not form and block_form is defined %}
+        {% set form = block_form %}
+    {% endif %}
+
+    {% if row|is_string and form %}
+        {% set row = form.getRows(row) %}
+    {% endif %}
+
+    {% set widget = row.getWidget() %}
+    {% if widget %}
+        {% if widget.isMultiple() %}
+            {% set type = "checkbox" %}
+        {% else %}
+            {% set type = "radio" %}
+        {% endif %}
+
+        {% set attributes = widget.getAttributes() %}
+        {% set value = widget.getValue() %}
+        {% set options = widget.getOptions() %}
+        {% if part is not null %}
+            {% if options.part is defined %}
+                <input type="{{ type }}"
+                   name="{{ widget.getName() }}{% if type == 'checkbox' %}[{{ part }}]{% endif %}"
+                   value="{{ part }}"
+                   {% if (value is not iterable and part is same as(value)) or (value is iterable and value[part] is defined) %}checked="checked"{% endif %}
+                   {% for name, attribute in attributes %}
+                       {% if name == 'id' %}
+                            {% set attribute = attribute ~ '-' ~ part %}
+                       {% endif %}
+                       {{ name }}="{{ attribute|escape }}"
+                   {% endfor %}
+             />
+             {% endif %}
+        {% else %}
+            {% if options is iterable %}
+                {% for option, label in options %}
+                    <div class="{{ type }}">
+                        <label>
+                            <input type="{{ type }}"
+                                   name="{{ widget.getName() }}{% if part %}[{{ part }}]{elseif type == 'checkbox'}[]{% endif %}"
+                                   value="{{ option }}"
+                                   {% if (value is not iterable and option is same as(value)) or (value is iterable and value[option] is defined) %}checked="checked"{% endif %}
+                                   {% for name, attribute in attributes %}
+                                       {% if name == 'id' %}
+                                            {% set attribute = attribute ~ '-' ~ option %}
+                                       {% endif %}
+                                       {{ name }}="{{ attribute|escape }}"
+                                   {% endfor %}
+                             />
+                            {{ label|raw }}
+                        </label>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="checkbox">
+                    <label{% if attributes.disabled is defined %} class="text-muted"{% endif %}>
+                        <input type="checkbox" name="{{ widget.getName() }}" value="1"{% if value %} checked="checked"{% endif %}
+                            {% for name, attribute in attributes %}
+                                {{ name }}="{{ attribute|escape }}"
+                            {% endfor %}
+                        />
+                        {{ row.getDescription() }}
+                    </label>
+                </div>
+            {% endif %}
+        {% endif %}
+    {% endif %}
+{% endmacro %}
+
+{% macro formWidgetSelect(form=null, row=null, part=null) %}
+    {% if not form and block_form is defined %}
+        {% set form = block_form %}
+    {% endif %}
+
+    {% if row|is_string and form %}
+        {% set row = form.getRows(row) %}
+    {% endif %}
+
+    {% set widget = row.getWidget() %}
+    {% if widget %}
+        {% set attributes = widget.getAttributes() %}
+        {% if attributes.class is defined %}
+            {% set attributes = {class: attributes.class ~ " form-control"} %}
+        {% else %}
+            {% set attributes = {class: 'form-control'} %}
+        {% endif %}
+
+        {% set value = widget.getValue() %}
+
+        <select name="{{ widget.getName() }}{% if part %}[{{ part }}]{% elseif widget.isMultiple() %}[]{% endif %}"
+           {% if widget.isMultiple() %} multiple="multiple"{% endif %}
+           {% for name, attribute in attributes %}
+               {{ name }}="{{ attribute|escape }}"
+           {% endfor %}
+         >
+         {% for option, label in widget.getOptions() %}
+            {% if label is iterable %}
+            <optgroup label="{{ option|escape }}">
+            {% for o, l in label %}
+                <option value="{{ o|escape }}"{% if (value is not iterable and o is same as(value)) or (value is iterable and value[o] is defined) %} selected="selected"{% endif %}>{{ l }}</option>
+            {% endfor %}
+            </optgroup>
+            {% else %}
+                <option value="{{ option|escape }}"{% if (value is not iterable and o is same as(value)) or (value is iterable and value[option] is defined) %} selected="selected"{% endif %}>{{ label }}</option>
+            {% endif %}
+         {% endfor %}
+         </select>
+    {% endif %}
+{% endmacro %}
+{#
+{% macro formWidgetFile(form=null, row=null, part=null) %}
+    {% if not form and block_form is defined %}
+        {% set form = block_form %}
+    {% endif %}
+
+    {% if row|is_string and form %}
+        {% set row = form.getRows(row) %}
+    {% endif %}
+
+    {% set widget = row.getWidget() %}
+    {% if widget %}
+        {% set attributes = widget.getAttributes() %}
+        {% set value = widget.getValue(part) %}
+
+        {if $value}
+        <input type="hidden"
+               name="{{ widget.getName() }}{if part !== null}[{part}]{% endif %}"
+               value="{$value}" />
+        {% endif %}
+        <input type="file"
+               name="{{ widget.getName() }}{if part !== null}[{part}]{% endif %}"
+           {% for name, attribute in attributes %}
+               {{ name }}="{{ attribute|escape }}"
+           {% endfor %}
+         />
+
+        {if $value}
+        <div class="help-block">{$value}</div>
+        {% endif %}
+    {% endif %}
+{% endmacro %}
+
+{% macro formWidgetImage(form=null, row=null, part=null) %}
+    {% if not form and block_form is defined %}
+        {% set form = block_form %}
+    {% endif %}
+
+    {% if row|is_string and form %}
+        {% set row = form.getRows(row) %}
+    {% endif %}
+
+    {% set widget = row.getWidget() %}
+    {% if widget %}
+        {% set attributes = widget.getAttributes() %}
+        {% set value = widget.getValue(part) %}
+
+        {if $value}
+        <input type="hidden"
+               name="{{ widget.getName() }}{if part !== null}[{part}]{% endif %}"
+               value="{$value}" />
+        {% endif %}
+        <input type="file"
+               name="{{ widget.getName() }}{if part !== null}[{part}]{% endif %}"
+           {% for name, attribute in attributes %}
+               {{ name }}="{{ attribute|escape }}"
+           {% endfor %}
+         />
+
+        {if $value}
+        <div class="help-block">
+            {image src=$value thumbnail="crop" width=100 height=100 title=$value}
+        </div>
+        {% endif %}
+    {% endif %}
+{% endmacro %}
+
+
+{*
+    Renders a component control of the form
+*}
+{% macro formWidgetComponent(form=null row=null class=null) %}
+    {% if not form and block_form is defined %}
+        {% set form = block_form %}
+    {% endif %}
+
+    {% if row|is_string and form %}
+        {% set row = form.getRows(row) %}
+    {% endif %}
+
+    {% if row %}
+        {if row.getType() == 'component'}
+            {{ _self.formRows form=form rows=row->getRows() rowClass=$class }}
+        {% else %}
+            <span class="error">No component row provided</span>
+        {% endif %}
+    {% else %}
+        <span class="error">No row provided</span>
+    {% endif %}
+{% endmacro %}
+
+{*
+    Renders a collection control of the form
+*}
+{% macro formWidgetCollection(form=null row=null) %}
+    {% if not form and block_form is defined %}
+        {% set form = block_form %}
+    {% endif %}
+
+    <div class="collection-control-group">
+        {% set widget = row.getWidget() %}
+        {% if widget %}
+            {$values = widget->getValue()}
+            {foreach $values as $key => $value}
+                {{ _self.formCollectionPrototype form=form row=row part=$key }}
+            {% endfor %}
+        {% else %}
+            {rows = row->getRows()}
+            {foreach rows as $key => $r}
+                {if $key !== '%prototype%'}
+                    {{ _self.formCollectionPrototype form=form row=row part=$key }}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <a href="#" class="btn btn-default prototype-add{if row.isDisabled() or row.isReadOnly()} disabled{% endif %}"><i class="glyphicon glyphicon-plus"></i> {translate key="button.add"}</a>
+{% endmacro %}
+
+{*
+    Renders a single collection control of the form
+*}
+{% macro formCollectionPrototype(form=null, row=null, part=null) %}
+    {% if row|is_string and form %}
+        {% set row = form.getRows(row) %}
+    {% endif %}
+
+    <div class="collection-control clearfix">
+        <div class="col-md-10">
+        {% set widget = row.getWidget() %}
+        {% if widget %}
+            {{ _self.formWidget form=form row=row part=part type=widget->getType() }}
+        {% else %}
+            {{ _self.formRow form=form row=row->getRow(part) }}
+        {% endif %}
+        </div>
+        <div class="col-md-2">
+            <a href="#" class="btn btn-default prototype-remove{if row.isDisabled() or row.isReadOnly()} disabled{% endif %}"><i class="glyphicon glyphicon-minus"></i> {translate key="button.remove"}</a>
+        </div>
+        <hr />
+    </div>
+
+{% endmacro %} #}

@@ -1,0 +1,98 @@
+<!doctype html>
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie10"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9 lt-ie10"> <![endif]-->
+<!--[if IE 9]> <html class="no-js lt-ie10"> <![endif]-->
+<!--[if gt IE 9]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+{% block head %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>{% block head_title %}{% if app.taskbar is defined %}{{ app.taskbar.getTitle() }}{% endif %}{% endblock head_title %}</title>
+
+    {% block styles %}
+        <link href="{{ app.url.base }}/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="{{ app.url.base }}/css/custom.css" rel="stylesheet" media="screen">
+        {% if app.styles is defined %}
+            {% for style in app.styles %}
+                {% if style|slice(0, 7) == 'http://' or style|slice(0, 8) == 'https://' or style|slice(0, 2) == '//' %}
+                    <script src="{{ style }}"></script>
+                {% else %}
+                    <script src="{{ app.url.base }}/{{ style }}"></script>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endblock styles %}
+{% endblock head %}
+
+</head>
+<body>
+{% block body %}
+    {% block taskbar %}
+        {% if app.taskbar is defined %}
+            {# {include file="" title=$app.taskbar->getTitle() applicationsMenu=$app.taskbar->getApplicationsMenu() settingsMenu=$app.taskbar->getSettingsMenu()} #}
+            {% include 'base/taskbar' with {'applicationsMenu': app.taskbar.getApplicationsMenu() } %}
+        {% endif %}
+    {% endblock %}
+
+
+
+    {% block container %}
+        <div class="container">
+        {% block content %}
+            {% block content_title %}{% endblock %}
+            {% block messages %}
+                {% if app.messages is defined %}
+                    {% set _messageTypes = {"error": "danger", "warning": "warning", "success": "success", "information": "info"} %}
+                    {% for _messageType, _messageClass in _messageTypes %}
+                        {% set _messages = app.messages.getByType(_messageType) %}
+                        {% if _messages is defined %}
+                            <div class="alert alert-{$_messageClass}">
+                            {% if _messages|length == 1 %}
+                                {% set _message = _messages|array_pop %}
+                                <p>{{ _message.getMessage() }}</p>
+                            {% else %}
+                                <ul>
+                                {% for _message in _messages %}
+                                    <li>{{ _message.getMessage() }}</li>
+                                {% endfor %}
+                                </ul>
+                            {% endif %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endblock %}
+            {% block content_body %}{% endblock %}
+        {% endblock content %}
+        </div>
+    {% endblock container %}
+
+    {% block scripts %}
+        <script src="{{ app.url.base }}/js/jquery.js"></script>
+        <script src="{{ app.url.base }}/js/bootstrap.min.js"></script>
+
+        {% if app.javascripts is defined %}
+            {% for script in app.javascripts %}
+                {% if script|slice(0, 7) == 'http://' or script|slice(0, 8) == 'https://' or script|slice(0, 2) == '//' %}
+                    <script src="{{ script }}"></script>
+                {% else %}
+                    <script src="{{ app.url.base }}/{{ script }}"></script>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        {% if app.inlineJavascripts is defined %}
+            <script type="text/javascript">
+                $(function() {
+                {% for inlineJavascript in app.inlineJavascripts %}
+                    {{ inlineJavascript }}
+                {% endfor %}
+                });
+            </script>
+        {% endif %}
+    {% endblock scripts %}
+
+{% endblock body %}
+
+</body>
+</html>
