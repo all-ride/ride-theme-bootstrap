@@ -35,7 +35,7 @@
     {% endif %}
 
     {% if row|is_string and form %}
-        {% set row = form.getRows(row) %}
+        {% set row = form.getRow(row) %}
     {% endif %}
 
     {% if row %}
@@ -141,7 +141,7 @@
     {% endif %}
 
     {% if row|is_string and form %}
-        {% set row = form.getRows(row) %}
+        {% set row = form.getRow(row) %}
     {% endif %}
 
     {% if row %}
@@ -153,6 +153,7 @@
             <span class="error">No type provided for row {{ row.getName() }}</span>
         {% else %}
             {% set function = "formWidget" ~ type %}
+
             {# {{ dump(function) }} #}
             {{ attribute(_self, function, [form, row, part]) }}
 
@@ -253,7 +254,7 @@
     {% endif %}
 
     {% if row|is_string and form %}
-        {% set row = form.getRows(row) %}
+        {% set row = form.getRow(row) %}
     {% endif %}
 
     {% set widget = row.getWidget() %}
@@ -379,7 +380,7 @@
     {% endif %}
 
     {% if row|is_string and form %}
-        {% set row = form.getRows(row) %}
+        {% set row = form.getRow(row) %}
     {% endif %}
 
     {% set widget = row.getWidget() %}
@@ -434,7 +435,7 @@
     {% endif %}
 
     {% if row|is_string and form %}
-        {% set row = form.getRows(row) %}
+        {% set row = form.getRow(row) %}
     {% endif %}
 
     {% set widget = row.getWidget() %}
@@ -488,7 +489,7 @@
     {% endif %}
 
     {% if row|is_string and form %}
-        {% set row = form.getRows(row) %}
+        {% set row = form.getRow(row) %}
     {% endif %}
 
     {% set widget = row.getWidget() %}
@@ -558,7 +559,7 @@
     {% endif %}
 
     {% if row|is_string and form %}
-        {% set row = form.getRows(row) %}
+        {% set row = form.getRow(row) %}
     {% endif %}
 
     {% set widget = row.getWidget() %}
