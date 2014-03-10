@@ -41,7 +41,7 @@
     {% if row %}
         {% set type = row.getType() %}
         {% if type == 'hidden' %}
-            {# {{ _self.formWidget form=form row=row part=part} }} #}
+            {{ _self.formWidget(form, row, part) }}
             {% set errors = form.getValidationErrors(row.getName()) %}
             {% if errors %}
             <div class="form-group has-error">
@@ -49,16 +49,16 @@
             </div>
             {% endif %}
         {% elseif type == 'component' and row.getOption('embed') %}
-            {# {{ _self.formWidgetComponent form=form row=row} }} #}
+            {{ _self.formWidgetComponent(form, row) }}
         {% elseif type == 'collection' %}
             {% set errors = form.getValidationErrors(row.getName()) %}
 
             <div class="form-group row-{{ row.getName()|replace({'[': '', ']': ''}) }}{% if row.isDisabled() %} disabled{% endif %}{% if row.isReadOnly() %} readonly{% endif %} clearfix{% if errors %} has-error{% endif %}{% if class %} {{ class }}{% endif %}">
                 <label class="col-md-2 control-label">{{ row.getLabel() }}</label>
 
-                {# {{ _self.formCollectionPrototype assign="prototype" form=form row=row part='%prototype%' }} #}
+                {% filter escape %}{{ _self.formCollectionPrototype(form, row, '%prototype%') }}{% endfilter %}
                 <div class="col-md-10 collection-controls" data-prototype="{{ prototype|escape("html")|trim|replace({"\n": ''}) }}">
-                    {# {{ _self.formWidgetCollection form=form row=row part=part }} #}
+                    {{ _self.formWidgetCollection(form, row, part) }}
 
                    {% if errors %}
                         <ul class="text-danger">
@@ -154,7 +154,6 @@
         {% else %}
             {% set function = "formWidget" ~ type %}
 
-            {# {{ dump(function) }} #}
             {{ attribute(_self, function, [form, row, part]) }}
 
             {{ row.setIsRendered(true) }}
@@ -659,12 +658,11 @@
         {% endif %}
     {% endif %}
 {% endmacro %}
-
-
-{*
+#}
+{#
     Renders a component control of the form
-*}
-{% macro formWidgetComponent(form=null row=null class=null) %}
+#}
+{% macro formWidgetComponent(form=null, row=null, class=null) %}
     {% if not form and block_form is defined %}
         {% set form = block_form %}
     {% endif %}
@@ -674,8 +672,8 @@
     {% endif %}
 
     {% if row %}
-        {if row.getType() == 'component'}
-            {{ _self.formRows form=form rows=row->getRows() rowClass=$class }}
+        {% if row.getType() == 'component' %}
+            {{ _self.formRows(form, row.getRows(), class) }}
         {% else %}
             <span class="error">No component row provided</span>
         {% endif %}
@@ -684,37 +682,39 @@
     {% endif %}
 {% endmacro %}
 
-{*
+{#
     Renders a collection control of the form
-*}
-{% macro formWidgetCollection(form=null row=null) %}
+#}
+{% macro formWidgetCollection(form=null, row=null) %}
     {% if not form and block_form is defined %}
         {% set form = block_form %}
     {% endif %}
 
     <div class="collection-control-group">
         {% set widget = row.getWidget() %}
+
         {% if widget %}
-            {$values = widget->getValue()}
-            {foreach $values as $key => $value}
-                {{ _self.formCollectionPrototype form=form row=row part=$key }}
+            {% set values = widget.getValue() %}
+            {% for key, value in values %}
+                {{ _self.formCollectionPrototype(form, row, key) }}
             {% endfor %}
         {% else %}
-            {rows = row->getRows()}
-            {foreach rows as $key => $r}
-                {if $key !== '%prototype%'}
-                    {{ _self.formCollectionPrototype form=form row=row part=$key }}
+            {% set rows = row.getRows() %}
+
+            {% for key, r in rows %}
+                {% if key != '%prototype%' %}
+                    {{ _self.formCollectionPrototype(form, row, key) }}
                 {% endif %}
             {% endfor %}
         {% endif %}
     </div>
 
-    <a href="#" class="btn btn-default prototype-add{if row.isDisabled() or row.isReadOnly()} disabled{% endif %}"><i class="glyphicon glyphicon-plus"></i> {translate key="button.add"}</a>
+    <a href="#" class="btn btn-default prototype-add{% if row.isDisabled() or row.isReadOnly() %} disabled{% endif %}"><i class="glyphicon glyphicon-plus"></i> {{ translate("button.add") }}</a>
 {% endmacro %}
 
-{*
+{#
     Renders a single collection control of the form
-*}
+#}
 {% macro formCollectionPrototype(form=null, row=null, part=null) %}
     {% if row|is_string and form %}
         {% set row = form.getRows(row) %}
@@ -724,15 +724,15 @@
         <div class="col-md-10">
         {% set widget = row.getWidget() %}
         {% if widget %}
-            {{ _self.formWidget form=form row=row part=part type=widget->getType() }}
+            {{ _self.formWidget(form, row, part, widget.getType()) }}
         {% else %}
-            {{ _self.formRow form=form row=row->getRow(part) }}
+            {{ _self.formRow(form, row.getRow(part)) }}
         {% endif %}
         </div>
         <div class="col-md-2">
-            <a href="#" class="btn btn-default prototype-remove{if row.isDisabled() or row.isReadOnly()} disabled{% endif %}"><i class="glyphicon glyphicon-minus"></i> {translate key="button.remove"}</a>
+            <a href="#" class="btn btn-default prototype-remove{% if row.isDisabled() or row.isReadOnly() %} disabled{% endif %}"><i class="glyphicon glyphicon-minus"></i> {{ translate("button.remove") }}</a>
         </div>
         <hr />
     </div>
 
-{% endmacro %} #}
+{% endmacro %}
