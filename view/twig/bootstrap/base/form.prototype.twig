@@ -29,12 +29,12 @@
 {#
     Renders a simple row of the form
 #}
-{% macro formRow(form = null, row = null, part = null, class=null) %}
+{% macro formRow(form = null, row = null, part = null, class = null) %}
     {% if not form and block_form is defined %}
         {% set form = block_form %}
     {% endif %}
 
-    {% if row|is_string and form %}
+    {% if row|type == 'string' and form %}
         {% set row = form.getRow(row) %}
     {% endif %}
 
@@ -119,7 +119,7 @@
                         {# <span class="help-block">{{ translate("label.multiselect") }}</span> #}
                     {% endif %}
                     {% if type == 'image' and row.getData() %}
-                        {# {image src=row.getData() width=100 height=100 thumbnail="crop"} #}
+                        <img src="{{ image(src=row.getData(), parameters = {width: 100, height: 100, thumbnail: "crop"}) }}" />
                     {% endif %}
                 </div>
             </div>
@@ -140,7 +140,7 @@
         {% set form = block_form %}
     {% endif %}
 
-    {% if row|is_string and form %}
+    {% if row|type == 'string' and form %}
         {% set row = form.getRow(row) %}
     {% endif %}
 
@@ -172,8 +172,8 @@
         {% set form = block_form %}
     {% endif %}
 
-    {% if row|is_string and form %}
-        {% set row = form.getRows(row) %}
+    {% if row|type == 'string' and form %}
+        {% set row = form.getRow(row) %}
     {% endif %}
 
     {% if row %}
@@ -212,8 +212,8 @@
         {% set form = block_form %}
     {% endif %}
 
-    {% if row|is_string and form %}
-        {% set row = form.getRows(row) %}
+    {% if row|type == 'string' and form %}
+        {% set row = form.getRow(row) %}
     {% endif %}
 
     {% set widget = row.getWidget() %}
@@ -233,8 +233,8 @@
         {% set form = block_form %}
     {% endif %}
 
-    {% if row|is_string and form %}
-        {% set row = form.getRows(row) %}
+    {% if row|type == 'string' and form %}
+        {% set row = form.getRow(row) %}
     {% endif %}
 
     {% set widget = row.getWidget() %}
@@ -252,7 +252,7 @@
         {% set form = block_form %}
     {% endif %}
 
-    {% if row|is_string and form %}
+    {% if row|type == 'string' and form %}
         {% set row = form.getRow(row) %}
     {% endif %}
 
@@ -293,8 +293,8 @@
         {% set form = block_form %}
     {% endif %}
 
-    {% if row|is_string and form %}
-        {% set row = form.getRows(row) %}
+    {% if row|type == 'string' and form %}
+        {% set row = form.getRow(row) %}
     {% endif %}
 
     {% set widget = row.getWidget() %}
@@ -321,8 +321,8 @@
         {% set form = block_form %}
     {% endif %}
 
-    {% if row|is_string and form %}
-        {% set row = form.getRows(row) %}
+    {% if row|type == 'string' and form %}
+        {% set row = form.getRow(row) %}
     {% endif %}
 
     {% set widget = row.getWidget() %}
@@ -349,8 +349,8 @@
         {% set form = block_form %}
     {% endif %}
 
-    {% if row|is_string and form %}
-        {% set row = form.getRows(row) %}
+    {% if row|type == 'string' and form %}
+        {% set row = form.getRow(row) %}
     {% endif %}
 
     {% set widget = row.getWidget() %}
@@ -378,7 +378,7 @@
         {% set form = block_form %}
     {% endif %}
 
-    {% if row|is_string and form %}
+    {% if row|type == 'string' and form %}
         {% set row = form.getRow(row) %}
     {% endif %}
 
@@ -406,8 +406,8 @@
         {% set form = block_form %}
     {% endif %}
 
-    {% if row|is_string and form %}
-        {% set row = form.getRows(row) %}
+    {% if row|type == 'string' and form %}
+        {% set row = form.getRow(row) %}
     {% endif %}
 
     {% set widget = row.getWidget() %}
@@ -433,7 +433,7 @@
         {% set form = block_form %}
     {% endif %}
 
-    {% if row|is_string and form %}
+    {% if row|type == 'string' and form %}
         {% set row = form.getRow(row) %}
     {% endif %}
 
@@ -460,8 +460,8 @@
         {% set form = block_form %}
     {% endif %}
 
-    {% if row|is_string and form %}
-        {% set row = form.getRows(row) %}
+    {% if row|type == 'string' and form %}
+        {% set row = form.getRow(row) %}
     {% endif %}
 
     {% set widget = row.getWidget() %}
@@ -487,7 +487,7 @@
         {% set form = block_form %}
     {% endif %}
 
-    {% if row|is_string and form %}
+    {% if row|type == 'string' and form %}
         {% set row = form.getRow(row) %}
     {% endif %}
 
@@ -557,7 +557,7 @@
         {% set form = block_form %}
     {% endif %}
 
-    {% if row|is_string and form %}
+    {% if row|type == 'string' and form %}
         {% set row = form.getRow(row) %}
     {% endif %}
 
@@ -598,8 +598,8 @@
         {% set form = block_form %}
     {% endif %}
 
-    {% if row|is_string and form %}
-        {% set row = form.getRows(row) %}
+    {% if row|type == 'string' and form %}
+        {% set row = form.getRow(row) %}
     {% endif %}
 
     {% set widget = row.getWidget() %}
@@ -630,8 +630,8 @@
         {% set form = block_form %}
     {% endif %}
 
-    {% if row|is_string and form %}
-        {% set row = form.getRows(row) %}
+    {% if row|type == 'string' and form %}
+        {% set row = form.getRow(row) %}
     {% endif %}
 
     {% set widget = row.getWidget() %}
@@ -667,8 +667,8 @@
         {% set form = block_form %}
     {% endif %}
 
-    {% if row|is_string and form %}
-        {% set row = form.getRows(row) %}
+    {% if row|type == 'string' and form %}
+        {% set row = form.getRow(row) %}
     {% endif %}
 
     {% if row %}
@@ -716,8 +716,8 @@
     Renders a single collection control of the form
 #}
 {% macro formCollectionPrototype(form=null, row=null, part=null) %}
-    {% if row|is_string and form %}
-        {% set row = form.getRows(row) %}
+    {% if row|type == 'string' and form %}
+        {% set row = form.getRow(row) %}
     {% endif %}
 
     <div class="collection-control clearfix">

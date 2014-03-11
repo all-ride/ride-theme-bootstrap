@@ -4,7 +4,7 @@
     {% for item in items %}
         {% if item == '-' %}
             <li role="presentation" class="divider"></li>
-        {% elseif item|is_string %}
+        {% elseif item|type == 'string' %}
             <li role="presentation" class="dropdown-header">{{ item }}</li>
         {% elseif item.hasItems() is not defined %}
             <li><a href="{{ item.getUrl() }}">{{ item.getLabel() }}</a></li>
