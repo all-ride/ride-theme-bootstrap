@@ -6,6 +6,30 @@
 #}
 
 {#
+    Renders the form
+#}
+{% macro form(form = null, action = null, referer = null) %}
+    {% if not form and block_form is defined %}
+        {% set form = block_form %}
+    {% endif %}
+
+    <form id="{{ form.getId() }}" class="form-horizontal" action="{{ action }}" method="POST" role="form">
+        <fieldset>
+            {{ _self.formRows(null, form) }}
+
+            <div class="form-group">
+                <div class="col-lg-offset-2 col-lg-10">
+                <input type="submit" class="btn btn-default" value="TODO button.save" />
+                {% if referer %}
+                    <a href="{{ referer }}" class="btn">TODO button.cancel</a>
+                {% endif %}
+                </div>
+            </div>
+        </fieldset>
+    </form>
+{% endmacro %}
+
+{#
     Renders the rows of the form
 #}
 {% macro formRows(rows = null, form = null, rowClass = null) %}
@@ -70,10 +94,10 @@
 
                     {% set description = row.getDescription() %}
                     {% if description %}
-                        <span class="help-block">{{ description }}</span>
+                        <span class="help-block">{{ description|raw }}</span>
                     {% endif %}
                 </div>
-            </div> #}
+            </div>
         {% else %}
             {% set errors = form.getValidationErrors() %}
             {% set widget = row.getWidget() %}
@@ -110,7 +134,7 @@
 
                     {% set description = row.getDescription() %}
                     {% if description and type != 'checkbox' and (type != 'option' or (type == 'option' and widget and widgetOptions)) %}
-                        <span class="help-block">{{ description }}</span>
+                        <span class="help-block">{{ description|raw }}</span>
                     {% endif %}
 
                     {% if type == 'date' %}
@@ -709,7 +733,7 @@
         {% endif %}
     </div>
 
-    <a href="#" class="btn btn-default prototype-add{% if row.isDisabled() or row.isReadOnly() %} disabled{% endif %}"><i class="glyphicon glyphicon-plus"></i> {{ translate("button.add") }}</a>
+    <a href="#" class="btn btn-default prototype-add{% if row.isDisabled() or row.isReadOnly() %} disabled{% endif %}"><i class="glyphicon glyphicon-plus"></i>TODO button.add</a>
 {% endmacro %}
 
 {#
@@ -730,7 +754,7 @@
         {% endif %}
         </div>
         <div class="col-md-2">
-            <a href="#" class="btn btn-default prototype-remove{% if row.isDisabled() or row.isReadOnly() %} disabled{% endif %}"><i class="glyphicon glyphicon-minus"></i> {{ translate("button.remove") }}</a>
+            <a href="#" class="btn btn-default prototype-remove{% if row.isDisabled() or row.isReadOnly() %} disabled{% endif %}"><i class="glyphicon glyphicon-minus"></i>TODO button.remove</a>
         </div>
         <hr />
     </div>
