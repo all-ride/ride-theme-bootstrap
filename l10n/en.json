@@ -1,3 +1,4 @@
 {
-    "theme.bootstrap": "Bootstrap"
+    "theme.bootstrap": "Bootstrap",
+    "title.terminal": "Terminal"
 }
