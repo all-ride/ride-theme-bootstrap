@@ -1,4 +1,13 @@
 {
+    "button.save.image" : "Save image",
+    "image.processor.error.resize.value": "No valid width and/or height given",
+    "image.processor.label.aspect": "Ratio 4:3",
+    "image.processor.label.height": "Original height of your image",
+    "image.processor.label.instruction": "Instructions",
+    "image.processor.label.instruction1": "Select crop area by dragging your mouse on the image(<i>Default ratio 4:3</i>)",
+    "image.processor.label.instruction2": "Press 'Save image'",
+    "image.processor.label.width": "Original width of your image",
     "theme.bootstrap": "Bootstrap",
     "title.terminal": "Terminal"
+    "title.image.processor" : "Image Processor"
 }
