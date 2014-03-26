@@ -9,5 +9,5 @@
     "image.processor.label.width": "Original width of your image",
     "theme.bootstrap": "Bootstrap",
     "title.terminal": "Terminal",
-    "title.image.processor": "Image Processor"
+    "title.image.processor": "Crop Image"
 }

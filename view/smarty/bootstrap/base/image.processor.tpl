@@ -9,18 +9,21 @@
 {/block}
 
 {block name="content_body" append}
-    <div class="image col-md-10">
+    <div class="col-md-9">
         {image src=$path id="image-input"}
     </div>
 
-    {include file="base/form.prototype"}
-    <form id="{$form->getId()}" class="form-horizontal" enctype="multipart/form-data" method="post" action="{$app.url.request}" name="{$form->getId()}" role="form">
-        {call formRows form=$form}
+    <div class="col-md-3">
+        {include file="base/form.prototype"}
+        <form id="{$form->getId()}" class="form-horizontal" enctype="multipart/form-data" method="post" action="{$app.url.request}" name="{$form->getId()}" role="form">
+            {call formRows form=$form}
 
-        <input type="submit" class="btn btn-default" value="{translate key="button.save.image"}" />
-    </form>
+            <input type="submit" class="btn btn-default btn-lg" value="{translate key="button.save.image"}" />
+            {if $referer}
+                <a href="{$referer}" class="btn">{translate key="button.cancel"}</a>
+            {/if}
+        </form>
 
-    <div>
         <h3>{translate key="image.processor.label.instruction"}</h3>
         <ul>
             <li>{translate key="image.processor.label.instruction1"}</li>
@@ -36,8 +39,22 @@
 {block name="scripts" append}
     <script src="{$app.url.base}/js/jquery.imgareaselect.pack.js"></script>
     <script type="text/javascript">
+        var image = $('#image-input');
+
+        var detectViewPort = function() {
+            $('input[name="displayWidth"]').val(image.width());
+
+            console.log('toon mij!');
+            console.log($('#form-displayWidth').val());
+        };
+
+        $(window).resize(function() {
+           detectViewPort();
+        });
+
         $(function() {
-            $('#image-input').imgAreaSelect({
+            detectViewPort();
+            image.imgAreaSelect({
                 handles: true,
                 onSelectEnd: function (img, selection) {
                     $('input[name="x1"]').val(selection.x1);

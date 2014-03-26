@@ -37,5 +37,6 @@
 	opacity: 0.5;
 }
 
-.imgareaselect-selection {
+#image-input {
+    width: 100%;
 }
