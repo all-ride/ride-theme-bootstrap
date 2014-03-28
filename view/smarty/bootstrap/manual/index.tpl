@@ -13,8 +13,14 @@
 {/block}
 
 {block name="sidebar"}
-    <h3>{translate key="title.pages"}</h3>
     {foreach $pages as $path => $pathPages}
+        {assign var="path" value=$path|trim:"/"}
+        {if $path}
+            <h3>{$path}</h3>
+        {else}
+            <h3>General</h3>
+        {/if}
+
         <ul class="nav nav-pills nav-stacked">
         {foreach $pathPages as $page}
             <li><a href="{$page->getUrl()}">{$page->getTitle()}</a></li>
