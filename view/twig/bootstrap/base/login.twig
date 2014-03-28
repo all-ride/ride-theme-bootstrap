@@ -1,0 +1,35 @@
+{% extends 'cms/backend/index' %}
+
+{% block head_title %}{{ translate("title.login") }} - {{ parent() }}{% endblock %}
+
+{% block content_body %}
+    {% import "base/form.prototype" as formPrototype %}
+
+    <div class="col-md-offset-3 col-md-6">
+        <div class="page-header">
+            <h1>{{ translate("title.login") }}</h1>
+        </div>
+
+        {{ parent() }}
+
+        {% set url = "login" %}
+        {% if referer %}
+            {% set url = url ~ "?referer=" ~ referer|url_encode %}
+        {% endif %}
+
+        {{ formPrototype.form(form, url, referer) }}
+
+        {% if urls %}
+            <ul>
+                {% for service, url in urls %}
+                    <li><a href="{{ url }}">{{ translate("button.login." ~ service) }}</a></li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+{% endblock content_body %}
+
+{% block scripts %}
+    {{ parent() }}
+    <script type="application/javascript">$(function() { $('#form-username').focus(); });</script>
+{% endblock scripts %}

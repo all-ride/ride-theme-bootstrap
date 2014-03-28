@@ -30,12 +30,9 @@
 {% block body %}
     {% block taskbar %}
         {% if app.taskbar is defined %}
-            {# {include file="" title=$app.taskbar->getTitle() applicationsMenu=$app.taskbar->getApplicationsMenu() settingsMenu=$app.taskbar->getSettingsMenu()} #}
-            {% include 'base/taskbar' with {'applicationsMenu': app.taskbar.getApplicationsMenu() } %}
+            {% include 'base/taskbar' with {title: app.taskbar.getTitle, applicationsMenu: app.taskbar.getApplicationsMenu(), settingsMenu: app.taskbar.getSettingsMenu() } %}
         {% endif %}
     {% endblock %}
-
-
 
     {% block container %}
         <div class="container">
@@ -46,10 +43,10 @@
                     {% set _messageTypes = {"error": "danger", "warning": "warning", "success": "success", "information": "info"} %}
                     {% for _messageType, _messageClass in _messageTypes %}
                         {% set _messages = app.messages.getByType(_messageType) %}
-                        {% if _messages is defined %}
-                            <div class="alert alert-{$_messageClass}">
+                        {% if _messages is not empty %}
+                            <div class="alert alert-{{ _messageClass }}">
                             {% if _messages|length == 1 %}
-                                {% set _message = _messages|array_pop %}
+                                {% set _message = _messages|last %}
                                 <p>{{ _message.getMessage() }}</p>
                             {% else %}
                                 <ul>
