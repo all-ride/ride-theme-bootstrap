@@ -11,16 +11,16 @@
     {block name="styles"}
         <link href="{$app.url.base}/css/bootstrap.min.css" rel="stylesheet" media="screen">
         <link href="{$app.url.base}/css/custom.css" rel="stylesheet" media="screen">
-        
+
         {if isset($app.styles)}
             {foreach $app.styles as $style => $null}
                 {if substr($style, 0, 7) == 'http://' || substr(style, 0, 8) == 'https://' || substr($style, 0, 2) == '//'}
-                    <script src="{$style}"></script>
+                    <link href="{$style}" rel="stylesheet" media="screen">
                 {else}
-                    <script src="{$app.url.base}/{$style}"></script>
+                    <link href="{$app.url.base}/{$style}" rel="stylesheet" media="screen">
                 {/if}
             {/foreach}
-        {/if}        
+        {/if}
     {/block}
 {/block}
     </head>
@@ -28,8 +28,8 @@
 {block name="body"}
     {block name="taskbar"}
         {if isset($app.taskbar)}
-            {include file="base/taskbar" title=$app.taskbar->getTitle() applicationsMenu=$app.taskbar->getApplicationsMenu() settingsMenu=$app.taskbar->getSettingsMenu()} 
-        {/if}	
+            {include file="base/taskbar" title=$app.taskbar->getTitle() applicationsMenu=$app.taskbar->getApplicationsMenu() settingsMenu=$app.taskbar->getSettingsMenu()}
+        {/if}
     {/block}
     {block name="container"}
         <div class="container">
@@ -51,7 +51,7 @@
                                     <li>{$_message->getMessage()}</li>
                                 {/foreach}
                                 </ul>
-                            {/if} 
+                            {/if}
                             </div>
                         {/if}
                     {/foreach}
@@ -64,23 +64,25 @@
     {block name="scripts"}
         <script src="{$app.url.base}/js/jquery.js"></script>
         <script src="{$app.url.base}/js/bootstrap.min.js"></script>
-    {if isset($app.javascripts)} 
+    {if isset($app.javascripts)}
         {foreach $app.javascripts as $script => $null}
             {if substr($script, 0, 7) == 'http://' || substr(script, 0, 8) == 'https://' || substr($script, 0, 2) == '//'}
         <script src="{$script}"></script>
+            {elseif substr($script, 0, 7) == '<script'}
+        {$script}
             {else}
         <script src="{$app.url.base}/{$script}"></script>
             {/if}
-        {/foreach}        
+        {/foreach}
     {/if}
     {if isset($app.inlineJavascripts)}
-        <script type="text/javascript"> 
+        <script type="text/javascript">
             $(function() {
             {foreach $app.inlineJavascripts as $inlineJavascript}
                 {$inlineJavascript}
-            {/foreach}        
+            {/foreach}
             });
-        </script> 
+        </script>
     {/if}
     {/block}
 {/block}
