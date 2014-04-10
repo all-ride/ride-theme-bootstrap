@@ -90,7 +90,7 @@
             {/if}
 
             <div class="form-group row-{$row->getName()|replace:'[':''|replace:']':''}{if $row->isDisabled()} disabled{/if}{if $row->isReadOnly()} readonly{/if} clearfix{if $errors} has-error{/if}{if $class} {$class}{/if}">
-                <label class="col-md-2 control-label" for="{$widget->getId()}">{$row->getLabel()}</label>
+                <label class="col-md-2 control-label" for="{$widget->getId()}">{if $type != 'button'}{$row->getLabel()}{/if}</label>
                 <div class="col-md-10">
                     {call formWidget form=$form row=$row part=$part}
 
@@ -244,6 +244,34 @@
                {$name}="{$attribute|escape}"
            {/foreach}
          >{$widget->getValue($part)|escape}</span>
+    {/if}
+{/function}
+
+{function name="formWidgetButton" form=null row=null part=null}
+    {if !$form && isset($block_form)}
+        {$form = $block_form}
+    {/if}
+
+    {if is_string($row) && $form}
+        {$row = $form->getRow($row)}
+    {/if}
+
+    {$widget = $row->getWidget()}
+    {if $widget}
+        {$attributes = $widget->getAttributes()}
+        {if isset($attributes.class)}
+            {$attributes.class = "`$attributes.class` btn btn-default"}
+        {else}
+            {$attributes.class = 'btn btn-default'}
+        {/if}
+
+        <button
+            name="{$widget->getName()}{if $widget->isMultiple() || $part !== null}[{$part}]{/if}"
+            value="{$widget->getValue($part)|escape}"
+           {foreach $attributes as $name => $attribute}
+               {$name}="{$attribute|escape}"
+           {/foreach}
+         >{$row->getLabel()}</button>
     {/if}
 {/function}
 
