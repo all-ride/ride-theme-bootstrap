@@ -1,9 +1,9 @@
 {function name="taskbarMenuItems" items=null class=null}
     {foreach from=$items item="item"}
         {if $item === '-'}
-            <li role="presentation" class="divider"></li>                    
+            <li role="presentation" class="divider"></li>
         {elseif is_string($item)}
-            <li role="presentation" class="dropdown-header">{$item}</li>                    
+            <li role="presentation" class="dropdown-header">{$item}</li>
         {elseif !method_exists($item, 'hasItems')}
             <li><a href="{$item->getUrl()}">{$item->getLabel()}</a></li>
         {elseif $class}
@@ -14,7 +14,7 @@
                 </ul>
             </li>
         {else}
-            <li role="presentation" class="dropdown-header">{$item->getLabel()}</li>                    
+            <li role="presentation" class="dropdown-header">{$item->getLabel()}</li>
             {taskbarMenuItems items=$item->getItems()}
         {/if}
     {/foreach}
@@ -64,7 +64,7 @@
             {block name="taskbar_applications"}
                 {if $applicationsMenu->hasItems()}
                     {taskbarMenuItems items=$applicationsMenu->getItems() class="dropdown"}
-                {/if}            
+                {/if}
             {/block}
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -74,6 +74,9 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         {if $app.user}
+                            {if $app.user->getImage()}
+                               {image src=$app.user->getImage() width=18 height=18 thumbnail="crop"}
+                            {/if}
                             {$app.user->getDisplayName()}
                         {else}
                             {translate key="label.user.anonymous"}
@@ -84,12 +87,12 @@
                         {block name="taskbar_settings"}
                             {if $settingsMenu->hasItems()}
                                 {taskbarMenuItems items=$settingsMenu->getItems()}
-                            {/if}            
+                            {/if}
                         {/block}
                     </ul>
                 </li>
                 {/block}
-            </ul>                
+            </ul>
         </div><!--/.navbar-collapse -->
     </div>
-</div>   
+</div>
