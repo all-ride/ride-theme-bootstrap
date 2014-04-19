@@ -1,0 +1,99 @@
+{% if table.hasRows() or table.hasSearch() %}
+    {{ tableVars }}
+
+    {% import "base/form.prototype" as formPrototype %}
+
+    {# {% set tableMessages = json_encode(table.getActionConfirmationMessages()) %} #}
+    <form id="{{ tableForm.getId() }}" action="{{ tableAction }}" method="POST" class="table" role="form" data-confirm-messages="{{ tableMessages|escape }}">
+        {{ formPrototype.formWidget(tableForm, tableNameField) }}
+
+        <fieldset>
+
+        {% if table.hasOrderMethods() or table.hasSearch() %}
+            <div class="row-fluid table-header clearfix">
+                <div class="col-md-4"></div>
+                <div class="col-md-4 search">
+                    {% if table.hasSearch() %}
+                        {% block table_search %}
+                            {# {{ tableForm.getRow("tableSearchQueryField").getWidget().setAttribute('placeholder', translate("label.search")) }} #}
+
+                            {{ formPrototype.formWidget(tableForm, tableSearchQueryField) }}
+                        {% endblock %}
+                    {% endif %}
+                </div>
+                <div class="col-md-4 order">
+                    {% if table.hasOrderMethods() %}
+                        {% block table_order %}
+                            {{ translate("label.table.order") }}
+
+                            {{ formPrototype.formWidget(tableForm, tableOrderField) }}
+
+                            {% if table.getOrderDirection() == 'asc' %}
+                                {% set direction ="desc" %}
+                                {% set iconClass ="glyphicon glyphicon-chevron-down" %}
+                            {% else %}
+                                {% set direction ="asc" %}
+                                {% set iconClass ="glyphicon glyphicon-chevron-up" %}
+                            {% endif %}
+
+                            <a href="{{ table.getOrderDirectionUrl()|replace({"%direction%": direction}) }}">
+                                <i class="{{ iconClass }}"></i>
+                            </a>
+                        {% endblock %}
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+
+        {% if table.hasRows() %}
+            {% block table_content %}
+                {{ table.getHtml() }}
+            {% endblock %}
+
+            {% if table.hasActions() or table.hasPaginationOptions() %}
+                <div class="row-fluid">
+                    <div class="options col-md-3">
+                        {% if table.hasActions() %}
+                            {% block table_actions %}
+                                {% if tableForm.hasRow(tableActionField) %}
+                                    <input type="checkbox" id="{tableForm.getId()}-action-all" class="check-all" />
+                                    {{ formPrototype.formWidget(tableForm, tableActionField) }}
+                                {% endif %}
+                            {% endblock %}
+                        {% endif %}
+                    </div>
+                    {% if table.hasPaginationOptions() %}
+                        {% block table_pagination %}
+                            {% if table.getRowsPerPage() or table.getPaginationOptions() %}
+                                {% set page = table.getPage() %}
+                                {% set pages = table.getPages() %}
+                                {% set href = table.getPaginationUrl() %}
+
+                                <div class="col-md-6 pagination">
+                                    {% if pages > 1 %}
+                                        {pagination page=page pages=pages href=href}
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-3 pagination-options">
+                                    {% if table.getPaginationOptions() %}
+                                        {{ formPrototype.formWidget(tableForm, tablePageRowsField) }}
+                                        {translate key="label.table.rows.page"}
+                                    {% endif %}
+
+                                    ({translate key="label.table.rows.total" rows=table.countRows()})
+                                </div>
+                            {% else %}
+                                <div class="col-md-9 pagination-options">
+                                    {translate key="label.table.rows.total" rows=table.countRows()}
+                                </div>
+                            {% endif %}
+                        {% endblock %}
+                    {% endif %}
+                </div>
+            {% endif %}
+        {% endif %}
+        </fieldset>
+    </form>
+{% else %}
+    <p>No rows</p>
+{% endif %}

@@ -1,0 +1,43 @@
+{% extends 'base/index' %}
+
+{% block taskbar_panels %}
+    {{ parent() }}
+    {% if localizeUrl %}
+        {{ functions.taskbarPanelLocales(localizeUrl, locale, locales) }}
+    {% endif %}
+{% endblock taskbar_panels %}
+
+{% block content_title %}
+    <div class="page-header">
+        <h1>{{ title }}</h1>
+    </div>
+{% endblock content_title %}
+
+
+{% block content_body %}
+    {{ parent() }}
+    <div class="btn-group">
+        {% for url, dataAction in actions %}
+            <a href="{{ url }}" class="btn btn-default">{{ dataAction }}</a>
+        {% endfor %}
+    </div>
+
+    <p></p>
+
+    {% include "base/table" with {table: table, tableForm: form, tableAction: action} %}
+
+    {% if exports %}
+        {{ translate("orm.label.export") }}
+
+        {% for extension, url in exports %}
+            <a href="{{ url }}" title="{{ translate("orm.label.export.to", {format: extension}) }}">{{ image("img/export/" ~ extension ~ ".png") }}</a>
+        {% endfor %}
+    {% endif %}
+{% endblock content_body %}
+
+{% block scripts %}
+    {{ parent() }}
+    <script src="{{ app.url.base }}/js/form.js"></script>
+    <script src="{{ app.url.base }}/js/table.js"></script>
+{% endblock scripts %}
+

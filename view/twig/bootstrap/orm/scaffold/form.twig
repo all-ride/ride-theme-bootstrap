@@ -1,0 +1,27 @@
+{% extends 'base/index' %}
+{# {% extends 'orm/scaffold/index' %} #}
+
+{% block taskbar_panels %}
+    {{ parent() }}
+    {% if localizeUrl %}
+        {{ functions.taskbarPanelLocales(localizeUrl, locale, locales) }}
+    {% endif %}
+{% endblock taskbar_panels %}
+
+{% block content_title %}
+    <div class="page-header">
+        <h1>{{ title }}</h1>
+    </div>
+{% endblock content_title %}
+
+{% block content %}
+    {{ parent() }}
+    {% import "base/form.prototype" as formPrototype %}
+
+    {{ formPrototype.form(form, app.url.request) }}
+{% endblock %}
+
+{% block scripts %}
+    {{ parent() }}
+    <script src="{{ app.url.base }}/js/form.js"></script>
+{% endblock scripts %}

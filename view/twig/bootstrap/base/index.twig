@@ -70,7 +70,7 @@
         <script src="{{ app.url.base }}/js/bootstrap.min.js"></script>
 
         {% if app.javascripts is defined %}
-            {% for script in app.javascripts %}
+            {% for script, null in app.javascripts %}
                 {% if script|slice(0, 7) == 'http://' or script|slice(0, 8) == 'https://' or script|slice(0, 2) == '//' %}
                     <script src="{{ script }}"></script>
                 {% else %}
