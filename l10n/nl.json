@@ -1,0 +1,13 @@
+{
+    "button.save.image" : "Foto opslaan",
+    "image.processor.error.resize.value": "Geen geldige breedte en hoogte ingegeven",
+    "image.processor.label.aspect": "Ratio 4:3",
+    "image.processor.label.height": "Originele hoogte van foto",
+    "image.processor.label.instruction": "Instructies",
+    "image.processor.label.instruction1": "Selecteer een regio door met de muis te slepen op de foto",
+    "image.processor.label.instruction2": "Druk 'Foto opslaan'",
+    "image.processor.label.width": "Originele breedte van foto",
+    "theme.bootstrap": "Bootstrap",
+    "title.terminal": "Terminal",
+    "title.image.processor": "Afbeelding bijsnijden"
+}
