@@ -1,0 +1,39 @@
+{% extends 'base/index' %}
+
+{% block head_title %}{{ translate("title.terminal") }} - {{ parent() }}{% endblock %}
+
+{% block content_body %}
+    <div class="page-header">
+        <h1>{{ translate("title.terminal") }}</h1>
+    </div>
+{% endblock %}
+
+{% block content_body %}
+    {{ parent() }}
+    {% import "base/form.prototype" as formPrototype %}
+
+    <form id="{{ form.getId() }}" action="{{ app.url.request }}" method="POST" role="form">
+        <div class="result">
+            <pre class="result"></pre>
+        </div>
+        <div class="bash">
+            <pre class="bash"><span class="path">{$path}</span> $</pre> {{ formPrototype.formWidget(form, "command") }}
+        </div>
+    </form>
+{% endblock %}
+
+
+{% block styles %}
+    {{ parent() }}
+    <link href="{$app.url.base}/css/terminal.css" rel="stylesheet" media="screen">
+{% endblock %}
+
+{% block scripts %}
+    {{ parent() }}
+    <script src="{{ app.url.base }}/js/terminal.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            ride.terminal.init();
+        });
+    </script>
+{% endblock %}
