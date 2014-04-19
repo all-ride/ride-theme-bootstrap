@@ -16,9 +16,9 @@
         {% if app.styles is defined %}
             {% for style in app.styles %}
                 {% if style|slice(0, 7) == 'http://' or style|slice(0, 8) == 'https://' or style|slice(0, 2) == '//' %}
-                    <script src="{{ style }}"></script>
+                    <link href="{{ style }}" rel="stylesheet" media="screen">
                 {% else %}
-                    <script src="{{ app.url.base }}/{{ style }}"></script>
+                    <link href="{{ app.url.base }}/{{ style }}" rel="stylesheet" media="screen">
                 {% endif %}
             {% endfor %}
         {% endif %}

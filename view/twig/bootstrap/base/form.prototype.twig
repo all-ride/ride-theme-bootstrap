@@ -114,7 +114,8 @@
             {% endif %}
 
             <div class="form-group row-{{ row.getName()|replace({'[': '', ']': ''}) }}{% if row.isDisabled() %} disabled{% endif %}{% if row.isReadOnly() %} readonly{% endif %} clearfix{% if errors %} has-error{% endif %}{% if class %} {{ class }}{% endif %}">
-                <label class="col-md-2 control-label" for="{{ widget.getId() }}">{{ row.getLabel() }}</label>
+                <label class="col-md-2 control-label" for="{{ widget.getId() }}">{% if type == 'button' %}{{ row.getLabel() }}{% endif %}</label>
+
                 <div class="col-md-10">
                     {{ _self.formWidget(form, row, part) }}
 
@@ -271,6 +272,38 @@
     {% endif %}
 {% endmacro %}
 #}
+
+{% macro formWidgetButton(form=null, row=null, part=null) %}
+    {% if not form and block_form is defined %}
+        {% set form = block_form %}
+    {% endif %}
+
+    {% if row|type == 'string' and form %}
+        {% set row = form.getRow(row) %}
+    {% endif %}
+
+    {% set widget = row.getWidget() %}
+    {% if $widget %}
+        {% set attributes = widget.getAttributes() %}
+        {% if attributes.class is defined %}
+            {% set attributes = {class: attributes.class ~ " btn btn-default"} %}
+        {% else %}
+            {% set attributes = {class: 'btn btn-default'} %}
+        {% endif %}
+
+        <button
+            name="{{ widget.getName() }}{% if widget.isMultiple() or part !== null %}[{{ part }}]{% endif %}"
+            value="{{ widget.getValue($part)|escape }}"
+           {% for name, attribute in attributes %}
+               {{ name }}="{{ attribute|escape }}"
+           {% endfor %}
+         >{{ row.getLabel() }}</button>
+    {% endif %}
+{% endmacro %}
+
+
+
+
 {% macro formWidgetString(form=null, row=null, part=null) %}
     {% if not form and block_form is defined %}
         {% set form = block_form %}

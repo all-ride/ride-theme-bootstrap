@@ -42,8 +42,19 @@
     {{ parent() }}
     <script src="{{ app.url.base }}/js/jquery.imgareaselect.pack.js"></script>
     <script type="text/javascript">
+        var image = $('#image-input');
+
+        var detectViewPort = function() {
+            $('input[name="displayWidth"]').val(image.width());
+        };
+
+        $(window).resize(function() {
+           detectViewPort();
+        });
+
         $(function() {
-            $('#image-input').imgAreaSelect({
+            detectViewPort();
+            image.imgAreaSelect({
                 handles: true,
                 onSelectEnd: function (img, selection) {
                     $('input[name="x1"]').val(selection.x1);
