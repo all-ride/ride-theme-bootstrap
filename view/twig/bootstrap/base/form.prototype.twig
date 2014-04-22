@@ -283,7 +283,7 @@
     {% endif %}
 
     {% set widget = row.getWidget() %}
-    {% if $widget %}
+    {% if widget %}
         {% set attributes = widget.getAttributes() %}
         {% if attributes.class is defined %}
             {% set attributes = {class: attributes.class ~ " btn btn-default"} %}
@@ -292,8 +292,8 @@
         {% endif %}
 
         <button
-            name="{{ widget.getName() }}{% if widget.isMultiple() or part !== null %}[{{ part }}]{% endif %}"
-            value="{{ widget.getValue($part)|escape }}"
+            name="{{ widget.getName() }}{% if widget.isMultiple() or part %}[{{ part }}]{% endif %}"
+            value="{{ widget.getValue(part)|escape }}"
            {% for name, attribute in attributes %}
                {{ name }}="{{ attribute|escape }}"
            {% endfor %}
