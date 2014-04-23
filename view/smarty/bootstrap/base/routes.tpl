@@ -21,7 +21,6 @@
         <thead>
             <tr>
                 <th>{translate key="label.path"}</th>
-                <th>{translate key="label.action"}</th>
                 <th>{translate key="label.id"}</th>
                 <th>{translate key="label.methods"}</th>
             </tr>
@@ -38,8 +37,9 @@
                         <br />
                         <span class="help-block">{$baseUrl}</span>
                     {/if}
+                    <br />
+                    <span class="help-block">{$callback[0]}->{$callback[1]}()</span>
                 </td>
-                <td>{$callback[0]}->{$callback[1]}()</td>
                 <td>{$route->getId()}</td>
                 <td>{if $methods}{$methods|@array_keys|@implode:', '}{else}*{/if}</td>
             </tr>
