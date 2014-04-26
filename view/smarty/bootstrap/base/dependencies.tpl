@@ -8,15 +8,13 @@
 
 {block name="content_title"}
     <div class="page-header">
-        {if $query}
-        <h1>{translate key="title.dependencies.query" query=$query|escape}</h1>
-        {else}
-        <h1>{translate key="title.dependencies"}</h1>
-        {/if}
+        <h1>{translate key="title.system"}</h1>
     </div>
 {/block}
 
 {block name="content" append}
+    {include file="base/system.tabs" active="dependencies"}
+
     {foreach $dependencies as $interface => $interfaceDependencies}
         {if $urlClass}
     <h2><a href="{$urlClass}/{$interface|replace:'\\':'/'}">{$interface}</a></h2>
@@ -66,7 +64,7 @@
                                         <li>{$key}: {$value}</li>
                             {/foreach}
                                     </ul>
-                        {/if}                                
+                        {/if}
                                 </li>
                     {/foreach}
                             </ul>
@@ -94,7 +92,7 @@
                                         <li>{$key}: {$value}</li>
                                 {/foreach}
                                     </ul>
-                            {/if}                                
+                            {/if}
                                 </li>
                         {/foreach}
                             </ul>

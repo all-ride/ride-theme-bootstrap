@@ -9,6 +9,8 @@
 {/block}
 
 {block name="content" append}
+    {include file="base/system.tabs" active="system"}
+
     <dl>
         <dt>{translate key="label.php.version"}</dt>
         <dd><a href="{url id="system.php"}">{$phpVersion}</a></dd>
