@@ -8,6 +8,7 @@
     "image.processor.label.instruction2": "Press 'Save image'",
     "image.processor.label.width": "Original width of your image",
     "theme.bootstrap": "Bootstrap",
-    "title.terminal": "Terminal",
-    "title.image.processor": "Crop Image"
+    "title.image.processor": "Crop Image",
+    "title.details": "Details",
+    "title.terminal": "Terminal"
 }

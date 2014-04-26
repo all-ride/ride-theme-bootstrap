@@ -8,21 +8,19 @@
 
 {block name="content_title"}
     <div class="page-header">
-        {if $query}
-        <h1>{translate key="title.parameters.query" query=$query|escape}</h1>
-        {else}
-        <h1>{translate key="title.parameters"}</h1>
-        {/if}
+        <h1>{translate key="title.system"}</h1>
     </div>
 {/block}
 
 {block name="content" append}
+    {include file="base/system.tabs" active="parameters"}
+
     {include file="base/form.prototype"}
 
     <form id="{$form->getId()}" class="form-horizontal" action="{$app.url.request}" method="POST" role="form">
         <fieldset>
             {call formRows form=$form}
-        
+
             <div class="form-group">
                 <div class="col-lg-offset-2 col-lg-10">
                     <input type="submit" class="btn btn-default" value="{translate key="button.submit"}" />
@@ -30,8 +28,8 @@
                 </div>
             </div>
         </fieldset>
-    </form>    
-    
+    </form>
+
     <table class="table table-responsive table-striped">
         <thead>
             <tr>

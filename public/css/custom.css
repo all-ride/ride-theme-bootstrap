@@ -5,7 +5,7 @@ body .navbar {
 }
 
 .collection-control {
-    margin-bottom: 15px;	
+    margin-bottom: 15px;
 }
 
 .collection-control .col-md-2,
@@ -24,4 +24,4 @@ body .navbar {
 	}
 }
 
-.tab-pane { padding-top: 25px }
+.nav-tabs { margin-bottom: 25px }

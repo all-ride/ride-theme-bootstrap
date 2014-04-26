@@ -8,15 +8,13 @@
 
 {block name="content_title"}
     <div class="page-header">
-        {if $query}
-        <h1>{translate key="title.routes.query" query=$query|escape}</h1>
-        {else}
-        <h1>{translate key="title.routes"}</h1>
-        {/if}
+        <h1>{translate key="title.system"}</h1>
     </div>
 {/block}
 
 {block name="content" append}
+    {include file="base/system.tabs" active="routes"}
+
     <table class="table table-responsive table-striped">
         <thead>
             <tr>

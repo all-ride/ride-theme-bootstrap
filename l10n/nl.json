@@ -8,6 +8,7 @@
     "image.processor.label.instruction2": "Druk 'Foto opslaan'",
     "image.processor.label.width": "Originele breedte van foto",
     "theme.bootstrap": "Bootstrap",
-    "title.terminal": "Terminal",
-    "title.image.processor": "Afbeelding bijsnijden"
+    "title.image.processor": "Afbeelding bijsnijden",
+    "title.details": "Details",
+    "title.terminal": "Terminal"
 }
