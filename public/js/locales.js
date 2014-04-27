@@ -11,5 +11,7 @@ $('.locales h3').css('cursor', 'move');
 
 $(".btn-toggle-properties").click(function() {
     $($(this).data('target')).toggle();
+
+    return false;
 });
 $('.locales .properties').hide();
