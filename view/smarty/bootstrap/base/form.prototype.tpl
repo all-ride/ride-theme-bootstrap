@@ -473,11 +473,22 @@
             {$attributes.class = 'form-control'}
         {/if}
 
-        <textarea name="{$widget->getName()}{if $part}[{$part}]{/if}"
-           {foreach $attributes as $name => $attribute}
-               {$name}="{$attribute|escape}"
-           {/foreach}
-         >{$widget->getValue($part)|escape}</textarea>
+        {$value = $widget->getValue($part)}
+        {if is_array($value)}
+            {foreach $value as $part => $val}
+                <textarea name="{$widget->getName()}{if $widget->isMultiple() || $part !== null}[{$part}]{/if}"
+                   {foreach $attributes as $name => $attribute}
+                       {$name}="{$attribute|escape}"
+                   {/foreach}
+                 >{$val|escape}</textarea>
+             {/foreach}
+        {else}
+            <textarea name="{$widget->getName()}{if $widget->isMultiple() || $part !== null}[{$part}]{/if}"
+               {foreach $attributes as $name => $attribute}
+                   {$name}="{$attribute|escape}"
+               {/foreach}
+             >{$widget->getValue($part)|escape}</textarea>
+        {/if}
     {/if}
 {/function}
 

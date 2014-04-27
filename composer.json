@@ -2,7 +2,7 @@
     "name": "ride/theme-bootstrap",
     "description": "Bootstrap theme for the base web application of the Ride framework",
     "license": "MIT",
-    "version": "0.7.6",
+    "version": "0.7.8",
     "authors": [
         {
             "name": "Joris Vandeweerd",
@@ -11,7 +11,7 @@
     ],
     "require": {
         "ride/app-template-smarty": ">=0.2.0",
-        "ride/lib-template": ">=0.2.0",
+        "ride/lib-template": ">=0.4.0",
         "ride/web-template-smarty": ">=0.2.0"
     }, 
     "autoload": {

@@ -5,6 +5,7 @@
     "label.code": "Code",
     "label.locales.information": "You can use drag and drop to change the priority of the languages.",
     "label.name.native": "Native name",
+    "label.security.description": "Each path expression should be on a different line. * can be used to match a path token, ** to match anything.",
     "image.processor.error.resize.value": "No valid width and/or height given",
     "image.processor.label.aspect": "Ratio 4:3",
     "image.processor.label.height": "Original height of your image",

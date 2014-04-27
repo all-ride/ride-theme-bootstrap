@@ -16,6 +16,14 @@ class BootstrapTheme implements Theme {
     }
 
     /**
+     * Gets the display name of this theme
+     * @return string
+     */
+    public function getDisplayName() {
+        return ucfirst($this->getName());
+    }
+
+    /**
      * Gets the parent theme
      * @return string Machine name of the parent theme
      */
