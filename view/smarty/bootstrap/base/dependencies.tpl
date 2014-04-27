@@ -17,9 +17,9 @@
 
     {foreach $dependencies as $interface => $interfaceDependencies}
         {if $urlClass}
-    <h2><a href="{$urlClass}/{$interface|replace:'\\':'/'}">{$interface}</a></h2>
+    <h3><a href="{$urlClass}/{$interface|replace:'\\':'/'}">{$interface}</a></h3>
         {else}
-    <h2>{$interface}</h2>
+    <h3>{$interface}</h3>
         {/if}
     <table class="table table-responsive table-striped">
         <thead>
