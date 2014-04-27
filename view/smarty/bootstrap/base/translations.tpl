@@ -30,16 +30,18 @@
     <form id="{$form->getId()}" class="form-horizontal" action="{$app.url.request}" method="POST" role="form">
         <fieldset>
             {call formRows form=$form}
-        
+
             <div class="form-group">
                 <div class="col-lg-offset-2 col-lg-10">
                     <input type="submit" class="btn btn-default" value="{translate key="button.submit"}" />
-                    <a class="btn" href="{url id="system.translations.locale" parameters=["locale" => $locale]}">{translate key="button.cancel"}</a>
+                    {if $referer}
+                    <a class="btn" href="{$referer}">{translate key="button.cancel"}</a>
+                    {/if}
                 </div>
             </div>
         </fieldset>
-    </form>    
-    
+    </form>
+
     <table class="table table-responsive table-striped">
         <thead>
             <tr>
@@ -50,7 +52,7 @@
         <tbody>
     {foreach $translations as $key => $value}
             <tr>
-                <td><a href="{url id="system.translations.edit" parameters=["locale" => $locale, "key" => $key]}">{$key}</a></td>
+                <td><a href="{url id="system.translations.edit" parameters=["locale" => $locale, "key" => $key]}{if $referer}?referer={$referer|escape}{/if}">{$key}</a></td>
                 <td>{$value|escape}</td>
             </tr>
     {/foreach}
