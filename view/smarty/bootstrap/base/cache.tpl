@@ -8,7 +8,7 @@
     </div>
 {/block}
 
-{block name="content" append} 
+{block name="content" append}
     {include file="base/form.prototype"}
 
     <form id="{$form->getId()}" class="form-horizontal" action="{$app.url.request}" method="POST">
@@ -21,9 +21,9 @@
                     {/foreach}
                 </div>
             </div>
-                        
+
             <div class="form-actions col-lg-offset-2">
-                <input type="submit" name="submit" class="btn btn-primary" value="{"label.`$action`"|translate}" />
+                <input type="submit" name="submit" class="btn btn-default" value="{"label.`$action`"|translate}" />
                 {if $action == "enable"}
                     <a href="{url id="system.cache.clear"}" class="btn">{translate key="button.cache.clear"}</a>
                 {else}
