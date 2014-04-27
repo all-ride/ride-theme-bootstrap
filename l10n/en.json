@@ -1,5 +1,10 @@
 {
+    "button.properties.toggle" : "Toggle properties",
     "button.save.image" : "Save image",
+    "button.translations.manage" : "Manage the translations",
+    "label.code": "Code",
+    "label.locales.information": "You can use drag and drop to change the priority of the languages.",
+    "label.name.native": "Native name",
     "image.processor.error.resize.value": "No valid width and/or height given",
     "image.processor.label.aspect": "Ratio 4:3",
     "image.processor.label.height": "Original height of your image",
@@ -8,7 +13,9 @@
     "image.processor.label.instruction2": "Press 'Save image'",
     "image.processor.label.width": "Original width of your image",
     "theme.bootstrap": "Bootstrap",
-    "title.image.processor": "Crop Image",
     "title.details": "Details",
+    "title.image.processor": "Crop Image",
+    "title.locales": "Languages",
+    "title.properties": "Properties",
     "title.terminal": "Terminal"
 }

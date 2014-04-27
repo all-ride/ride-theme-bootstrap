@@ -1,5 +1,10 @@
 {
+    "button.properties.toggle" : "Bekijk eigenschappen",
     "button.save.image" : "Foto opslaan",
+    "button.translations.manage" : "Beheer de vertalingen",
+    "label.code": "Code",
+    "label.locales.information": "Je kan de prioriteit van de talen veranderen door ze in de juiste volgorde te slepen.",
+    "label.name.native": "Naam",
     "image.processor.error.resize.value": "Geen geldige breedte en hoogte ingegeven",
     "image.processor.label.aspect": "Ratio 4:3",
     "image.processor.label.height": "Originele hoogte van foto",
@@ -8,7 +13,9 @@
     "image.processor.label.instruction2": "Druk 'Foto opslaan'",
     "image.processor.label.width": "Originele breedte van foto",
     "theme.bootstrap": "Bootstrap",
-    "title.image.processor": "Afbeelding bijsnijden",
     "title.details": "Details",
+    "title.image.processor": "Afbeelding bijsnijden",
+    "title.locales": "Talen",
+    "title.properties": "Eigenschappen",
     "title.terminal": "Terminal"
 }
