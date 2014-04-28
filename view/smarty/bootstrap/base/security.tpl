@@ -16,7 +16,11 @@
     <form id="{$form->getId()}" class="form-horizontal" action="{$app.url.request}" method="POST" role="form">
         <fieldset>
             <h3>{$form->getRow('secured-paths')->getLabel()}</h3>
+            <div class="form-group">
+                <div class="col-lg-12">
             {call formWidget form=$form row="secured-paths"}
+                </div>
+            </div>
 
             {if $form->hasRow('allowed-paths')}
                 <h3>{$form->getRow('allowed-paths')->getLabel()}</h3>
@@ -24,7 +28,11 @@
                 {foreach $roles as $role}
                     <li class="role role-{$role->getId()}">
                         <a href="#">{$role->getName()}</a>
-                        {call formWidget form=$form row="allowed-paths" part=$role->getId()}
+                        <div class="form-group">
+                            <div class="col-lg-12">
+                                {call formWidget form=$form row="allowed-paths" part=$role->getId()}
+                            </div>
+                        </div>
                     </li>
                 {/foreach}
                 </ul>
