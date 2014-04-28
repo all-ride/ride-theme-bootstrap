@@ -3,11 +3,11 @@
     {include file="base/form.prototype"}
 
     {$tableMessages = json_encode($table->getActionConfirmationMessages())}
-    <form id="{$tableForm->getId()}" action="{$tableAction}" method="POST" class="table" role="form" data-confirm-messages="{$tableMessages|escape}">
+    <form id="{$tableForm->getId()}" action="{if isset($tableAction)}{$tableAction}{else}{$table->getFormUrl()}{/if}" method="POST" class="table" role="form" data-confirm-messages="{$tableMessages|escape}">
         {formWidget form=$tableForm row=$tableNameField}
-        
+
         <fieldset>
-    
+
         {if $table->hasOrderMethods() || $table->hasSearch()}
             <div class="row-fluid table-header clearfix">
                 <div class="col-md-4"></div>
@@ -24,7 +24,7 @@
                         {block name="table.order"}
                             {translate key="label.table.order"}
                             {formWidget form=$tableForm row=$tableOrderField}
-                
+
                             {if $table->getOrderDirection() == 'asc'}
                                 {assign var="direction" value="desc"}
                                 {assign var="iconClass" value="glyphicon glyphicon-chevron-down"}
@@ -32,7 +32,7 @@
                                 {assign var="direction" value="asc"}
                                 {assign var="iconClass" value="glyphicon glyphicon-chevron-up"}
                             {/if}
-                
+
                             <a href="{$table->getOrderDirectionUrl()|replace:"%direction%":$direction}">
                                 <i class="{$iconClass}"></i>
                             </a>
@@ -41,21 +41,21 @@
                 </div>
             </div>
         {/if}
-    
+
         {if $table->hasRows()}
             {block name="table.content"}
                 {$table->getHtml()}
             {/block}
-    
+
             {if $table->hasActions() || $table->hasPaginationOptions()}
                 <div class="row-fluid">
-                    <div class="options col-md-3">    
+                    <div class="options col-md-3">
                         {if $table->hasActions()}
                             {block name="table.actions"}
                                 {if $tableForm->hasRow($tableActionField)}
                                     <input type="checkbox" id="{$tableForm->getId()}-action-all" class="check-all" />
                                     {formWidget form=$tableForm row=$tableActionField}
-                                {/if}                    
+                                {/if}
                             {/block}
                         {/if}
                     </div>
@@ -65,7 +65,7 @@
                                 {assign var="page" value=$table->getPage()}
                                 {assign var="pages" value=$table->getPages()}
                                 {assign var="href" value=$table->getPaginationUrl()}
-                                
+
                                 <div class="col-md-6 pagination">
                                     {if $pages > 1}
                                         {pagination page=$page pages=$pages href=$href}
@@ -90,7 +90,7 @@
             {/if}
         {/if}
         </fieldset>
-    </form>     
+    </form>
 {else}
     <p>No rows</p>
 {/if}

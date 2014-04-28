@@ -9,5 +9,9 @@
 {/block}
 
 {block name="content_body" append}
-    {include file="base/table" table=$tableModels tableForm=$tableModelsForm tableAction=$tableModelsAction}
+    {include file="base/table" table=$table tableForm=$form}
+{/block}
+
+{block name="scripts" append}
+    <script src="{$app.url.base}/js/table.js"></script>
 {/block}
