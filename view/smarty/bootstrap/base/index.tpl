@@ -11,7 +11,9 @@
     {block name="styles"}
         <link href="{$app.url.base}/css/bootstrap.min.css" rel="stylesheet" media="screen">
         <link href="{$app.url.base}/css/custom.css" rel="stylesheet" media="screen">
+    {/block}
 
+    {block name="styles_app"}
         {if isset($app.styles)}
             {foreach $app.styles as $style => $null}
                 {if substr($style, 0, 7) == 'http://' || substr(style, 0, 8) == 'https://' || substr($style, 0, 2) == '//'}
@@ -64,6 +66,8 @@
     {block name="scripts"}
         <script src="{$app.url.base}/js/jquery.js"></script>
         <script src="{$app.url.base}/js/bootstrap.min.js"></script>
+    {/block}
+    {block name="scripts_app"}
     {if isset($app.javascripts)}
         {foreach $app.javascripts as $script => $null}
             {if substr($script, 0, 7) == 'http://' || substr(script, 0, 8) == 'https://' || substr($script, 0, 2) == '//'}
