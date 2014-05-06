@@ -247,7 +247,7 @@
         {/if}
 
         <p
-           {foreach $widget->getAttributes() as $name => $attribute}
+           {foreach $attributes as $name => $attribute}
                {$name}="{$attribute|escape}"
            {/foreach}
          >{$widget->getValue($part)|escape}</p>
