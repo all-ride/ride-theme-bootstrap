@@ -3,9 +3,12 @@
     "button.role.add" : "Rol toevoegen",
     "button.roles.manage" : "Beheer de rollen",
     "button.save.image" : "Foto opslaan",
+    "button.term.add" : "Term toevoegen",
     "button.translations.manage" : "Beheer de vertalingen",
     "button.user.add" : "Gebruiker toevoegen",
     "button.users.manage" : "Beheer de gebruikers",
+    "button.vocabulary.add" : "Woordenboek toevoegen",
+    "button.vocabulary.manage" : "Beheer de woordenboeken",
     "label.code": "Code",
     "label.locales.information": "Je kan de prioriteit van de talen veranderen door ze in de juiste volgorde te slepen.",
     "label.name.native": "Naam",
@@ -29,5 +32,6 @@
     "title.locales": "Talen",
     "title.properties": "Eigenschappen",
     "title.roles": "Rollen",
-    "title.terminal": "Terminal"
+    "title.terminal": "Terminal",
+    "title.terms.vocabulary": "Termen van %vocabulary%"
 }

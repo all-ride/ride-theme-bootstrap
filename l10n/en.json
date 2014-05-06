@@ -3,9 +3,12 @@
     "button.role.add" : "Add a new role",
     "button.roles.manage" : "Manage the roles",
     "button.save.image" : "Save image",
+    "button.term.add" : "Add a new term",
     "button.translations.manage" : "Manage the translations",
     "button.user.add" : "Add a new user",
     "button.users.manage" : "Manage the users",
+    "button.vocabulary.add" : "Add a new vocabulary",
+    "button.vocabulary.manage" : "Manage the vocabularies",
     "label.code": "Code",
     "label.locales.information": "You can use drag and drop to change the priority of the languages.",
     "label.name.native": "Native name",
@@ -29,5 +32,6 @@
     "title.locales": "Languages",
     "title.properties": "Properties",
     "title.roles": "Roles",
-    "title.terminal": "Terminal"
+    "title.terminal": "Terminal",
+    "title.terms.vocabulary": "Terms of %vocabulary%"
 }
