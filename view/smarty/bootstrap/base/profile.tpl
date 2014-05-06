@@ -11,7 +11,7 @@
 {block name="content" append}
     {include file="base/form.prototype"}
 
-    <form id="{$form->getId()}" class="form-horizontal" action="{$app.url.request}" method="POST" enctype="multipart/form-data">
+    <form id="{$form->getId()}" class="form-horizontal" action="{$app.url.request}" method="POST" enctype="multipart/form-data" role="form">
         <fieldset>
             <div class="tabbable">
             <ul class="nav nav-tabs">
@@ -39,4 +39,8 @@
             {/if}
         </fieldset>
     </form>
+{/block}
+
+{block name="scripts" append}
+    <script src="{$app.url.base}/js/form.js"></script>
 {/block}

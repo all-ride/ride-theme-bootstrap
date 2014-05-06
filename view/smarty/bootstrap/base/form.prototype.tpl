@@ -239,11 +239,18 @@
 
     {$widget = $row->getWidget()}
     {if $widget}
-        <span
+        {$attributes = $widget->getAttributes()}
+        {if isset($attributes.class)}
+            {$attributes.class = "`$attributes.class` form-control-static"}
+        {else}
+            {$attributes.class = 'form-control-static'}
+        {/if}
+
+        <p
            {foreach $widget->getAttributes() as $name => $attribute}
                {$name}="{$attribute|escape}"
            {/foreach}
-         >{$widget->getValue($part)|escape}</span>
+         >{$widget->getValue($part)|escape}</p>
     {/if}
 {/function}
 
