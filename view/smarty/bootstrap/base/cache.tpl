@@ -1,14 +1,16 @@
 {extends file="base/index"}
 
-{block name="head_title" prepend}{translate key="title.cache"} - {/block}
+{block name="head_title" prepend}{translate key="title.system"} - {/block}
 
 {block name="content_title"}
     <div class="page-header">
-        <h1>{translate key="title.cache"}</h1>
+        <h1>{translate key="title.system"}</h1>
     </div>
 {/block}
 
 {block name="content" append}
+    {include file="base/system.tabs" active="cache"}
+
     {include file="base/form.prototype"}
 
     <form id="{$form->getId()}" class="form-horizontal" action="{$app.url.request}" method="POST">

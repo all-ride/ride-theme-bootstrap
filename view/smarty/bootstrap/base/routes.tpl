@@ -1,6 +1,6 @@
 {extends file="base/index"}
 
-{block name="head_title" prepend}{translate key="title.routes"} - {/block}
+{block name="head_title" prepend}{translate key="title.system"} - {/block}
 
 {block name="taskbar_panels" append}
     {call taskbarPanelSearch url=$app.url.request method="GET" query=$query}
