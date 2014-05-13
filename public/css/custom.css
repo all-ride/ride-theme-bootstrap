@@ -8,10 +8,7 @@ body .navbar {
     margin-bottom: 15px;
 }
 
-.collection-control .col-md-2,
-.collection-control .col-md-10 {
-	padding: 0;
-}
+
 
 .collection-control .col-md-2 {
 	padding-left: 15px;
@@ -20,8 +17,11 @@ body .navbar {
 @media (max-width: 991px) {
 	.collection-control .col-md-2 {
         margin-top: 15px;
-        padding: 0;
 	}
+  .collection-control .col-md-2,
+  .collection-control .col-md-10 {
+    padding: 0;
+  }
 }
 
 .nav-tabs { margin-bottom: 25px }
