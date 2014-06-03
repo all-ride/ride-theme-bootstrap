@@ -12,6 +12,7 @@
     "label.code": "Code",
     "label.locales.information": "Je kan de prioriteit van de talen veranderen door ze in de juiste volgorde te slepen.",
     "label.name.native": "Naam",
+    "label.options": "Opties",
     "label.security.description": "Elke pad definitie moet op een aparte lijn. * kan gebruikt worden om één pad token te matchen, ** om alles te matchen.",
     "label.table.order": "Sorteren op",
     "label.table.confirm.delete": "Ben je zeker dat je de geselecteerde items wenst te verwijderen?",
