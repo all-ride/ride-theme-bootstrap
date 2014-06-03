@@ -191,7 +191,8 @@
 
     {if $row}
         {if !$type}
-            {$type = $row->getType()|ucfirst}
+            {$widget = $row->getWidget()}
+            {$type = $widget->getType()|ucfirst}
         {/if}
 
         {if !$type}
