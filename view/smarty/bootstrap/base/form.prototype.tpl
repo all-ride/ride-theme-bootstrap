@@ -89,7 +89,7 @@
                 {$errors = array()}
             {/if}
 
-            <div class="form-group row-{$row->getName()|replace:'[':''|replace:']':''}{if $row->isDisabled()} disabled{/if}{if $row->isReadOnly()} readonly{/if} clearfix{if $errors} has-error{/if}{if $class} {$class}{/if}">
+            <div class="form-group row-{$row->getName()|replace:'[':''|replace:']':''}{if $row->isRequired()} required{/if}{if $row->isDisabled()} disabled{/if}{if $row->isReadOnly()} readonly{/if} clearfix{if $errors} has-error{/if}{if $class} {$class}{/if}">
                 <label class="col-md-2 control-label" for="{$widget->getId()}">{if $type != 'button'}{$row->getLabel()}{/if}</label>
                 <div class="col-md-10">
                     {call formWidget form=$form row=$row part=$part}
