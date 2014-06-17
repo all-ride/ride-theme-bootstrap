@@ -29,6 +29,19 @@ $.fn.formCollection = function() {
     });
 };
 
+$.fn.formFile = function() {
+    $(this).on('click', '.btn-file-delete', function() {
+        var anchor = $(this);
+        if (confirm(anchor.data('message'))) {
+            anchor.parents('.form-group').find('input[type=hidden]').val('');
+            anchor.parent('div').remove();
+        }
+
+        return false;
+    });
+};
+
 $(function() {
     $('form[role=form]').formCollection();
+    $('form[role=form]').formFile();
 });

@@ -664,7 +664,13 @@
          />
 
         {if $value}
-        <div class="help-block">{$value}</div>
+        <div class="help-block">
+            {$value}
+            <a href="#" class="btn-file-delete" data-message="{translate key="label.confirm.file.delete"}">
+                <i class="glyphicon glyphicon-remove"></i>
+                {translate key="button.delete"}
+            </a>
+        </div>
         {/if}
     {/if}
 {/function}
@@ -698,6 +704,11 @@
         {if $value}
         <div class="help-block">
             {image src=$value thumbnail="crop" width=100 height=100 title=$value}
+            <br />
+            <a href="#" class="btn-file-delete" data-message="{translate key="label.confirm.file.delete"}">
+                <i class="glyphicon glyphicon-remove"></i>
+                {translate key="button.delete"}
+            </a>
         </div>
         {/if}
     {/if}
