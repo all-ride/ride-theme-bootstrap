@@ -25,3 +25,20 @@ body .navbar {
 }
 
 .nav-tabs { margin-bottom: 25px }
+
+/* Collection */
+.collection-control {
+  position: relative;
+}
+
+.order-handle {
+  width: 9px;
+  height: 17px;
+  background: transparent url(data:image/gif;base64,R0lGODlhCQARAJECAM/m/42Iev///wAAACH5BAEAAAIALAAAAAAJABEAAAIilI8Rpqcg3gFQUITZiptDaVxWlTlbo30BKYqlBqfeVLllAQA7) no-repeat;
+  cursor: move;
+
+  position: absolute;
+  left: 0;
+  top: 7px;
+  z-index: 1;
+}
