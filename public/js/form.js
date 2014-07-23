@@ -31,7 +31,7 @@ $.fn.formCollection = function() {
     $('[data-order=true] .collection-control-group').first().sortable({
         axis: "y",
         cursor: "move",
-        handle: ".control-label",
+        handle: ".order-handle",
         items: "> .collection-control",
         select: false,
         scroll: true

@@ -775,6 +775,7 @@
     {/if}
 
     <div class="collection-control clearfix">
+        <div class="order-handle"></div>
         <div class="col-md-10">
         {$widget = $row->getWidget()}
         {if $widget}
