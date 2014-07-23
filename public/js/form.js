@@ -27,6 +27,15 @@ $.fn.formCollection = function() {
 
         return false;
     });
+
+    $('[data-order=true] .collection-control-group').first().sortable({
+        axis: "y",
+        cursor: "move",
+        handle: ".control-label",
+        items: "> .collection-control",
+        select: false,
+        scroll: true
+    }).disableSelection();
 };
 
 $.fn.formFile = function() {
