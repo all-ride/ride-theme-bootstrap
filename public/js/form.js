@@ -28,14 +28,14 @@ $.fn.formCollection = function() {
         return false;
     });
 
-    $('[data-order=true] .collection-control-group').first().sortable({
+    $('[data-order=true] .collection-control-group').sortable({
         axis: "y",
         cursor: "move",
         handle: ".order-handle",
         items: "> .collection-control",
         select: false,
         scroll: true
-    }).disableSelection();
+    });
 };
 
 $.fn.formFile = function() {
