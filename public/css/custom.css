@@ -31,7 +31,7 @@ body .navbar {
   position: relative;
 }
 
-.order-handle {
+[data-order] .order-handle {
   width: 9px;
   height: 17px;
   background: transparent url(data:image/gif;base64,R0lGODlhCQARAJECAM/m/42Iev///wAAACH5BAEAAAIALAAAAAAJABEAAAIilI8Rpqcg3gFQUITZiptDaVxWlTlbo30BKYqlBqfeVLllAQA7) no-repeat;
