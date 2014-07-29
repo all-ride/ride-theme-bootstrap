@@ -18,7 +18,7 @@
     <form id="{$form->getId()}" class="form-horizontal" action="{$app.url.request}" method="POST" role="form" enctype="multipart/form-data">
         <fieldset>
             {call formRows form=$form}
-        
+
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" class="btn btn-default" value="{translate key="button.save"}" />
@@ -26,9 +26,10 @@
                 </div>
             </div>
         </fieldset>
-    </form>    
+    </form>
 {/block}
 
 {block name="scripts" append}
+    <script src="{$app.url.base}/js/jquery-ui.js"></script>
     <script src="{$app.url.base}/js/form.js"></script>
 {/block}

@@ -10,7 +10,7 @@
 
 {block name="content_body" append}
     <div class="col-md-9">
-        {image src=$path id="image-input"}
+        <img src="{image src=$path}" id="image-input" />
     </div>
 
     <div class="col-md-3">
