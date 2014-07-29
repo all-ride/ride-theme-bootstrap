@@ -118,12 +118,6 @@
                     {elseif $type == 'select' && $widget->isMultiple()}
                         <span class="help-block">{translate key="label.multiselect"}</span>
                     {/if}
-
-{*
-                    {if $type == 'image' && $row->getData()}
-                        {image src=$row->getData() width=100 height=100 thumbnail="crop"}
-                    {/if}
-*}
                 </div>
             </div>
         {/if}
@@ -703,7 +697,7 @@
 
         {if $value}
         <div class="help-block">
-            {image src=$value thumbnail="crop" width=100 height=100 title=$value}
+            <img src="{image src=$value transformation="crop" width=100 height=100}" title="{$value}" />
             <br />
             <a href="#" class="btn-file-delete" data-message="{translate key="label.confirm.file.delete"}">
                 <i class="glyphicon glyphicon-remove"></i>

@@ -75,7 +75,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         {if $app.user}
                             {if $app.user->getImage()}
-                               {image src=$app.user->getImage() width=18 height=18 thumbnail="crop"}
+                               <img src="{image src=$app.user->getImage() transformation="crop" width=18 height=18}" />
                             {/if}
                             {$app.user->getDisplayName()}
                         {else}
