@@ -11,7 +11,7 @@
 {block name="content" append}
     {include file="base/form.prototype"}
 
-    <p>{translate key="label.security.description"}</p>
+    <p>{translate key="label.path.security.description"}</p>
 
     <form id="{$form->getId()}" class="form-horizontal" action="{$app.url.request}" method="POST" role="form">
         <fieldset>

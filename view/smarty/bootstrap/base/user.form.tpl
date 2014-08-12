@@ -11,8 +11,22 @@
 {block name="content" append}
     {include file="base/form.prototype"}
 
-    <form id="{$form->getId()}" class="form-horizontal" action="{$app.url.request}" method="POST" role="form">
+    <form id="{$form->getId()}" class="form-horizontal" action="{$app.url.request}" method="POST" role="form" enctype="multipart/form-data">
         <fieldset>
+            <h3>{translate key="title.details"}</h3>
+            {call formRow form=$form row="name"}
+            {call formRow form=$form row="email"}
+            {call formRow form=$form row="email-confirmed"}
+            {call formRow form=$form row="image"}
+
+            <h3>{translate key="title.credentials"}</h3>
+            {call formRow form=$form row="username"}
+            {call formRow form=$form row="password"}
+
+            <h3>{translate key="title.security"}</h3>
+            {call formRow form=$form row="active"}
+            {call formRow form=$form row="roles"}
+
             {call formRows form=$form}
 
             <div class="form-group">

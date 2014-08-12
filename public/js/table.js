@@ -30,6 +30,10 @@ $.fn.table = function() {
 	});
 
 	$('td.action a').addClass('btn btn-default');
+
+	$("tr.disabled").css({ opacity: 0.5 });
+	$('tr.disabled a').contents().unwrap();
+	$('tr.disabled input[type=checkbox]').attr('disabled', 'disabled');
 };
 
 $(function() {

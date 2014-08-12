@@ -25,6 +25,7 @@
                 <div class="form-group{if $errors} has-error{/if}">
                     <div class="col-lg-12">
                         {call formWidget form=$form row="password"}
+                        <a href="{url id="profile.password.request"}" class="btn">{translate key="button.password.reset"}</a>
                     </div>
                 </div>
 

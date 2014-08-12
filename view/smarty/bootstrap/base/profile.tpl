@@ -30,13 +30,13 @@
                 </div>
             {/foreach}
             {if $form->hasRow('submit-unregister')}
-                <div id="hook-unregister" class="tab-pane{if $activeHook == $hookName} active{/if}">
+                <div id="hook-unregister" class="tab-pane{if $activeHook == 'unregister'} active{/if}">
                     <p>{translate key="label.unregister"}</p>
 
                     {call formRow form=$form row="submit-unregister"}
                 </div>
-            </div>
             {/if}
+            </div>
         </fieldset>
     </form>
 {/block}
