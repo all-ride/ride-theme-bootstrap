@@ -43,4 +43,5 @@
 {block name="scripts" append}
     <script src="{$app.url.base}/js/jquery-ui.js"></script>
     <script src="{$app.url.base}/js/form.js"></script>
+    <script src="{$app.url.base}/js/table.js"></script>
 {/block}
