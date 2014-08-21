@@ -8,8 +8,6 @@ body .navbar {
     margin-bottom: 15px;
 }
 
-
-
 .collection-control .col-md-2 {
 	padding-left: 15px;
 }
@@ -29,6 +27,14 @@ body .navbar {
 /* Collection */
 .collection-control {
   position: relative;
+}
+
+form input[type=text].time {
+  width: 65px;
+}
+
+form input[type=number].form-control {
+  width: auto;
 }
 
 [data-order] .order-handle {
