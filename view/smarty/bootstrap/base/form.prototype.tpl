@@ -45,7 +45,7 @@
 
             {$errors = $form->getValidationErrors($row->getName())}
             {if $errors}
-            <div class="form-group has-error">
+            <div class="form__group has-error">
                 {call formWidgetErrors form=$form row=$row}
             </div>
             {/if}
@@ -54,11 +54,11 @@
         {elseif $type == 'collection'}
             {$errors = $form->getValidationErrors($row->getName())}
 
-            <div class="form-group row-{$row->getName()|replace:'[':''|replace:']':''}{if $row->isRequired()} required{/if}{if $row->isDisabled()} disabled{/if}{if $row->isReadOnly()} readonly{/if} clearfix{if $errors} has-error{/if}{if $class} {$class}{/if}"{if $row->getOption('order')} data-order="true"{/if}>
-                <label class="col-md-2 control-label">{$row->getLabel()}</label>
+            <div class="form__group grid row-{$row->getName()|replace:'[':''|replace:']':''}{if $row->isRequired()} required{/if}{if $row->isDisabled()} disabled{/if}{if $row->isReadOnly()} readonly{/if} clearfix{if $errors} has-error{/if}{if $class} {$class}{/if}"{if $row->getOption('order')} data-order="true"{/if}>
+                <label class="grid--bp-med__2 form__label">{$row->getLabel()}</label>
 
                 {call formCollectionPrototype assign="prototype" form=$form row=$row part='%prototype%'}
-                <div class="col-md-10 collection-controls" data-prototype="{$prototype|escape:"html"|trim|replace:"\n":''}">
+                <div class="grid--bp-med__10 collection-controls" data-prototype="{$prototype|escape:"html"|trim|replace:"\n":''}">
                     {call formWidgetCollection form=$form row=$row part=$part}
 
                    {if $errors}
@@ -71,7 +71,7 @@
 
                     {$description = $row->getDescription()}
                     {if $description}
-                    <span class="help-block">{$description}</span>
+                    <div class="form__help">{$description}</div>
                     {/if}
                 </div>
             </div>
@@ -89,9 +89,9 @@
                 {$errors = array()}
             {/if}
 
-            <div class="form-group row-{$row->getName()|replace:'[':''|replace:']':''}{if $row->isRequired()} required{/if}{if $row->isDisabled()} disabled{/if}{if $row->isReadOnly()} readonly{/if} clearfix{if $errors} has-error{/if}{if $class} {$class}{/if}">
-                <label class="col-md-2 control-label" for="{$widget->getId()}">{if $type != 'button'}{$row->getLabel()}{/if}</label>
-                <div class="col-md-10">
+            <div class="form__item form__item--{$row->getName()|replace:'[':''|replace:']':''}{if $row->isRequired()} form__item--required{/if}{if $row->isDisabled()} form__item--disabled{/if}{if $row->isReadOnly()} form__item--readonly{/if} clearfix{if $errors} has-error{/if}{if $class} {$class}{/if}">
+                <label class="form__label" for="{$widget->getId()}">{if $type != 'button'}{$row->getLabel()}{/if}</label>
+                <div class="clearfix">
                     {call formWidget form=$form row=$row part=$part}
 
                     {if $errors}
@@ -110,13 +110,13 @@
 
                     {$description = $row->getDescription()}
                     {if $description && $type !== 'checkbox' && ($type !== 'option' || ($type === 'option' && $widget && $widgetOptions))}
-                        <span class="help-block">{$description}</span>
+                        <div class="form__help">{$description}</div>
                     {/if}
 
                     {if $type == 'date'}
-                        <span class="help-block">{translate key="label.date.example" example=time()|date_format:$row->getFormat() format=$row->getFormat()}</span>
+                        <div class="form__help">{translate key="label.date.example" example=time()|date_format:$row->getFormat() format=$row->getFormat()}</div>
                     {elseif $type == 'select' && $widget->isMultiple()}
-                        <span class="help-block">{translate key="label.multiselect"}</span>
+                        <div class="form__help">{translate key="label.multiselect"}</div>
                     {/if}
                 </div>
             </div>
@@ -157,17 +157,17 @@
             {/if}
 
             {if $errors}
-                <ul class="errors help-block">
+                <ul class="errors form__help">
                 {foreach $errors as $error}
                     <li>{$error->getCode()|translate:$error->getParameters()}</li>
                 {/foreach}
                 </ul>
             {/if}
         {else}
-            <span class="error">No widget set in row {$row->getName()}.</span>
+            <div class="error">No widget set in row {$row->getName()}.</div>
         {/if}
     {else}
-        <span class="error">No row provided</span>
+        <div class="error">No row provided</div>
     {/if}
 {/function}
 
@@ -190,7 +190,7 @@
         {/if}
 
         {if !$type}
-            <span class="error">No type provided for row {$row->getName()}</span>
+            <div class="error">No type provided for row {$row->getName()}</div>
         {else}
             {$function = "formWidget`$type`"}
             {call $function form=$form row=$row part=$part}
@@ -198,7 +198,7 @@
             {$row->setIsRendered(true)}
         {/if}
     {else}
-        <span class="error">No row provided</span>
+        <div class="error">No row provided</div>
     {/if}
 {/function}
 
@@ -236,9 +236,9 @@
     {if $widget}
         {$attributes = $widget->getAttributes()}
         {if isset($attributes.class)}
-            {$attributes.class = "`$attributes.class` form-control-static"}
+            {$attributes.class = "`$attributes.class` form__label"}
         {else}
-            {$attributes.class = 'form-control-static'}
+            {$attributes.class = 'form__label'}
         {/if}
 
         <p
@@ -262,9 +262,9 @@
     {if $widget}
         {$attributes = $widget->getAttributes()}
         {if isset($attributes.class)}
-            {$attributes.class = "`$attributes.class` btn btn-default"}
+            {$attributes.class = "btn btn--default `$attributes.class`"}
         {else}
-            {$attributes.class = 'btn btn-default'}
+            {$attributes.class = 'btn btn--default'}
         {/if}
 
         <button
@@ -290,9 +290,9 @@
     {if $widget}
         {$attributes = $widget->getAttributes()}
         {if isset($attributes.class)}
-            {$attributes.class = "`$attributes.class` form-control"}
+            {$attributes.class = "`$attributes.class` form__text"}
         {else}
-            {$attributes.class = 'form-control'}
+            {$attributes.class = 'form__text'}
         {/if}
 
         {$value = $widget->getValue($part)}
@@ -331,12 +331,12 @@
     {if $widget}
         {$attributes = $widget->getAttributes()}
         {if isset($attributes.class)}
-            {$attributes.class = "`$attributes.class` form-control"}
+            {$attributes.class = "`$attributes.class` form__text"}
         {else}
-            {$attributes.class = 'form-control'}
+            {$attributes.class = 'form__text'}
         {/if}
 
-        <input type="number"
+        <input type="text" inputmode ="number"
                name="{$widget->getName()}{if $part}[{$part}]{/if}"
                value="{$widget->getValue($part)|escape}"
            {foreach $attributes as $name => $attribute}
@@ -359,9 +359,9 @@
     {if $widget}
         {$attributes = $widget->getAttributes()}
         {if isset($attributes.class)}
-            {$attributes.class = "`$attributes.class` form-control"}
+            {$attributes.class = "`$attributes.class` form__text"}
         {else}
-            {$attributes.class = 'form-control'}
+            {$attributes.class = 'form__text'}
         {/if}
 
         <input type="email"
@@ -387,9 +387,9 @@
     {if $widget}
         {$attributes = $widget->getAttributes()}
         {if isset($attributes.class)}
-            {$attributes.class = "`$attributes.class` form-control"}
+            {$attributes.class = "`$attributes.class` form__text"}
         {else}
-            {$attributes.class = 'form-control'}
+            {$attributes.class = 'form__text'}
         {/if}
 
         <input type="date"
@@ -415,9 +415,9 @@
     {if $widget}
         {$attributes = $widget->getAttributes()}
         {if isset($attributes.class)}
-            {$attributes.class = "`$attributes.class` form-control"}
+            {$attributes.class = "`$attributes.class` form__text"}
         {else}
-            {$attributes.class = 'form-control'}
+            {$attributes.class = 'form__text'}
         {/if}
 
         <input type="website"
@@ -443,9 +443,9 @@
     {if $widget}
         {$attributes = $widget->getAttributes()}
         {if isset($attributes.class)}
-            {$attributes.class = "`$attributes.class` form-control"}
+            {$attributes.class = "`$attributes.class` form__text"}
         {else}
-            {$attributes.class = 'form-control'}
+            {$attributes.class = 'form__text'}
         {/if}
 
         <input type="password"
@@ -470,9 +470,9 @@
     {if $widget}
         {$attributes = $widget->getAttributes()}
         {if isset($attributes.class)}
-            {$attributes.class = "`$attributes.class` form-control"}
+            {$attributes.class = "`$attributes.class` form__text"}
         {else}
-            {$attributes.class = 'form-control'}
+            {$attributes.class = 'form__text'}
         {/if}
 
         {$value = $widget->getValue($part)}
@@ -507,9 +507,9 @@
     {if $widget}
         {$attributes = $widget->getAttributes()}
         {if isset($attributes.class)}
-            {$attributes.class = "`$attributes.class` form-control"}
+            {$attributes.class = "`$attributes.class` form__text"}
         {else}
-            {$attributes.class = 'form-control'}
+            {$attributes.class = 'form__text'}
         {/if}
 
         <textarea name="{$widget->getName()}{if $part}[{$part}]{/if}"
@@ -538,6 +538,12 @@
         {/if}
 
         {$attributes = $widget->getAttributes()}
+        {if isset($attributes.class)}
+            {$attributes.class = "`$attributes.class` form__`$type`"}
+        {else}
+            {$attributes.class = "form__`$type`"}
+        {/if}
+
         {$value = $widget->getValue()}
         {$options = $widget->getOptions()}
         {if $part !== null}
@@ -557,8 +563,8 @@
         {else}
             {if is_array($options)}
                 {foreach $options as $option => $label}
-                    <div class="{$type}">
-                        <label>
+                    <div class="form__{$type}-item">
+                        <label class="form__label form__label--checkbox">
                             <input type="{$type}"
                                    name="{$widget->getName()}{if $part}[{$part}]{elseif $type == 'checkbox'}[]{/if}"
                                    value="{$option}"
@@ -575,8 +581,8 @@
                     </div>
                 {/foreach}
             {else}
-                <div class="checkbox">
-                    <label{if isset($attributes.disabled)} class="text-muted"{/if}>
+                <div class="form__checkbox-type">
+                    <label class="form__label form__label--checkbox{if isset($attributes.disabled)} form__label--muted{/if}">
                         <input type="checkbox" name="{$widget->getName()}" value="1"{if $value} checked="checked"{/if}
                             {foreach $attributes as $name => $attribute}
                                 {$name}="{$attribute|escape}"
@@ -603,9 +609,9 @@
     {if $widget}
         {$attributes = $widget->getAttributes()}
         {if isset($attributes.class)}
-            {$attributes.class = "`$attributes.class` form-control"}
+            {$attributes.class = "`$attributes.class` form__select"}
         {else}
-            {$attributes.class = 'form-control'}
+            {$attributes.class = 'form__select'}
         {/if}
 
         {$value = $widget->getValue()}
@@ -658,7 +664,7 @@
          />
 
         {if $value}
-        <div class="help-block">
+        <div class="form__help">
             {$value}
             <a href="#" class="btn-file-delete" data-message="{translate key="label.confirm.file.delete"}">
                 <i class="glyphicon glyphicon-remove"></i>
@@ -696,7 +702,7 @@
          />
 
         {if $value}
-        <div class="help-block">
+        <div class="form__help">
             <img src="{image src=$value transformation="crop" width=100 height=100}" title="{$value}" />
             <br />
             <a href="#" class="btn-file-delete" data-message="{translate key="label.confirm.file.delete"}">
@@ -725,10 +731,10 @@
         {if $row->getType() == 'component'}
             {call formRows form=$form rows=$row->getRows() rowClass=$class}
         {else}
-            <span class="error">No component row provided</span>
+            <div class="error">No component row provided</div>
         {/if}
     {else}
-        <span class="error">No row provided</span>
+        <div class="error">No row provided</div>
     {/if}
 {/function}
 
@@ -757,7 +763,7 @@
         {/if}
     </div>
 
-    <a href="#" class="btn btn-default prototype-add{if $row->isDisabled() || $row->isReadOnly()} disabled{/if}"><i class="glyphicon glyphicon-plus"></i> {translate key="button.add"}</a>
+    <a href="#" class="btn btn--brand prototype-add{if $row->isDisabled() || $row->isReadOnly()} disabled{/if}"><i class="glyphicon glyphicon-plus"></i> {translate key="button.add"}</a>
 {/function}
 
 {*
@@ -770,17 +776,31 @@
 
     <div class="collection-control clearfix">
         <div class="order-handle"></div>
-        <div class="col-md-10">
-        {$widget = $row->getWidget()}
-        {if $widget}
-            {call formWidget form=$form row=$row part=$part type=$widget->getType()}
-        {else}
-            {call formRow form=$form row=$row->getRow($part)}
-        {/if}
-        </div>
-        <div class="col-md-2">
-            <a href="#" class="btn btn-default prototype-remove{if $row->isDisabled() || $row->isReadOnly()} disabled{/if}"><i class="glyphicon glyphicon-minus"></i> {translate key="button.remove"}</a>
+        <div class="grid grid--vr-m">
+            <div class="grid--bp-med__10">
+            {$widget = $row->getWidget()}
+            {if $widget}
+                {call formWidget form=$form row=$row part=$part type=$widget->getType()}
+            {else}
+                {call formRow form=$form row=$row->getRow($part)}
+            {/if}
+            </div>
+            <div class="grid--bp-med__2">
+                <a href="#" class="btn btn--default prototype-remove{if $row->isDisabled() || $row->isReadOnly()} disabled{/if}"><i class="glyphicon glyphicon-minus"></i> {translate key="button.remove"}</a>
+            </div>
         </div>
         <hr />
+    </div>
+{/function}
+
+{*
+    Renders the form actions, if a referer is passed, a cancel button will be presented
+*}
+{function name="formActions" referer=null}
+    <div class="form__actions">
+        <button type="submit" class="btn btn--default">{translate key="button.save"}</button>
+        {if $referer}
+            <a href="{$referer}" class="btn btn--link">{translate key="button.cancel"}</a>
+        {/if}
     </div>
 {/function}

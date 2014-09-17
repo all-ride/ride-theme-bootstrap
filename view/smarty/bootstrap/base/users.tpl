@@ -9,15 +9,15 @@
 {/block}
 
 {block name="content" append}
-    <div class="btn-group">
+    <div class="btn--group">
         {url id="system.security.role" var="urlRoles"}
         {url id="system.security.user.add" var="urlUserAdd"}
 
         {isGranted url=$urlUserAdd}
-        <a class="btn btn-default" href="{$urlUserAdd}?referer={$app.url.request|escape}">{translate key="button.user.add"}</a>
+        <a class="btn btn--default" href="{$urlUserAdd}?referer={$app.url.request|escape}">{translate key="button.user.add"}</a>
         {/isGranted}
         {isGranted url=$urlRoles}
-        <a class="btn btn-default" href="{$urlRoles}">{translate key="button.roles.manage"}</a>
+        <a class="btn btn--default" href="{$urlRoles}">{translate key="button.roles.manage"}</a>
         {/isGranted}
     </div>
 

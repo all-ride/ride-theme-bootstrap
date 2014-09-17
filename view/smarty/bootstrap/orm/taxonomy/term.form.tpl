@@ -10,18 +10,18 @@
     {include file="base/form.prototype"}
 
     <form id="{$form->getId()}" class="form-horizontal" action="{$app.url.request}" method="POST" role="form" enctype="multipart/form-data">
-        <fieldset>
+        <div class="form__group">
             {call formRows form=$form}
 
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" class="btn btn-default" value="{translate key="button.save"}" />
+            <div class="form__group">
+                <div class="grid--bp-med__offset-2 grid--bp-med__10">
+                    <input type="submit" class="btn btn--default" value="{translate key="button.save"}" />
                     {if $referer}
                         <a class="btn" href="{$referer}">{translate key="button.cancel"}</a>
                     {/if}
                 </div>
             </div>
-        </fieldset>
+        </div>
     </form>
 {/block}
 

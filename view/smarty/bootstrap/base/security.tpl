@@ -14,9 +14,9 @@
     <p>{translate key="label.path.security.description"}</p>
 
     <form id="{$form->getId()}" class="form-horizontal" action="{$app.url.request}" method="POST" role="form">
-        <fieldset>
+        <div class="form__group">
             <h3>{$form->getRow('secured-paths')->getLabel()}</h3>
-            <div class="form-group">
+            <div class="form__group">
                 <div class="col-lg-12">
             {call formWidget form=$form row="secured-paths"}
                 </div>
@@ -28,7 +28,7 @@
                 {foreach $roles as $role}
                     <li class="role role-{$role->getId()}">
                         <a href="#">{$role->getName()}</a>
-                        <div class="form-group">
+                        <div class="form__group">
                             <div class="col-lg-12">
                                 {call formWidget form=$form row="allowed-paths" part=$role->getId()}
                             </div>
@@ -38,12 +38,12 @@
                 </ul>
             {/if}
 
-            <div class="form-group">
+            <div class="form__group">
                 <div class="col-lg-12">
-                    <input type="submit" class="btn btn-default" value="{translate key="button.save"}" />
+                    <input type="submit" class="btn btn--default" value="{translate key="button.save"}" />
                 </div>
             </div>
-        </fieldset>
+        </div>
     </form>
 {/block}
 

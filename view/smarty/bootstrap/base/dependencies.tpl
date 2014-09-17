@@ -24,8 +24,8 @@
     <table class="table table-responsive table-striped">
         <thead>
             <tr>
-                <th class="col-md-2">{translate key="label.id"}</th>
-                <th class="col-md-5">{translate key="label.class"}</th>
+                <th class="grid--bp-med__2">{translate key="label.id"}</th>
+                <th class="grid--bp-med__5">{translate key="label.class"}</th>
                 <th>{translate key="label.calls"}</th>
             </tr>
         </thead>

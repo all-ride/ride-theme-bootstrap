@@ -14,8 +14,8 @@
     {include file="base/form.prototype"}
 
     <form id="{$form->getId()}" class="form-horizontal" action="{$app.url.request}" method="POST">
-        <fieldset>
-            <div class="form-group">
+        <div class="form__group">
+            <div class="form__group">
                 <div class="col-lg-12">
                     {foreach $controls as $name => $control}
                         {call formWidget form=$form row=$name}
@@ -24,13 +24,13 @@
             </div>
 
             <div class="form-actions">
-                <input type="submit" name="submit" class="btn btn-default" value="{"label.`$action`"|translate}" />
+                <input type="submit" name="submit" class="btn btn--default" value="{"label.`$action`"|translate}" />
                 {if $action == "enable"}
                     <a href="{url id="system.cache.clear"}" class="btn">{translate key="button.cache.clear"}</a>
                 {else}
                     <a href="{url id="system.cache"}" class="btn">{translate key="button.cancel"}</a>
                 {/if}
             </div>
-        </fieldset>
+        </div>
     </form>
 {/block}

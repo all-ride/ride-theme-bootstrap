@@ -15,14 +15,15 @@
 {block name="content" append}
     {include file="base/form.prototype"}
 
-    <form id="{$form->getId()}" class="form-horizontal" action="{$app.url.request}" method="POST" role="form" enctype="multipart/form-data">
-        <fieldset>
-            {call formRows form=$form}
+    <form id="{$form->getId()}" class="form" action="{$app.url.request}" method="POST" role="form" enctype="multipart/form-data">
+        <div class="form__group grid">
 
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" class="btn btn-default" value="{translate key="button.save"}" />
-                    <a class="btn" href="{$referer}">{translate key="button.cancel"}</a>
+            <div class="grid--bp-med__8">
+                {call formRows form=$form}
+
+                <div class="form__actions">
+                    <input type="submit" class="btn btn--default" value="{translate key="button.save"}" />
+                    <a class="btn btn--link" href="{$referer}">{translate key="button.cancel"}</a>
                 </div>
             </div>
         </fieldset>

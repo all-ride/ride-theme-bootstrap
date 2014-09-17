@@ -16,10 +16,10 @@
     {include file="base/form.prototype"}
 
     <form id="{$form->getId()}" class="form-horizontal" action="{$app.url.request}" method="POST" role="form" enctype="multipart/form-data">
-        <fieldset>
+        <div class="form__group">
             <div class="form-group row-date clearfix">
-                <label for="form-event-dateStart" class="col-md-2 control-label">{translate key="label.date"}</label>
-                <div class="col-md-10">
+                <label for="form-event-dateStart" class="grid--bp-med__2 control-label">{translate key="label.date"}</label>
+                <div class="grid--bp-med__10">
                     {call formWidget form=$form row=$form->getRow('date')->getRow('dateStart')}
                     {call formWidget form=$form row=$form->getRow('date')->getRow('timeStart')}
                     <span class="until">&nbsp;{"label.until"|translate|lower}&nbsp;</span>
@@ -30,7 +30,7 @@
                     {call formWidget form=$form row=$form->getRow('date')->getRow('isPeriod')}
                     {call formWidget form=$form row=$form->getRow('date')->getRow('isRepeat')}
                 </div>
-                <div class="col-md-offset-2 col-md-10">
+                <div class="grid--bp-med__offset-2 grid--bp-med__10">
                     {call formWidgetErrors form=$form row=$form->getRow('date')->getRow('dateStart')}
                     {call formWidgetErrors form=$form row=$form->getRow('date')->getRow('timeStart')}
                     {call formWidgetErrors form=$form row=$form->getRow('date')->getRow('dateStop')}
@@ -44,8 +44,8 @@
 
             <div class="repeater">
                 <div class="form-group row-step clearfix">
-                    <label for="form-event-step" class="col-md-2 control-label">{translate key="label.mode"}</label>
-                    <div class="col-md-10">
+                    <label for="form-event-step" class="grid--bp-med__2 control-label">{translate key="label.mode"}</label>
+                    <div class="grid--bp-med__10">
                         {call formWidget form=$form row=$form->getRow('date')->getRow('mode')}
                         &nbsp;{"label.event.every"|translate|lower}&nbsp;
                         {call formWidget form=$form row=$form->getRow('date')->getRow('step')}
@@ -60,8 +60,8 @@
                 {call formRow form=$form row=$form->getRow('date')->getRow('monthly')}
 
                 <div class="form-group row-until clearfix">
-                    <label class="col-md-2 control-label" for="form-event-performance-until">{translate key="label.until"}</label>
-                    <div class="col-md-10">
+                    <label class="grid--bp-med__2 control-label" for="form-event-performance-until">{translate key="label.until"}</label>
+                    <div class="grid--bp-med__10">
                         <div class="radio">
                             <label>
                                 {call formWidget form=$form row=$form->getRow('date')->getRow('until') part="date"}
@@ -90,13 +90,13 @@
 
             {call formRows form=$form}
 
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" class="btn btn-default" value="{translate key="button.save"}" />
+            <div class="form__group">
+                <div class="grid--bp-med__offset-2 grid--bp-med__10">
+                    <input type="submit" class="btn btn--default" value="{translate key="button.save"}" />
                     <a class="btn" href="{$referer}">{translate key="button.cancel"}</a>
                 </div>
             </div>
-        </fieldset>
+        </div>
     </form>
 {/block}
 

@@ -9,9 +9,9 @@
 {/block}
 
 {block name="content" append}
-    <div class="btn-group">
-        <a class="btn btn-default" href="{url id="system.security.role.add"}?referer={$app.url.request|escape}">{translate key="button.role.add"}</a>
-        <a class="btn btn-default" href="{url id="system.security.user"}">{translate key="button.users.manage"}</a>
+    <div class="btn--group">
+        <a class="btn btn--default" href="{url id="system.security.role.add"}?referer={$app.url.request|escape}">{translate key="button.role.add"}</a>
+        <a class="btn btn--default" href="{url id="system.security.user"}">{translate key="button.users.manage"}</a>
     </div>
 
     <p></p>

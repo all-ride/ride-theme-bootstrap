@@ -9,9 +9,9 @@
 {/block}
 
 {block name="content_body" append}
-    <div class="btn-group">
-        <a class="btn btn-default" href="{url id="taxonomy.term.add" parameters=["vocabulary" => $vocabulary->id]}">{translate key="button.term.add"}</a>
-        <a class="btn btn-default" href="{url id="taxonomy.vocabulary.list"}">{translate key="button.vocabulary.manage"}</a>
+    <div class="btn--group">
+        <a class="btn btn--default" href="{url id="taxonomy.term.add" parameters=["vocabulary" => $vocabulary->id]}">{translate key="button.term.add"}</a>
+        <a class="btn btn--default" href="{url id="taxonomy.vocabulary.list"}">{translate key="button.vocabulary.manage"}</a>
     </div>
 
     <p></p>

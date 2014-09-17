@@ -12,7 +12,7 @@
     {include file="base/form.prototype"}
 
     <form id="{$form->getId()}" class="form-horizontal" action="{$app.url.request}" method="POST" role="form" enctype="multipart/form-data">
-        <fieldset>
+        <div class="form__group">
             <h3>{translate key="title.details"}</h3>
             {call formRow form=$form row="name"}
             {call formRow form=$form row="email"}
@@ -29,14 +29,14 @@
 
             {call formRows form=$form}
 
-            <div class="form-group">
+            <div class="form__group">
                 <div class="col-lg-offset-2 col-lg-10">
-                    <input type="submit" class="btn btn-default" value="{translate key="button.save"}" />
+                    <input type="submit" class="btn btn--default" value="{translate key="button.save"}" />
                     {if $referer}
                         <a href="{$referer}" class="btn">{translate key="button.cancel"}</a>
                     {/if}
                 </div>
             </div>
-        </fieldset>
+        </div>
     </form>
 {/block}

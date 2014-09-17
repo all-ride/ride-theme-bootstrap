@@ -9,16 +9,16 @@
 {/block}
 
 {block name="content_body" append}
-    <div class="col-md-9">
+    <div class="grid--bp-med__9">
         <img src="{image src=$path}" id="image-input" />
     </div>
 
-    <div class="col-md-3">
+    <div class="grid--bp-med__3">
         {include file="base/form.prototype"}
         <form id="{$form->getId()}" class="form-horizontal" enctype="multipart/form-data" method="post" action="{$app.url.request}" name="{$form->getId()}" role="form">
             {call formRows form=$form}
 
-            <input type="submit" class="btn btn-default btn-lg" value="{translate key="button.save.image"}" />
+            <input type="submit" class="btn btn--default btn-lg" value="{translate key="button.save.image"}" />
             {if $referer}
                 <a href="{$referer}" class="btn">{translate key="button.cancel"}</a>
             {/if}
