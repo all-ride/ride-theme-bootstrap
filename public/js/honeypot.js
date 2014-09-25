@@ -9,7 +9,7 @@ $.fn.honeyPot = function(options) {
 
         var defaultValue = $input.data('value');
         if (defaultValue) {
-            // $input.val(defaultValue);
+            $input.val(defaultValue);
         }
 
         $input.parents('.form-group').hide();
@@ -20,8 +20,15 @@ $.fn.honeyPot = function(options) {
 
         $(options.fields).each(function(index, value) {
             var $input = $('input[name=' + value + ']', $this);
+            var value = $input.val();
 
-            submitValue += (submitValue === '' ? '' : ',') + $input.val();
+            if (value === '') {
+                value = $input.attr('name');
+            } else {
+                value = $input.attr('name') + ':' + value;
+            }
+
+            submitValue += (submitValue === '' ? '' : ',') + value;
         });
 
         $('input[name=honeypot-submit]', $this).val(submitValue);
