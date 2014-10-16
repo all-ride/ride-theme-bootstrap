@@ -537,6 +537,7 @@
             {$type = "radio"}
         {/if}
 
+        {$isDisabled = $row->isDisabled()}
         {$attributes = $widget->getAttributes()}
         {$value = $widget->getValue()}
         {$options = $widget->getOptions()}
@@ -557,7 +558,7 @@
         {else}
             {if is_array($options)}
                 {foreach $options as $option => $label}
-                    <div class="{$type}">
+                    <div class="{$type}{if $isDisabled} disabled{/if}">
                         <label>
                             <input type="{$type}"
                                    name="{$widget->getName()}{if $part}[{$part}]{elseif $type == 'checkbox'}[]{/if}"
@@ -575,7 +576,7 @@
                     </div>
                 {/foreach}
             {else}
-                <div class="checkbox">
+                <div class="checkbox{if $isDisabled} disabled{/if}">
                     <label{if isset($attributes.disabled)} class="text-muted"{/if}>
                         <input type="checkbox" name="{$widget->getName()}" value="1"{if $value} checked="checked"{/if}
                             {foreach $attributes as $name => $attribute}
