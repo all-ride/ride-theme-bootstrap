@@ -22,11 +22,11 @@
 {/block}
 
 {block name="styles" append}
-    <link href="{$app.url.base}/css/terminal.css" rel="stylesheet" media="screen">
+    <link href="{$app.url.base}/bootstrap/css/terminal.css" rel="stylesheet" media="screen">
 {/block}
 
 {block name="scripts" append}
-    <script src="{$app.url.base}/js/terminal.js"></script>
+    <script src="{$app.url.base}/bootstrap/js/terminal.js"></script>
     <script type="text/javascript">
         $(function() {
             ride.terminal.init();

@@ -9,8 +9,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>{block name="head_title"}{if isset($app.taskbar)}{$app.taskbar->getTitle()}{/if}{/block}</title>
     {block name="styles"}
-        <link href="{$app.url.base}/css/bootstrap.min.css" rel="stylesheet" media="screen">
-        <link href="{$app.url.base}/css/custom.css" rel="stylesheet" media="screen">
+        <link href="{$app.url.base}/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="{$app.url.base}/bootstrap/css/custom.css" rel="stylesheet" media="screen">
     {/block}
 
     {block name="styles_app"}
@@ -19,7 +19,7 @@
                 {if substr($style, 0, 7) == 'http://' || substr(style, 0, 8) == 'https://' || substr($style, 0, 2) == '//'}
                     <link href="{$style}" rel="stylesheet" media="screen">
                 {else}
-                    <link href="{$app.url.base}/{$style}" rel="stylesheet" media="screen">
+                    <link href="{$app.url.base}/bootstrap/{$style}" rel="stylesheet" media="screen">
                 {/if}
             {/foreach}
         {/if}
@@ -64,8 +64,8 @@
         </div>
     {/block}
     {block name="scripts"}
-        <script src="{$app.url.base}/js/jquery.js"></script>
-        <script src="{$app.url.base}/js/bootstrap.min.js"></script>
+        <script src="{$app.url.base}/bootstrap/js/jquery.js"></script>
+        <script src="{$app.url.base}/bootstrap/js/bootstrap.min.js"></script>
     {/block}
     {block name="scripts_app"}
     {if isset($app.javascripts)}
@@ -75,7 +75,7 @@
             {elseif substr($script, 0, 7) == '<script'}
         {$script}
             {else}
-        <script src="{$app.url.base}/{$script}"></script>
+        <script src="{$app.url.base}/bootstrap/{$script}"></script>
             {/if}
         {/foreach}
     {/if}

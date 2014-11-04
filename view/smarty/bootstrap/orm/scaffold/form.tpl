@@ -30,6 +30,6 @@
 {/block}
 
 {block name="scripts" append}
-    <script src="{$app.url.base}/js/jquery-ui.js"></script>
-    <script src="{$app.url.base}/js/form.js"></script>
+    <script src="{$app.url.base}/bootstrap/js/jquery-ui.js"></script>
+    <script src="{$app.url.base}/bootstrap/js/form.js"></script>
 {/block}
