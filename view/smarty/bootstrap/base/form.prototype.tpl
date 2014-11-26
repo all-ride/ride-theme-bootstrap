@@ -758,7 +758,9 @@
         {/if}
     </div>
 
+    {if !$row->getOption('disable_add')}
     <a href="#" class="btn btn-default prototype-add{if $row->isDisabled() || $row->isReadOnly()} disabled{/if}"><i class="glyphicon glyphicon-plus"></i> {translate key="button.add"}</a>
+    {/if}
 {/function}
 
 {*
@@ -779,9 +781,11 @@
             {call formRow form=$form row=$row->getRow($part)}
         {/if}
         </div>
+        {if !$row->getOption('disable_remove')}
         <div class="col-md-2">
             <a href="#" class="btn btn-default prototype-remove{if $row->isDisabled() || $row->isReadOnly()} disabled{/if}"><i class="glyphicon glyphicon-minus"></i> {translate key="button.remove"}</a>
         </div>
+        {/if}
         <hr />
     </div>
 {/function}
