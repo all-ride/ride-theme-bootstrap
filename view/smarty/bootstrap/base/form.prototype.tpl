@@ -63,7 +63,7 @@
 
                    {if $errors}
                         <ul class="text-danger">
-                        {foreach $errors as $error => $null}
+                        {foreach $errors as $error => $dummy}
                             <li>{$error}</li>
                         {/foreach}
                         </ul>
@@ -186,8 +186,9 @@
     {if $row}
         {if !$type}
             {$widget = $row->getWidget()}
-            {$type = $widget->getType()|ucfirst}
+            {$type = $widget->getType()}
         {/if}
+        {$type = $type|ucfirst}
 
         {if !$type}
             <span class="error">No type provided for row {$row->getName()}</span>
