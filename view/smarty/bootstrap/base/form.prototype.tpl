@@ -186,8 +186,9 @@
     {if $row}
         {if !$type}
             {$widget = $row->getWidget()}
-            {$type = $widget->getType()|ucfirst}
+            {$type = $widget->getType()}
         {/if}
+        {$type = $type|ucfirst}
 
         {if !$type}
             <span class="error">No type provided for row {$row->getName()}</span>
