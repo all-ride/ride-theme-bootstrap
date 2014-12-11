@@ -63,7 +63,7 @@
 
                    {if $errors}
                         <ul class="text-danger">
-                        {foreach $errors as $error => $null}
+                        {foreach $errors as $error => $dummy}
                             <li>{$error}</li>
                         {/foreach}
                         </ul>

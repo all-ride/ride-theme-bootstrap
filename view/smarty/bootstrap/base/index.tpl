@@ -15,7 +15,7 @@
 
     {block name="styles_app"}
         {if isset($app.styles)}
-            {foreach $app.styles as $style => $null}
+            {foreach $app.styles as $style => $dummy}
                 {if substr($style, 0, 7) == 'http://' || substr(style, 0, 8) == 'https://' || substr($style, 0, 2) == '//'}
                     <link href="{$style}" rel="stylesheet" media="screen">
                 {else}
@@ -69,7 +69,7 @@
     {/block}
     {block name="scripts_app"}
     {if isset($app.javascripts)}
-        {foreach $app.javascripts as $script => $null}
+        {foreach $app.javascripts as $script => $dummy}
             {if substr($script, 0, 7) == 'http://' || substr(script, 0, 8) == 'https://' || substr($script, 0, 2) == '//'}
         <script src="{$script}"></script>
             {elseif substr($script, 0, 7) == '<script'}

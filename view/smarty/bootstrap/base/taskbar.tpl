@@ -10,12 +10,12 @@
             <li class="{$class}">
                 <a href="#" tabindex="-1" class="dropdown-toggle" data-toggle="dropdown">{$item->getLabel()} <b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                {taskbarMenuItems items=$item->getItems() class="dropdown-submenu"}
+                {call taskbarMenuItems items=$item->getItems() class="dropdown-submenu"}
                 </ul>
             </li>
         {else}
             <li role="presentation" class="dropdown-header">{$item->getLabel()}</li>
-            {taskbarMenuItems items=$item->getItems()}
+            {call taskbarMenuItems items=$item->getItems()}
         {/if}
     {/foreach}
 {/function}
@@ -63,7 +63,7 @@
             <ul class="nav navbar-nav">
             {block name="taskbar_applications"}
                 {if $applicationsMenu->hasItems()}
-                    {taskbarMenuItems items=$applicationsMenu->getItems() class="dropdown"}
+                    {call taskbarMenuItems items=$applicationsMenu->getItems() class="dropdown"}
                 {/if}
             {/block}
             </ul>
@@ -86,7 +86,7 @@
                     <ul class="dropdown-menu">
                         {block name="taskbar_settings"}
                             {if $settingsMenu->hasItems()}
-                                {taskbarMenuItems items=$settingsMenu->getItems()}
+                                {call taskbarMenuItems items=$settingsMenu->getItems()}
                             {/if}
                         {/block}
                     </ul>
