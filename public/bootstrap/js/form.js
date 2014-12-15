@@ -36,6 +36,20 @@ $.fn.formCollection = function() {
         select: false,
         scroll: true
     });
+
+    var toggleDependantRows = function($input) {
+        var $parent = $input.parents('form');
+        var $styleClass = $input.data('toggle-dependant');
+
+        $('.' + $styleClass, $parent).parents('.form-group').hide();
+        $('.' + $styleClass + '-' + $input.val(), $parent).parents('.form-group').show();
+    };
+
+    $('[data-toggle-dependant]').on('change', function() {
+        toggleDependantRows($(this));
+    }).filter(':checked').each(function() {
+        toggleDependantRows($(this));
+    });
 };
 
 $.fn.formFile = function() {

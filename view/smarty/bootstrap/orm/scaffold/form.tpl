@@ -17,6 +17,27 @@
 
     <form id="{$form->getId()}" class="form-horizontal" action="{$app.url.request}" method="POST" role="form" enctype="multipart/form-data">
         <fieldset>
+            {if $tabs}
+            <div class="tabbable">
+                <ul class="nav nav-tabs">
+                {foreach $tabs as $tabName => $tab}
+                    <li{if $tabName == $activeTab} class="active"{/if}>
+                        <a href="#tab{$tabName}" data-toggle="tab">{translate key=$tab.translation}</a>
+                    </li>
+                {/foreach}
+                </ul>
+                <div class="tab-content">
+                {foreach $tabs as $tabName => $tab}
+                    <div id="tab{$tabName}" class="tab-pane{if $tabName == $activeTab} active{/if}">
+                    {foreach $tab.rows as $row}
+                        {call formRow form=$form row=$row}
+                    {/foreach}
+                    </div>
+                {/foreach}
+                </div>
+            </div>
+            {/if}
+
             {call formRows form=$form}
 
             <div class="form-group">
