@@ -43,8 +43,17 @@ form input[type=number].form-control {
   background: transparent url(data:image/gif;base64,R0lGODlhCQARAJECAM/m/42Iev///wAAACH5BAEAAAIALAAAAAAJABEAAAIilI8Rpqcg3gFQUITZiptDaVxWlTlbo30BKYqlBqfeVLllAQA7) no-repeat;
   cursor: move;
 
+  z-index: 1;
+}
+
+[data-order] div .order-handle {
   position: absolute;
   left: 0;
   top: 7px;
-  z-index: 1;
+}
+
+table[data-order] td.order-handle {
+  width: 35px;
+  padding-left: 15px;
+  background-position: left 10px;
 }
