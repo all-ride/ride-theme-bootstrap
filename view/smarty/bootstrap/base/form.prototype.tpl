@@ -743,7 +743,18 @@
         {$form = $block_form}
     {/if}
 
-    <div class="collection-control-group">
+    {$attributes = $row->getOption('attributes')}
+    {if isset($attributes.class)}
+        {$attributes.class = "`$attributes.class` collection-control-group"}
+    {else}
+        {$attributes.class = 'collection-control-group'}
+    {/if}
+
+    <div
+       {foreach $attributes as $name => $attribute}
+           {$name}="{$attribute|escape}"
+       {/foreach}
+     >
         {$widget = $row->getWidget()}
         {if $widget}
             {$values = $widget->getValue()}
