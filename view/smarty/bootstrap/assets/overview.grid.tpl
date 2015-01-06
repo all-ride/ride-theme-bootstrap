@@ -8,7 +8,7 @@
             </a>
         </div>
         <div class="name">
-            <div class="option order-handle">
+            <div class="option{if !$flatten} order-handle{/if}">
                 <input type="checkbox" name="folders[]" value="{$item->getId()}" />
             </div>
             <a href="{url id="assets.folder.edit" parameters=["locale" => $locale, "folder" => $item->getId()]}?referer={$app.url.request|urlencode}">
@@ -22,7 +22,7 @@
         {/if}
         </div>
         <div class="name">
-            <div class="option order-handle">
+            <div class="option{if !$flatten} order-handle{/if}">
                 <input type="checkbox" name="assets[]" value="{$item->getId()}" />
             </div>
             <a href="{url id="assets.asset.edit" parameters=["locale" => $locale, "asset" => $item->getId()]}?referer={$app.url.request|urlencode}">
