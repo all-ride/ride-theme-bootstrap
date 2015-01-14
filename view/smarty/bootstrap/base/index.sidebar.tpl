@@ -1,7 +1,7 @@
 {extends file="base/index"}
 
 {block name="content"}
-    <div class="col-md-3">
+    <div class="col-md-3 sidebar">
         {block name="sidebar"}{/block}
     </div>
     <div class="col-md-9">
