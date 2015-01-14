@@ -36,20 +36,6 @@ $.fn.formCollection = function() {
         select: false,
         scroll: true
     });
-
-    var toggleDependantRows = function($input) {
-        var $parent = $input.parents('form');
-        var $styleClass = $input.data('toggle-dependant');
-
-        $('.' + $styleClass, $parent).parents('.form-group').hide();
-        $('.' + $styleClass + '-' + $input.val(), $parent).parents('.form-group').show();
-    };
-
-    $('[data-toggle-dependant]').on('change', function() {
-        toggleDependantRows($(this));
-    }).filter(':checked').each(function() {
-        toggleDependantRows($(this));
-    });
 };
 
 $.fn.formFile = function() {
@@ -64,7 +50,25 @@ $.fn.formFile = function() {
     });
 };
 
+$.fn.formDependantRows = function() {
+    var toggleDependantRows = function($input) {
+        var $parent = $input.parents('form');
+        var $styleClass = $input.data('toggle-dependant');
+        var value = $input.filter(':checked').length ? $input.val() : null;
+
+        $('.' + $styleClass, $parent).parents('.form-group').hide();
+        $('.' + $styleClass + '-' + value, $parent).parents('.form-group').show();
+    };
+
+    $('[data-toggle-dependant]', $(this)).on('change', function() {
+        toggleDependantRows($(this));
+    }).each(function() {
+        toggleDependantRows($(this));
+    });
+}
+
 $(function() {
     $('form[role=form]').formCollection();
     $('form[role=form]').formFile();
+    $('form[role=form]').formDependantRows();
 });
