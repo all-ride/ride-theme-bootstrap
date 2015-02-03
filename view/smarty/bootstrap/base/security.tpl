@@ -48,5 +48,5 @@
 {/block}
 
 {block name="scripts" append}
-    <script src="{$app.url.base}/bootstrap/js/security.js"></script>
+    {script src="bootstrap/js/security.js"}
 {/block}

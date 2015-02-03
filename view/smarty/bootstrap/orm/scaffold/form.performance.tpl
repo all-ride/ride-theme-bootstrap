@@ -101,11 +101,11 @@
 {/block}
 
 {block name="styles" append}
-    <link href="{$app.url.base}/bootstrap/css/calendar.css" rel="stylesheet" media="screen">
+    {style src="bootstrap/css/calendar.css" media="screen"}
 {/block}
 
 {block name="scripts" append}
-    <script src="{$app.url.base}/bootstrap/js/jquery-ui.js"></script>
-    <script src="{$app.url.base}/bootstrap/js/form.js"></script>
-    <script src="{$app.url.base}/bootstrap/js/calendar.js"></script>
+    {script src="bootstrap/js/jquery-ui.js"}
+    {script src="bootstrap/js/form.js"}
+    {script src="bootstrap/js/calendar.js"}
 {/block}

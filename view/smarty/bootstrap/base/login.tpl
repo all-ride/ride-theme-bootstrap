@@ -50,6 +50,6 @@
     </div>
 {/block}
 
-{block name="scripts" append}
+{block name="scripts_inline" append}
     <script type="application/javascript">$(function() { $('#form-username').focus(); });</script>
 {/block}

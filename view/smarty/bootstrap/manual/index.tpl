@@ -1,7 +1,7 @@
 {extends file="base/index.sidebar"}
 
 {block name="styles" append}
-    <link href="{$app.url.base}/bootstrap/css/documentation.css" rel="stylesheet" media="screen">
+    {style src="bootstrap/css/documentation.css" media="screen"}
 {/block}
 
 {block name="head_title" prepend}{translate key="title.manual"} - {/block}

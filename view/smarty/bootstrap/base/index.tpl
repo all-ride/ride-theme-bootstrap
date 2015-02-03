@@ -65,10 +65,12 @@
         {/block}
         </div>
     {/block}
+
     {block name="scripts"}
         {script src="bootstrap/js/jquery.js"}
         {script src="bootstrap/js/bootstrap.js"}
     {/block}
+
     {block name="scripts_app"}
     {if isset($app.javascripts)}
         {foreach $app.javascripts as $script => $dummy}
@@ -79,8 +81,11 @@
             {/if}
         {/foreach}
     {/if}
+    {/block}
+
     {scripts}
 
+    {block name="scripts_inline"}
     {if isset($app.inlineJavascripts)}
         <script type="text/javascript">
             $(function() {

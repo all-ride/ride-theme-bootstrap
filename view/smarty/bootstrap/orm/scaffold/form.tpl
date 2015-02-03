@@ -51,13 +51,6 @@
 {/block}
 
 {block name="scripts" append}
-    {$script = 'js/jquery-ui.js'}
-    {if !isset($app.javascripts[$script])}
-        <script src="{$app.url.base}/bootstrap/js/jquery-ui.js"></script>
-    {/if}
-
-    {$script = 'js/form.js'}
-    {if !isset($app.javascripts[$script])}
-        <script src="{$app.url.base}/bootstrap/js/form.js"></script>
-    {/if}
+    {script src="bootstrap/js/jquery-ui.js"}
+    {script src="bootstrap/js/form.js"}
 {/block}
