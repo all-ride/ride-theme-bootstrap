@@ -40,8 +40,8 @@
     {include file="base/table" table=$table tableForm=$form}
 {/block}
 
-{block name="scripts" append}
-    <script src="{$app.url.base}/bootstrap/js/jquery-ui.js"></script>
-    <script src="{$app.url.base}/bootstrap/js/form.js"></script>
-    <script src="{$app.url.base}/bootstrap/js/table.js"></script>
+{block name="scripts_app" append}
+    {script src="bootstrap/js/jquery-ui.js"}
+    {script src="bootstrap/js/form.js"}
+    {script src="bootstrap/js/table.js"}
 {/block}

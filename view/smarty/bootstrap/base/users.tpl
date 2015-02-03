@@ -27,7 +27,10 @@
 {/block}
 
 {block name="scripts" append}
-    <script src="{$app.url.base}/js/table.js"></script>
+    {script src="bootstrap/js/table.js"}
+{/block}
+
+{block name="scripts_inline" append}
     <script>
         $('tr.disabled td.lock').each(function() {
             var $cell = $(this);

@@ -33,11 +33,14 @@
 {/block}
 
 {block name="styles" append}
-    <link rel="stylesheet" type="text/css" href="{$app.url.base}/bootstrap/css/imgareaselect-animated.css">
+    {style src="bootstrap/css/imgareaselect-animated.css"}
 {/block}
 
 {block name="scripts" append}
-    <script src="{$app.url.base}/bootstrap/js/jquery.imgareaselect.pack.js"></script>
+    {script src="bootstrap/js/jquery.imgareaselect.pack.js"}
+{/block}
+
+{block name="scripts_inline" append}
     <script type="text/javascript">
         var image = $('#image-input');
 

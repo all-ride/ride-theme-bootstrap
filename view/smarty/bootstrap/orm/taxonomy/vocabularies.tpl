@@ -19,6 +19,6 @@
 {/block}
 
 {block name="scripts" append}
-    <script src="{$app.url.base}/bootstrap/js/form.js"></script>
-    <script src="{$app.url.base}/bootstrap/js/table.js"></script>
+    {script src="bootstrap/js/form.js"}
+    {script src="bootstrap/js/table.js"}
 {/block}

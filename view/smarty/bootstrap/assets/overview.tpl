@@ -73,11 +73,14 @@
 {/block}
 
 {block name="styles" append}
-    <link href="{$app.url.base}/bootstrap/css/assets.css" rel="stylesheet" media="screen">
+    {style src="bootstrap/css/assets.css" media="screen"}
 {/block}
 
 {block name="scripts" append}
-    <script src="{$app.url.base}/bootstrap/js/jquery-ui.js"></script>
+    {script src="bootstrap/js/jquery-ui.js"}
+{/block}
+
+{block name="scripts_inline" append}
     <script type="text/javascript">
         $(function () {
             $('.select-all').click(function() {
