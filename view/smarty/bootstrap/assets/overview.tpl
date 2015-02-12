@@ -17,28 +17,28 @@
 {block name="content_body" append}
     <div class="breadcrumbs">
         <ol class="breadcrumb">
-            <li><a href="{url id="assets.overview.locale" parameters=["locale" => $locale]}?view={$view}&flatten={$flatten}&limit={$limit}">{translate key="title.assets"}</a></li>
+            <li><a href="{url id="assets.overview.locale" parameters=["locale" => $locale]}?view={$view}&embed={$embed}&flatten={$flatten}&limit={$limit}">{translate key="title.assets"}</a></li>
         {foreach $breadcrumbs as $id => $name}
-            <li><a href="{url id="assets.folder.overview" parameters=["locale" => $locale, "folder" => $id]}?view={$view}&flatten={$flatten}&limit={$limit}">{$name}</a></li>
+            <li><a href="{url id="assets.folder.overview" parameters=["locale" => $locale, "folder" => $id]}?view={$view}&embed={$embed}&flatten={$flatten}&limit={$limit}">{$name}</a></li>
         {/foreach}
         </ol>
     </div>
 
     <div class="actions clearfix">
         <div class="btn-group">
-            <a href="{url id="assets.asset.add" parameters=["locale" => $locale]}?folder={$folder->id}&referer={$app.url.request|urlencode}" class="btn btn-default">
+            <a href="{url id="assets.asset.add" parameters=["locale" => $locale]}?folder={$folder->id}&embed={$embed}&referer={$app.url.request|urlencode}" class="btn btn-default">
                {translate key="button.add.asset"}
             </a>
-            <a href="{url id="assets.folder.add" parameters=["locale" => $locale]}?folder={$folder->id}&referer={$app.url.request|urlencode}" class="btn btn-default">
+            <a href="{url id="assets.folder.add" parameters=["locale" => $locale]}?folder={$folder->id}&embed={$embed}&referer={$app.url.request|urlencode}" class="btn btn-default">
                {translate key="button.add.folder"}
             </a>
         </div>
 
         <div class="btn-group">
-            <a href="{url id="assets.folder.overview" parameters=["locale" => $locale, "folder" => $folder->id]}?view=grid&type={$filter.type}&date={$filter.date}&flatten={$flatten}" class="btn btn-default{if $view == "grid"} active{/if}">
+            <a href="{url id="assets.folder.overview" parameters=["locale" => $locale, "folder" => $folder->id]}?view=grid&type={$filter.type}&date={$filter.date}&embed={$embed}&flatten={$flatten}" class="btn btn-default{if $view == "grid"} active{/if}">
                 <i class="glyphicon glyphicon-th"></i>
             </a>
-            <a href="{url id="assets.folder.overview" parameters=["locale" => $locale, "folder" => $folder->id]}?view=list&type={$filter.type}&date={$filter.date}&flatten={$flatten}" class="btn btn-default{if $view == "list"} active{/if}">
+            <a href="{url id="assets.folder.overview" parameters=["locale" => $locale, "folder" => $folder->id]}?view=list&type={$filter.type}&date={$filter.date}&embed={$embed}&flatten={$flatten}" class="btn btn-default{if $view == "list"} active{/if}">
                 <i class="glyphicon glyphicon-th-list"></i>
             </a>
         </div>
@@ -56,7 +56,7 @@
     {/if}
 
     <div class="assets assets-{$view}">
-        <form class="table" action="{url id="assets.folder.bulk" parameters=["locale" => $locale, "folder" => $folder->getId()]}?referer={$app.url.request|urlencode}" method="post">
+        <form class="table" action="{url id="assets.folder.bulk" parameters=["locale" => $locale, "folder" => $folder->getId()]}?embed={$embed}&referer={$app.url.request|urlencode}" method="post">
             <div class="asset-items clearfix">
                 {include file="assets/overview.`$view`" inline}
             </div>
