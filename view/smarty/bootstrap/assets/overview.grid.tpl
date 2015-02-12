@@ -11,7 +11,7 @@
             <div class="option{if !$flatten} order-handle{/if}">
                 <input type="checkbox" name="folders[]" value="{$item->getId()}" />
             </div>
-            <a href="{url id="assets.folder.edit" parameters=["locale" => $locale, "folder" => $item->getId()]}?referer={$app.url.request|urlencode}">
+            <a href="{url id="assets.folder.edit" parameters=["locale" => $locale, "folder" => $item->getId()]}?embed={$embed}&referer={$app.url.request|urlencode}">
                 {$item->getName()}
             </a>
         </div>
@@ -25,7 +25,7 @@
             <div class="option{if !$flatten} order-handle{/if}">
                 <input type="checkbox" name="assets[]" value="{$item->getId()}" />
             </div>
-            <a href="{url id="assets.asset.edit" parameters=["locale" => $locale, "asset" => $item->getId()]}?referer={$app.url.request|urlencode}">
+            <a href="{url id="assets.asset.edit" parameters=["locale" => $locale, "asset" => $item->getId()]}?embed={$embed}&referer={$app.url.request|urlencode}">
                 {$item->getName()}
             </a>
         </div>
