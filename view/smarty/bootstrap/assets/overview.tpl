@@ -17,9 +17,9 @@
 {block name="content_body" append}
     <div class="breadcrumbs">
         <ol class="breadcrumb">
-            <li><a href="{url id="assets.overview.locale" parameters=["locale" => $locale]}?view={$view}&flatten={$flatten}">{translate key="title.assets"}</a></li>
+            <li><a href="{url id="assets.overview.locale" parameters=["locale" => $locale]}?view={$view}&flatten={$flatten}&limit={$limit}">{translate key="title.assets"}</a></li>
         {foreach $breadcrumbs as $id => $name}
-            <li><a href="{url id="assets.folder.overview" parameters=["locale" => $locale, "folder" => $id]}?view={$view}&flatten={$flatten}">{$name}</a></li>
+            <li><a href="{url id="assets.folder.overview" parameters=["locale" => $locale, "folder" => $id]}?view={$view}&flatten={$flatten}&limit={$limit}">{$name}</a></li>
         {/foreach}
         </ol>
     </div>
@@ -69,7 +69,23 @@
                 <input class="btn btn-default" type="submit" value="{translate key="button.apply"}" />
             </div>
         </form>
+        <form action="{$app.url.request}" class="form-inline form-limit" method="POST" role="form">
+            <select name="limit" class="form-control">
+                <option value="12"{if $limit == 12} selected="selected"{/if}>12</option>
+                <option value="18"{if $limit == 18} selected="selected"{/if}>18</option>
+                <option value="24"{if $limit == 24} selected="selected"{/if}>24</option>
+                <option value="48"{if $limit == 48} selected="selected"{/if}>48</option>
+                <option value="96"{if $limit == 96} selected="selected"{/if}>96</option>
+            </select>
+            <button class="btn btn-default" type="submit">{translate key="button.show"}</button>
+        </form>
     </div>
+
+    {if $pages > 1}
+        {url id="assets.folder.overview" parameters=["locale" => $locale, "folder" => $folder->id] var="urlPagination"}
+        {$urlPagination = "`$urlPagination``$urlSuffix`&flatten=`$flatten`&limit=`$limit`&page=%page%"}
+        {pagination page=$page pages=$pages href=$urlPagination}
+    {/if}
 {/block}
 
 {block name="styles" append}
@@ -107,7 +123,7 @@
                         });
                     });
 
-                    $.post(sortUrl, {ldelim}order: order});
+                    $.post(sortUrl, {ldelim}order: order, index: {(($page - 1) * $limit) + 1}});
                 }
             });
         });

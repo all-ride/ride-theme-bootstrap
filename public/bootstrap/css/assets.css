@@ -17,6 +17,10 @@
     margin-bottom: 20px;
 }
 
+.assets .form-limit {
+    float: right;
+}
+
 .assets-list .asset-actions {
     padding-left: 15px;
 }
