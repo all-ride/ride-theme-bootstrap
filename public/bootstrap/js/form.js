@@ -50,11 +50,14 @@ $.fn.formFile = function() {
     });
 };
 
+
 $.fn.formDependantRows = function() {
     var toggleDependantRows = function($input) {
-        var $parent = $input.parents('form');
-        var $styleClass = $input.data('toggle-dependant');
-        var value = $input.filter(':checked').length ? $input.val() : null;
+        var $parent = $input.parents('form'),
+            $styleClass = $input.data('toggle-dependant'),
+            $group = $parent.find('[name^=' + $input.attr('name') + ']'),
+            $checked = $group.filter(':checked'),
+            value = $checked.length ? $checked.val() : null;
 
         $('.' + $styleClass, $parent).parents('.form-group').hide();
         $('.' + $styleClass + '-' + value, $parent).parents('.form-group').show();

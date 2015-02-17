@@ -80,11 +80,8 @@
             <button class="btn btn-default" type="submit">{translate key="button.show"}</button>
         </form>
     </div>
-
     {if $pages > 1}
-        {url id="assets.folder.overview" parameters=["locale" => $locale, "folder" => $folder->id] var="urlPagination"}
-        {$urlPagination = "`$urlPagination``$urlSuffix`&flatten=`$flatten`&limit=`$limit`&page=%page%"}
-        {pagination page=$page pages=$pages href=$urlPagination}
+        {pagination pages=$pagination->getPages() page=$pagination->getPage() href=$pagination->getHref()}
     {/if}
 {/block}
 
