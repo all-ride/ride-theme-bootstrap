@@ -10,7 +10,15 @@
 
         {if $table->hasOrderMethods() || $table->hasSearch()}
             <div class="row-fluid table-header clearfix">
-                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                {if isset($tableActions) && $tableActions}
+                    <div class="btn-group">
+                    {foreach $tableActions as $url => $dataAction}
+                        <a href="{$url}" class="btn btn-default">{$dataAction}</a>
+                    {/foreach}
+                    </div>
+                {/if}
+                </div>
                 <div class="col-md-4 search">
                     {if $table->hasSearch()}
                         {block name="table.search"}
