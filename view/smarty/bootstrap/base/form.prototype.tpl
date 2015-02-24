@@ -522,6 +522,84 @@
     {/if}
 {/function}
 
+{function name="formWidgetAssets" form=null row=null part=null}
+    {if !$form && isset($block_form)}
+        {$form = $block_form}
+    {/if}
+
+    {if is_string($row) && $form}
+        {$row = $form->getRow($row)}
+    {/if}
+
+    {$widget = $row->getWidget()}
+    {if $widget}
+        {$attributes = $widget->getAttributes()}
+        {if isset($attributes.class)}
+            {$attributes.class = "`$attributes.class` form__assets-input"}
+        {else}
+            {$attributes.class = 'form__assets-input'}
+        {/if}
+
+        <div class="form__assets" data-field="{$attributes.id}"{if $widget->isMultiple()} data-max="999"{else} data-max="1"{/if}>
+            {$assets = $widget->getAssets()}
+            {foreach $assets as $asset}
+                <div class="form__asset" data-id="{$asset->getId()}">
+                    <img src="{image src=$asset->getThumbnail() transformation="crop" width=100 height=100}" width="100" height="100">
+                    <a href="#" class="form__remove-asset">&times;</a>
+                </div>
+            {/foreach}
+            <a href="#modalAssetsAdd-{$widget->getName()}" class="form__add-assets btn btn-default"><i class="glyphicon glyphicon-plus"></i> {'button.add'|translate}</a>
+        </div>
+
+        {$value = $widget->getValue($part)}
+
+        <input type="hidden"
+               name="{$widget->getName()}"
+               value="{$value|escape}"
+           {foreach $attributes as $name => $attribute}
+               {$name}="{$attribute|escape}"
+           {/foreach}
+         />
+
+         {if !isset($locale)}
+            {$locale = $app.locale}
+         {/if}
+
+        <div class="modal modal--large fade" id="modalAssetsAdd-{$widget->getName()}" tabindex="-1" role="dialog" aria-labelledby="myModalAssetsAdd" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        {if $widget->getFolderId()}
+                            {url id="assets.folder.overview" parameters=["folder" => $widget->getFolderId(), "locale" => $locale] var="assetsUrl"}
+                        {else}
+                            {url id="assets.overview.locale" parameters=["locale" => $locale] var="assetsUrl"}
+                        {/if}
+                        <iframe data-src="{$assetsUrl}?embed=1" frameborder="0" width="100%" height="500"></iframe>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="grid">
+                            <div class="grid--bp-xsm__9">
+                                <div class="form__assets form__assets--sml" data-field="{$attributes.id}"{if $widget->isMultiple()} data-max="999"{else} data-max="1"{/if}>
+                                    {$assets = $widget->getAssets()}
+                                    {foreach $assets as $asset}
+                                        <div class="form__asset" data-id="{$asset->getId()}">
+                                            <img src="{image src=$asset->getThumbnail() transformation="crop" width=40 height=40}" width="40" height="40">
+                                            <a href="#" class="form__remove-asset">&times;</a>
+                                        </div>
+                                    {/foreach}
+                                </div>
+                            </div>
+                            <div class="grid--bp-xsm__3 text--right">
+                                <button type="button" class="btn btn--default" data-dismiss="modal">{translate key="button.done"}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {/if}
+{/function}
+
 {function name="formWidgetOption" form=null row=null part=null}
     {if !$form && isset($block_form)}
         {$form = $block_form}

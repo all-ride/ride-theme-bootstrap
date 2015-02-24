@@ -19,6 +19,7 @@
 {/block}
 
 {block name="scripts" append}
+    {script src="bootstrap/js/jquery-ui.js"}
     {script src="bootstrap/js/form.js"}
     {script src="bootstrap/js/table.js"}
 {/block}
