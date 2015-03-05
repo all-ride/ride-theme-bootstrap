@@ -57,3 +57,11 @@ table[data-order] td.order-handle {
   padding-left: 15px;
   background-position: left 10px;
 }
+
+#form-varnish {
+    text-align: center;
+}
+
+#form-varnish-url {
+    min-width: 50%;
+}
