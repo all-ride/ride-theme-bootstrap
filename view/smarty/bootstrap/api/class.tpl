@@ -243,14 +243,6 @@
     </div>
 {/block}
 
-{block name="scripts_inline" append}
-    <script type="text/javascript">
-        $(function() {
-            $(".source-toggle").click(function() {
-                $(this).parent().next().toggle();
-                return false;
-            });
-            $(".source").css("display", "none");
-        });
-    </script>
+{block name="scripts" append}
+    {script src="bootstrap/js/api.js"}
 {/block}
