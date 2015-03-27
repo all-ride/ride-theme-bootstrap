@@ -42,7 +42,7 @@
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" class="btn btn-default" value="{translate key="button.save"}"{if !$isWritable} disabled="disabled"{/if} />
+                    <input type="submit" class="btn btn-default" value="{translate key=$translationSubmit|default:"button.save"}"{if !$isWritable} disabled="disabled"{/if} />
                     <a class="btn" href="{$referer}">{translate key="button.cancel"}</a>
                 </div>
             </div>
