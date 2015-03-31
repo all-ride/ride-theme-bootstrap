@@ -1,5 +1,6 @@
 .btn-group,
-.form-filter select {
+.form-filter select,
+.form-filter input {
     display: inline;
     width: auto;
 }

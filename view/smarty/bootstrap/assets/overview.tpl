@@ -47,6 +47,7 @@
         <form id="{$form->getId()}" class="form-horizontal form-filter" action="{$app.url.request}" method="POST" role="form">
             {call formWidget form=$form row="type"}
             {call formWidget form=$form row="date"}
+            {call formWidget form=$form row="query"}
             <input type="submit" class="btn btn-default" value="{translate key="button.filter"}"/>
         </form>
     </div>
