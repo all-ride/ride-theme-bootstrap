@@ -1,24 +1,24 @@
-.btn-group,
+.actions .btn-group,
 .form-filter select,
 .form-filter input {
     display: inline;
     width: auto;
 }
 
-.btn-group {
-    float: left;
-    margin-right: 20px;
-}
-
-.form-filter {
-    float: left;
-}
-
 .actions {
     margin-bottom: 20px;
 }
 
-.assets .form-limit {
+.actions .btn-group {
+    float: left;
+    margin-right: 20px;
+}
+
+.form-order {
+    margin-left: 25px;
+}
+
+.form-limit {
     float: right;
 }
 
