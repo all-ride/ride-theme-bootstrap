@@ -26,7 +26,7 @@
 {/block}
 
 {block name="scripts_app" append}
-    <script src="bootstrap/js/terminal.js"></script>
+    {script src="bootstrap/js/terminal.js"}
 {/block}
 
 {block name="scripts_inline" append}

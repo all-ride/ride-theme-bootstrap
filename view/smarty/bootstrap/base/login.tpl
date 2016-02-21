@@ -29,6 +29,8 @@
                     </div>
                 </div>
 
+                {call formRows form=$form}
+
                 <div class="form-group">
                     <div class="col-lg-12">
                         <input type="submit" class="btn btn-default" value="{translate key="button.login"}" />
