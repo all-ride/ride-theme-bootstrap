@@ -50,6 +50,10 @@ form.table div.options select {
     margin-left: 4px;
 }
 
+form.table img {
+    max-width: 100px;
+}
+
 form.table span.loading {
     background-position: 0px 14px;
     margin-left: 7px;

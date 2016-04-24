@@ -1,5 +1,10 @@
 @import url(table.css);
 
+.tab-content {
+    margin-top: 25px;
+}
+
+/*
 body .navbar {
 	border-radius: 0;
 }
@@ -23,8 +28,9 @@ body .navbar {
 }
 
 .nav-tabs { margin-bottom: 25px }
-
+*/
 /* Collection */
+/*
 .collection-control {
   position: relative;
 }
@@ -65,3 +71,4 @@ table[data-order] td.order-handle {
 #form-varnish-url {
     min-width: 50%;
 }
+*/

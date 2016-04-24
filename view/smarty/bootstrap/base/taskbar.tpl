@@ -8,7 +8,17 @@
             <li><a href="{$item->getUrl()}">{$item->getLabel()}</a></li>
         {elseif $class}
             <li class="{$class}">
-                <a href="#" tabindex="-1" class="dropdown-toggle" data-toggle="dropdown">{$item->getLabel()} <b class="caret"></b></a>
+                {$icon = $item->__toString()|replace:'.menu':''}
+                {if $icon == 'content'}
+                    {$icon = 'file'}
+                {elseif $icon == 'sites'}
+                    {$icon = 'globe'}
+                {elseif $icon == 'themes'}
+                    {$icon = 'text-size'}
+                {elseif $icon == 'tools'}
+                    {$icon = 'wrench'}
+                {/if}
+                <a href="#" tabindex="-1" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-{$icon}"></i> {$item->getLabel()} <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                 {call taskbarMenuItems items=$item->getItems() class="dropdown-submenu"}
                 </ul>
@@ -73,6 +83,7 @@
                 {block name="taskbar_menu"}
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="glyphicon glyphicon-user"></i>
                         {if $app.user}
                             {if $app.user->getImage()}
                                <img src="{image src=$app.user->getImage() transformation="crop" width=18 height=18}" />
