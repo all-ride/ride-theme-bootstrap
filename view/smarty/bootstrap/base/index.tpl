@@ -7,6 +7,7 @@
 {block name="head"}
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{block name="head_title"}{if isset($app.taskbar)}{$app.taskbar->getTitle()}{/if}{/block}</title>
     {block name="styles"}
         {style src="bootstrap/css/bootstrap.css" media="screen"}
