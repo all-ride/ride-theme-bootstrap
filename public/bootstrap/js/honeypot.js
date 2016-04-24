@@ -2,7 +2,7 @@ $.fn.honeyPot = function(options) {
     var $this = $(this);
 
     $(options.fields).each(function(index, value) {
-        var $input = $('input[name=' + value + ']', $this);
+        var $input = $('.row-' + value + ' input', $this);
         if ($input.length === 0) {
             return;
         }
@@ -12,25 +12,25 @@ $.fn.honeyPot = function(options) {
             $input.val(defaultValue);
         }
 
-        $input.parents('.form-group').hide();
+        $input.closest('.form-group').hide();
     });
 
     $this.on('submit', function() {
         var submitValue = '';
 
         $(options.fields).each(function(index, value) {
-            var $input = $('input[name=' + value + ']', $this);
-            var value = $input.val();
+            var $input = $('.row-' + value + ' input', $this);
+            var val = $input.val();
 
-            if (value === '') {
-                value = $input.attr('name');
+            if (val === '') {
+                val = value;
             } else {
-                value = $input.attr('name') + ':' + value;
+                val = value + ':' + val;
             }
 
-            submitValue += (submitValue === '' ? '' : ',') + value;
+            submitValue += (submitValue === '' ? '' : ',') + val;
         });
 
-        $('input[name=honeypot-submit]', $this).val(submitValue);
+        $(options.submit, $this).val(submitValue);
     });
 };
