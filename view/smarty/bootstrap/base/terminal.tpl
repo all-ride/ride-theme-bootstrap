@@ -1,6 +1,6 @@
 {extends file="base/index"}
 
-{block name="head_title" prepend}{translate key="title.terminal"} - {/block}
+{block name="head_title" prepend}{translate key="title.terminal"} | {/block}
 
 {block name="content_title"}
     <div class="page-header">

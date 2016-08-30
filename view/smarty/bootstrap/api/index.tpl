@@ -4,7 +4,7 @@
     {style src="bootstrap/css/documentation.css" media="screen"}
 {/block}
 
-{block name="head_title" prepend}{translate key="title.api"} - {/block}
+{block name="head_title" prepend}{translate key="title.api"} | {/block}
 
 {block name="taskbar_panels" append}
     {url id="api.search" var=searchUrl}

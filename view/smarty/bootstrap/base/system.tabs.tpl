@@ -5,3 +5,4 @@
     <li{if $active == "routes"} class="active"{/if}><a href="{url id="system.routes"}">{translate key="title.routes"}</a></li>
     <li{if $active == "dependencies"} class="active"{/if}><a href="{url id="system.dependencies"}">{translate key="title.dependencies"}</a></li>
 </ul>
+<div class="tab-content"></div>

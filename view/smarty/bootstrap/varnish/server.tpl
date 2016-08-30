@@ -1,6 +1,6 @@
 {extends file="base/index"}
 
-{block name="head_title" prepend}{if $server}{$server}{else}{translate key="title.server.add"}{/if} - {translate key="title.varnish"} - {/block}
+{block name="head_title" prepend}{if $server}{$server}{else}{translate key="title.server.add"}{/if} | {translate key="title.varnish"} | {/block}
 
 {block name="content_title"}
 <div class="page-header">

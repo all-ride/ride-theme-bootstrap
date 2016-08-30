@@ -1,6 +1,6 @@
 {extends file="base/index"}
 
-{block name="head_title" prepend}{translate key="title.translations"} - {/block}
+{block name="head_title" prepend}{translate key="title.translations"} | {/block}
 
 {block name="taskbar_panels" append}
     {url id="system.translations.locale" parameters=["locale" => "%locale%"] var="url"}

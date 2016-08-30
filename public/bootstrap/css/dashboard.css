@@ -1,0 +1,12 @@
+.dashboard .col-xs-4 {
+    padding-bottom: 24px;
+}
+
+.dashboard .col-xs-4 .placeholder {
+    border: 2px dashed #CCC;
+    margin-bottom: 12px;
+}
+
+.dashboard .panel-heading {
+    cursor: move;
+}

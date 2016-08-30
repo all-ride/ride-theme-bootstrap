@@ -1,6 +1,6 @@
 {extends file="base/index"}
 
-{block name="head_title" prepend}{if $folder->getId()}{$folder->getName()} - {/if}{translate key="title.assets"} - {/block}
+{block name="head_title" prepend}{if $folder->getId()}{$folder->getName()} | {/if}{translate key="title.assets"} | {/block}
 
 {block name="taskbar_panels" append}
     {url id="assets.folder.overview" parameters=["locale" => "%locale%", "folder" => $folder->id] var="url"}

@@ -1,6 +1,6 @@
 {extends file="base/index"}
 
-{block name="head_title" prepend}{if $asset->getId()}{$asset->getName()}{else}{translate key="button.add.asset"}{/if} - {translate key="title.assets"} - {/block}
+{block name="head_title" prepend}{if $asset->getId()}{$asset->getName()}{else}{translate key="button.add.asset"}{/if} | {translate key="title.assets"} | {/block}
 
 {block name="taskbar_panels" append}
     {if $asset->getId()}

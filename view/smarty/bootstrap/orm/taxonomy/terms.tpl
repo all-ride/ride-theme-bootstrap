@@ -1,6 +1,6 @@
 {extends file="base/index"}
 
-{block name="head_title" prepend}{$vocabulary->name} - {translate key="title.terms"} - {translate key="title.taxonomy"} - {/block}
+{block name="head_title" prepend}{$vocabulary->name} | {translate key="title.terms"} | {translate key="title.taxonomy"} | {/block}
 
 {block name="taskbar_panels" append}
     {url id="taxonomy.term.list.locale" parameters=["vocabulary" => $vocabulary->getId(), "locale" => "%locale%"] var="localizeUrl"}

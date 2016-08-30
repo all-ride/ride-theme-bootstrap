@@ -1,6 +1,6 @@
 {extends file="base/index"}
 
-{block name="head_title" prepend}{$model->getName()} - {translate key="title.orm"} - {/block}
+{block name="head_title" prepend}{$model->getName()} | {translate key="title.orm"} | {/block}
 
 {block name="content_title"}
 <div class="page-header">
