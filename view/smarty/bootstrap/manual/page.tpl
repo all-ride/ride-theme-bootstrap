@@ -1,6 +1,6 @@
 {extends file="manual/index"}
 
-{block name="head_title" prepend}{$title} - {/block}
+{block name="head_title" prepend}{$title} | {/block}
 
 {block name="content_title"}
 <div class="page-header">

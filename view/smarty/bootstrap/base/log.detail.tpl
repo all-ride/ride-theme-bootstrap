@@ -1,6 +1,6 @@
 {extends file="base/index"}
 
-{block name="head_title" prepend}{translate key="title.log"} - {/block}
+{block name="head_title" prepend}{translate key="title.log"} | {/block}
 
 {block name="content_title"}
     <div class="page-header">
@@ -11,7 +11,7 @@
 {block name="content" append}
     {function name="logTable" id=null messages=null active=false}
         {if $messages}
-        <div id="tab{$id}" class="tab-pane{if $active} active{/if}">
+        <div id="{$id|lower}" class="tab-pane{if $active} active{/if}">
             <table class="table table-striped table-condensed">
             {foreach $messages as $message}
                 {call logTableRow message=$message}
@@ -45,24 +45,24 @@
 
     <div class="tabbable">
         <ul class="nav nav-tabs">
-            <li{if !$response && !$request && !$session} class="active"{/if}><a href="#tabAll" data-toggle="tab">{translate key="title.all"}</a></li>
+            <li{if !$response && !$request && !$session} class="active"{/if}><a href="#all" data-toggle="tab">{translate key="title.all"}</a></li>
         {if $application}
-            <li><a href="#tabApplication" data-toggle="tab">{translate key="title.application"}</a></li>
+            <li><a href="#application" data-toggle="tab">{translate key="title.application"}</a></li>
         {/if}
         {if $database}
-            <li><a href="#tabDatabase" data-toggle="tab">{translate key="title.database"}</a></li>
+            <li><a href="#database" data-toggle="tab">{translate key="title.database"}</a></li>
         {/if}
         {if $mail}
-            <li><a href="#tabMail" data-toggle="tab">{translate key="title.mail"}</a></li>
+            <li><a href="#mail" data-toggle="tab">{translate key="title.mail"}</a></li>
         {/if}
         {if $response || $request || $session}
-            <li class="active"><a href="#tabHttp" data-toggle="tab">{translate key="title.http"}</a></li>
+            <li class="active"><a href="#http" data-toggle="tab">{translate key="title.http"}</a></li>
         {/if}
         {if $i18n}
-            <li><a href="#tabI18n" data-toggle="tab">I18n</a></li>
+            <li><a href="#i18n" data-toggle="tab">I18n</a></li>
         {/if}
         {if $security}
-            <li><a href="#tabSecurity" data-toggle="tab">{translate key="title.security"}</a></li>
+            <li><a href="#security" data-toggle="tab">{translate key="title.security"}</a></li>
         {/if}
         </ul>
     </div>
@@ -81,7 +81,7 @@
         {call logTable id="I18n" messages=$i18n}
 
     {if $response || $request || $session}
-        <div id="tabHttp" class="tab-pane active">
+        <div id="http" class="tab-pane active">
         {if $response}
             <h4>{translate key="title.response"} <small><span class="label label-{if $response.status < 300}success{elseif $response.status < 400}warning{else}danger{/if}">{$response.status} {$response.statusPhrase}</span></small></h4>
             <table class="table table-striped table-condensed">
@@ -121,4 +121,8 @@
     {/if}
     </div>
 
+{/block}
+
+{block name="scripts" append}
+    {script src="bootstrap/js/tabs.js"}
 {/block}

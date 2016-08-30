@@ -4,7 +4,7 @@
     {style src="bootstrap/css/documentation.css" media="screen"}
 {/block}
 
-{block name="head_title" prepend}{translate key="title.manual"} - {/block}
+{block name="head_title" prepend}{translate key="title.manual"} | {/block}
 
 {block name="content_title"}
 <div class="page-header">

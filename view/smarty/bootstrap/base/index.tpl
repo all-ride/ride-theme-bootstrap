@@ -7,7 +7,8 @@
 {block name="head"}
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>{block name="head_title"}{if isset($app.taskbar)}{$app.taskbar->getTitle()}{/if}{/block}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{block name="head_title"}{if isset($app.taskbar)}{$app.taskbar->getTitle()|strip_tags}{/if}{/block}</title>
     {block name="styles"}
         {style src="bootstrap/css/bootstrap.css" media="screen"}
         {style src="bootstrap/css/custom.css" media="screen"}
@@ -45,7 +46,10 @@
                     {foreach $_messageTypes as $_messageType => $_messageClass}
                         {$_messages = $app.messages->getByType($_messageType)}
                         {if $_messages}
-                            <div class="alert alert-{$_messageClass}">
+                            <div class="alert alert-{$_messageClass} alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
                             {if $_messages|count == 1}
                                 {$_message = $_messages|array_pop}
                                 <p>{$_message->getMessage()}</p>

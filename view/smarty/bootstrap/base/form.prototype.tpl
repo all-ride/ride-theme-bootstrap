@@ -146,7 +146,7 @@
         {if $widget}
             {$errors = $form->getValidationErrors()}
             {$errorsName = $widget->getName()}
-            {if $widget->isMultiple() && $part}
+            {if $widget->isMultiple() && $part !== null}
                 {$errorsName = "`$errorsName`[`$part`]"}
             {/if}
 
@@ -215,7 +215,7 @@
     {$widget = $row->getWidget()}
     {if $widget}
         <input type="hidden"
-               name="{$widget->getName()}{if $part}[{$part}]{/if}"
+               name="{$widget->getName()}{if $part !== null}[{$part}]{/if}"
                value="{$widget->getValue($part)|escape}"
            {foreach $widget->getAttributes() as $name => $attribute}
                {$name}="{$attribute|escape}"
@@ -339,7 +339,7 @@
         {/if}
 
         <input type="number"
-               name="{$widget->getName()}{if $part}[{$part}]{/if}"
+               name="{$widget->getName()}{if $part !== null}[{$part}]{/if}"
                value="{$widget->getValue($part)|escape}"
            {foreach $attributes as $name => $attribute}
                {$name}="{$attribute|escape}"
@@ -367,7 +367,7 @@
         {/if}
 
         <input type="email"
-               name="{$widget->getName()}{if $part}[{$part}]{/if}"
+               name="{$widget->getName()}{if $part !== null}[{$part}]{/if}"
                value="{$widget->getValue($part)|escape}"
            {foreach $attributes as $name => $attribute}
                {$name}="{$attribute|escape}"
@@ -395,7 +395,7 @@
         {/if}
 
         <input type="date"
-               name="{$widget->getName()}{if $part}[{$part}]{/if}"
+               name="{$widget->getName()}{if $part !== null}[{$part}]{/if}"
                value="{$widget->getValue($part)|escape}"
            {foreach $attributes as $name => $attribute}
                {$name}="{$attribute|escape}"
@@ -423,7 +423,7 @@
         {/if}
 
         <input type="website"
-               name="{$widget->getName()}{if $part}[{$part}]{/if}"
+               name="{$widget->getName()}{if $part !== null}[{$part}]{/if}"
                value="{$widget->getValue($part)|escape}"
            {foreach $attributes as $name => $attribute}
                {$name}="{$attribute|escape}"
@@ -451,7 +451,7 @@
         {/if}
 
         <input type="password"
-               name="{$widget->getName()}{if $part}[{$part}]{/if}"
+               name="{$widget->getName()}{if $part !== null}[{$part}]{/if}"
            {foreach $attributes as $name => $attribute}
                {$name}="{$attribute|escape}"
            {/foreach}
@@ -514,7 +514,7 @@
             {$attributes.class = 'form-control'}
         {/if}
 
-        <textarea name="{$widget->getName()}{if $part}[{$part}]{/if}"
+        <textarea name="{$widget->getName()}{if $part !== null}[{$part}]{/if}"
            {foreach $attributes as $name => $attribute}
                {$name}="{$attribute|escape}"
            {/foreach}
@@ -641,7 +641,7 @@
                     <div class="{$type}{if $isDisabled} disabled{/if}">
                         <label>
                             <input type="{$type}"
-                                   name="{$widget->getName()}{if $part}[{$part}]{elseif $type == 'checkbox'}[]{/if}"
+                                   name="{$widget->getName()}{if $part !== null}[{$part}]{elseif $type == 'checkbox'}[]{/if}"
                                    value="{$option}"
                                    {if (!is_array($value) && strcmp($value, $option) == 0) || (is_array($value) && isset($value[$option]))}checked="checked"{/if}
                                    {foreach $attributes as $name => $attribute}
@@ -691,7 +691,7 @@
 
         {$value = $widget->getValue()}
 
-        <select name="{$widget->getName()}{if $part}[{$part}]{elseif $widget->isMultiple()}[]{/if}"
+        <select name="{$widget->getName()}{if $part !== null}[{$part}]{elseif $widget->isMultiple()}[]{/if}"
            {if $widget->isMultiple()} multiple="multiple"{/if}
            {foreach $attributes as $name => $attribute}
                {$name}="{$attribute|escape}"

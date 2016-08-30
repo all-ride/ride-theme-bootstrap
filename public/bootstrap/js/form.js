@@ -56,8 +56,14 @@ $.fn.formDependantRows = function() {
         var $parent = $input.parents('form'),
             $styleClass = $input.data('toggle-dependant'),
             $group = $parent.find('[name^=' + $input.attr('name') + ']'),
-            $checked = $group.filter(':checked'),
+            value = null;
+
+        if ($group.prop('tagName') == 'SELECT') {
+            value = $group.val();
+        } else {
+            var $checked = $group.filter(':checked');
             value = $checked.length ? $checked.val() : null;
+        }
 
         $('.' + $styleClass, $parent).parents('.form-group').hide();
         $('.' + $styleClass + '-' + value, $parent).parents('.form-group').show();

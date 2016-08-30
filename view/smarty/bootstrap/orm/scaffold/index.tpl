@@ -1,6 +1,6 @@
 {extends file="base/index"}
 
-{block name="head_title" prepend}{$title} - {/block}
+{block name="head_title" prepend}{$title} | {/block}
 
 {block name="taskbar_panels" append}
     {if $localizeUrl}

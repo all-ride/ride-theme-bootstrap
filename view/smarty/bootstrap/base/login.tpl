@@ -1,6 +1,6 @@
 {extends file="base/index"}
 
-{block name="head_title" prepend}{translate key="title.login"} - {/block}
+{block name="head_title" prepend}{translate key="title.login"} | {/block}
 
 {block name="content"}
     <div class="col-md-offset-3 col-md-4">

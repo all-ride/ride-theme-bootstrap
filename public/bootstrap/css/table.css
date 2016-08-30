@@ -12,6 +12,11 @@ form.table table tr td.option {
     width: 20px;
 }
 
+table tr th.action,
+table tr td.action {
+    width: 40px;
+}
+
 form.table .table-header,
 form.table table {
 	margin-bottom: 12px;

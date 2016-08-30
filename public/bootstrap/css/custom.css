@@ -1,5 +1,9 @@
 @import url(table.css);
 
+body {
+    padding-top: 50px;
+}
+
 .tab-content {
     margin-top: 25px;
 }
