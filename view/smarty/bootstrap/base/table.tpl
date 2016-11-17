@@ -62,7 +62,7 @@
                             {block name="table.actions"}
                                 {if $tableForm->hasRow($tableActionField)}
                                     <input type="checkbox" id="{$tableForm->getId()}-action-all" class="check-all" />
-                                    {formWidget form=$tableForm row=$tableActionField}
+                                    {call formWidget form=$tableForm row=$tableActionField}
                                 {/if}
                             {/block}
                         {/if}
