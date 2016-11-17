@@ -81,7 +81,7 @@
                                 </div>
                                 <div class="col-md-3 pagination-options">
                                     {if $table->getPaginationOptions()}
-                                        {formWidget form=$tableForm row=$tablePageRowsField}
+                                        {call formWidget form=$tableForm row=$tablePageRowsField}
                                         {translate key="label.table.rows.page"}
                                     {/if}
 
