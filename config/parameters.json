@@ -1,3 +1,4 @@
 {
-    "template.theme": "bootstrap"
+    "template.theme": "bootstrap",
+    "template.smarty.plugin.bootstrap": "%path%/src/ride/web/template/smarty/plugin"
 }
