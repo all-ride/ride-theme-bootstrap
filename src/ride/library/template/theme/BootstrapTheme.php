@@ -3,7 +3,7 @@
 namespace ride\library\template\theme;
 
 /**
- * Interface for a template theme
+ * Bootstrap template theme
  */
 class BootstrapTheme implements Theme {
 
