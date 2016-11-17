@@ -4,7 +4,7 @@
 
     {$tableMessages = json_encode($table->getActionConfirmationMessages())}
     <form id="{$tableForm->getId()}" action="{if isset($tableAction)}{$tableAction}{else}{$table->getFormUrl()}{/if}" method="POST" class="table" role="form" data-confirm-messages="{$tableMessages|escape}">
-        {formWidget form=$tableForm row=$tableNameField}
+        {call formWidget form=$tableForm row=$tableNameField}
 
         <fieldset>
 
@@ -23,7 +23,7 @@
                     {if $table->hasSearch()}
                         {block name="table.search"}
                             {$tableForm->getRow($tableSearchQueryField)->getWidget()->setAttribute('placeholder', "label.search"|translate)}
-                            {formWidget form=$tableForm row=$tableSearchQueryField}
+                            {call formWidget form=$tableForm row=$tableSearchQueryField}
                         {/block}
                     {/if}
                 </div>
@@ -31,7 +31,7 @@
                     {if $table->hasOrderMethods()}
                         {block name="table.order"}
                             {translate key="label.table.order"}
-                            {formWidget form=$tableForm row=$tableOrderField}
+                            {call formWidget form=$tableForm row=$tableOrderField}
 
                             {if $table->getOrderDirection() == 'asc'}
                                 {assign var="direction" value="desc"}
@@ -76,7 +76,7 @@
 
                                 <div class="col-md-6 pagination">
                                     {if $pages > 1}
-                                        {pagination page=$page pages=$pages href=$href}
+                                        {call pagination page=$page pages=$pages href=$href}
                                     {/if}
                                 </div>
                                 <div class="col-md-3 pagination-options">
